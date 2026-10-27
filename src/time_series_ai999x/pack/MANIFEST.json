@@ -1,5 +1,5 @@
 {
- "package": "1.0.0",
+ "package": "1.0.1",
  "pack": "1.0.0",
  "knowledge_db": null,
  "files": {
@@ -10,10 +10,10 @@
   "capabilities/_expected.py": "2e844e14a2b86d56a1d40492dfe0c14122ee6031834bcae5f55852a30b246a39",
   "capabilities/procedures.py": "56adc7fb0052c0fba26e81d4eabd8900c0bf0f5dab0e3c006cfae56913b9140a",
   "capabilities/procedures_certified.json": "ccbcf752f1b6d5dab3e483bf822a3eb1bc2bd17dfe8c8a08c33afc9db2fd83c5",
-  "time_series_knowledge_public.sqlite": "0ff6bffed405fead74d2fc314b396a37732c3cc99d2a986d9fd5d33f5be93480",
-  "search/encoder.int8.onnx": "8dfdc64b74a689092588fa02d7b7c90a09c478de71f1a4003e18dce5cd0980bd",
-  "search/tokenizer.json": "22814b2533272c7a139d477e6d514d35989c4abe3a2195b40942bc527a1e1d15",
-  "search/index.json": "a4efb354b436ecd9ea3aaf36cbdaa1e2562e557336b3c68183b1ad3355d49f70",
+  "time_series_knowledge_public.sqlite": "27dd49ec02b2e65739b638bdb79563cca10683f9804fb9d84e102473ea9dc947",
+  "search/encoder.int8.onnx": "521452d928a72da4d241b1835ab0f46b0e81ff58ffff0367b9a7029bd129fbd9",
+  "search/tokenizer.json": "b2f2deb461e6ad672b8e42aac29773e7a9be77d582cdf58808113ea43fda565e",
+  "search/index.json": "d8f81d9706c9a0efa7d9643bcec3d39a6c3500766ce0f44937d85ad90f772507",
   "reader/reader.int8.onnx": "ecee16f238097a01129c8c071809cc24d3edb25c7d73ca29bd5c383981ca0c33",
   "reader/tokenizer.json": "a54ec88bce54ad97ea91cd47911b41025e80d47e13af62d47cf5758a65ba8387",
   "reader/labels.json": "328c9073146573ae8e9890ac487d5a4cfe6914fef45fb0047633ac580f8fff80"

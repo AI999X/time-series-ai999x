@@ -4,7 +4,7 @@
 
 **[Install](https://pypi.org/project/time-series-ai999x/)** · **[Capability guide](https://huggingface.co/AI999X/time-series-ai999x/tree/main/docs)** · **[Evaluation](https://huggingface.co/AI999X/time-series-ai999x/tree/main/evaluation)** · **[AI999X on Hugging Face](https://huggingface.co/AI999X)** · **[Website](https://ai999x.com)** · **[Support: Buy Me a Coffee](https://buymeacoffee.com/ibnuljaiffarabi)**
 
-License: Apache-2.0 · Author: Ibnul Jaif Farabi (creator and engineer) · Organization: AI999X · Version 1.0.0
+License: Apache-2.0 · Author: Ibnul Jaif Farabi (creator and engineer) · Organization: AI999X · Version 1.0.1
 
 Field: **Mathematics & Statistics** · Tasks: Question Answering, Token Classification, Text Classification, Time Series Forecasting, Sentence Similarity, Feature Extraction
 
@@ -27,7 +27,7 @@ time-series-ai999x is an offline, deterministic Python solver that answers time 
 
 | Property | Value |
 |---|---|
-| Package | `time-series-ai999x` 1.0.0 (import `time_series_ai999x`) |
+| Package | `time-series-ai999x` 1.0.1 (import `time_series_ai999x`) |
 | Type | Deterministic neuro-symbolic time series engine (rule-based reading + certified symbolic capabilities) |
 | Capabilities | 77 certified procedures |
 | Knowledge pack | version 1.0.0 |
@@ -61,7 +61,18 @@ time_series.ask("Who created you?").message
 # -> time-series-ai999x was created and engineered by Ibnul Jaif Farabi at AI999X.
 ```
 
-Command line: `time-series-ai999x "<question>"`, `time-series-ai999x --capabilities`. The outputs above were produced by running this exact code on time-series-ai999x 1.0.0.
+Command line: `time-series-ai999x "<question>"`, `time-series-ai999x --capabilities`. The outputs above were produced by running this exact code on time-series-ai999x 1.0.1.
+
+## Find the right capability, and draw it
+
+`time_series.search()` finds which certified capability a question is about — across **every** AI999X model, so a question for another model points you to it. It runs **[ai999x-encoder](https://huggingface.co/AI999X/ai999x-encoder)**, AI999X's own capability encoder (4.7M parameters, a 4.9 MB ONNX model, offline; the root `model.safetensors` of this repository): `pip install "time-series-ai999x[search]"`. `ask(question, suggest=True)` adds the same pointers to a question it does not answer; an answer itself never changes.
+
+```python
+import time_series_ai999x as time_series
+
+time_series.search("Solve x^2 - 5x + 6 = 0", k=2)
+# -> Roots of a quadratic equation (math-foundations-ai999x, 0.63); Roots of a cubic equation (math-foundations-ai999x, 0.59)
+```
 
 ## How every answer is verified
 
@@ -71,6 +82,122 @@ Command line: `time-series-ai999x "<question>"`, `time-series-ai999x --capabilit
 4. **Checking** — dimensions, substitution back into the defining equation, and agreement between independent readings; any disagreement becomes a refusal, never a number.
 
 Capabilities are certified before they ship: each must reproduce hand-worked reference cases, reject a deliberately wrong variant (a control), and leave every benchmark answer unchanged.
+
+## Worked examples
+
+Each question was put to `time-series-ai999x`; the answer is the one it returned, with the steps it took.
+
+**Simple moving average** · _Moving averages_
+
+> Find the 3-period simple moving average of [10, 12, 14, 13, 15].
+
+→ **sma = [12, 13, 14], last = 14, count = 3**
+
+<details><summary>Steps</summary>
+
+- Simple moving average: x = [10, 12, 14, 13, 15], k = 3 → sma = [12, 13, 14], last = 14, count = 3
+
+</details>
+
+**Holt's linear trend method** · _Exponential smoothing_
+
+> Apply Holt's linear trend method with alpha = 0.5 and beta = 0.3 to [10, 12, 15, 16, 19, 21].
+
+→ **forecast = 22.65328591, level = 20.65533969, trend = 1.997946219, sse = 7.492761855**
+
+<details><summary>Steps</summary>
+
+- Holt's linear trend method: x = [10, 12, 15, 16, 19, 21], alpha = 0.5, beta = 0.3 → forecast = 22.65328591, level = 20.65533969, trend = 1.997946219, sse = 7.492761855
+
+</details>
+
+**Ljung-Box test** · _Autocorrelation_
+
+> Perform the Ljung-Box test with 3 lags on [4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13].
+
+→ **q = 9.319101598, p_value = 0.0253357685, df = 3**
+
+<details><summary>Steps</summary>
+
+- Ljung-Box test: x = [4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13], h = 3 → q = 9.319101598, p_value = 0.0253357685, df = 3
+
+</details>
+
+**Mean absolute percentage error** · _Forecast accuracy_
+
+> Find the MAPE for actual values [10, 12, 14, 13] and forecasts [11, 12, 13, 15].
+
+→ **mape = 8.131868132, n = 4**
+
+<details><summary>Steps</summary>
+
+- Mean absolute percentage error: y = [10, 12, 14, 13], f = [11, 12, 13, 15] → mape = 8.131868132, n = 4
+
+</details>
+
+**Kalman filter for a random-walk (local level) model** · _Kalman filtering_
+
+`m.solve("kalman_filter_local_level", x="10.4, 11.1, 10.7, 11.9, 12.3", q=0.5, r=2, m0=10, p0=5)`
+
+→ **estimate = 11.62410315, variance = 0.7906396594, gain = 0.3953198297, estimates = [10.29333333, 10.69327731, 10.69614922, 11.18222422, 11.62410315], log_likelihood = -8.617118062**
+
+<details><summary>Steps</summary>
+
+- Kalman filter for a random-walk (local level) model: x = [10.4, 11.1, 10.7, 11.9, 12.3], q = 0.5, r = 2, m0 = 10, p0 = 5 → estimate = 11.62410315, variance = 0.7906396594, gain = 0.3953198297, estimates = [10.29333333, 10.69327731, 10.69614922, 11.18222422, 11.62410315], log_likelihood = -8.617118062
+
+</details>
+
+**AR(1) forecast towards the mean** · _ARIMA models_
+
+> Forecast 3 steps ahead for an AR(1) process with mean 50, phi = 0.7 and last value 58.
+
+→ **forecast = 52.744**
+
+<details><summary>Steps</summary>
+
+- AR(1) forecast towards the mean: x = 58, phi = 0.7, mu = 50, h = 3 → forecast = 52.744
+
+</details>
+
+## Figures
+
+Every point was computed by `time-series-ai999x`.
+
+**Seasonal series and three forecasts**
+
+![Seasonal series and three forecasts — computed by time-series-ai999x](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/holt-winters-additive-forecast.svg)
+
+_A quarterly series of 12 values (30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51) and three forecasts for the next 8 periods, each step computed by the package: Holt–Winters additive and multiplicative (m = 4, α = 0.5, β = 0.3, γ = 0.2) and a linear trend with seasonal effects; 8-step forecasts 67.8788, 68.1074 and 69.875._
+
+**AR(1) forecast fan reverting to the mean**
+
+![AR(1) forecast fan reverting to the mean — computed by time-series-ai999x](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/ar1-forecast-forecast.svg)
+
+_AR(1) forecasts from the last value x = 58 with φ = 0.7, μ = 50 and innovation variance σ² = 4, 1 to 12 steps ahead, with the 95 % interval the package returns at each step (it widens to [44.6223, 55.5992] at h = 12); marked: h = 3, forecast = 52.744._
+
+**Autocorrelation function with its significance band**
+
+![Autocorrelation function with its significance band — computed by time-series-ai999x](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/sample-autocorrelation-acf.svg)
+
+_Sample autocorrelations of the series 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 at lags 1 to 6 (0.512567, 0.361929, 0.190263, 0.157039, -0.138822, -0.267831) and the 95 % band ±0.565793 … ±0.789621 from Bartlett's standard errors, all returned by the package._
+
+**Kalman filter and smoother against noisy observations**
+
+![Kalman filter and smoother against noisy observations — computed by time-series-ai999x](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/kalman-filter-local-level-filter.svg)
+
+_A local-level model (state noise q = 0.5, observation noise r = 2, start m₀ = 10, p₀ = 5) run by the package on 12 observations: the filtered level after each observation and the smoothed level from the backward pass; marked: t = 12, filtered level = 13.8669 (variance 0.780786, gain 0.390393)._
+
+**Two change points and the segment means**
+
+![Two change points and the segment means — computed by time-series-ai999x](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/two-change-points-segments.svg)
+
+_The two change points the package finds in x = 5, 6, 5, 12, 13, 12, 20, 21, 19: after observations 3 and 6, splitting the series into segments with means 5.33333, 12.3333, 20 (total squared error 3.33333)._
+
+**Where an AR(2) model is stationary**
+
+![Where an AR(2) model is stationary — computed by time-series-ai999x](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/ar2-stationarity-region.svg)
+
+_Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane — stationary with real roots (120 points), stationary with complex roots, i.e. damped oscillation (223), or not stationary (682); together they trace the stationarity triangle. Marked: φ₁ = 0.5, φ₂ = 0.3, real roots, largest modulus 0.85208._
 
 ## Capabilities
 
@@ -95,10 +222,10 @@ Capabilities are certified before they ship: each must reproduce hand-worked ref
 ## Citation
 
 ```bibtex
-@software{time_series_ai999x_1_0_0,
+@software{time_series_ai999x_1_0_1,
   title  = {time-series-ai999x: an offline, verified time series solver},
   author = {Farabi, Ibnul Jaif}, organization = {AI999X},
-  year   = {2026}, version = {1.0.0},
+  year   = {2026}, version = {1.0.1},
   url    = {https://huggingface.co/AI999X/time-series-ai999x}
 }
 ```

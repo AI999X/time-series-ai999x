@@ -505,6 +505,10 @@ $$
 - **Assumes:** $n  \geq  2m$; $0 < \alpha$, beta, $\gamma  \leq  1$; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, $s_j = x_j - l_0$ (additive) or $x_j / l_0$ (multiplicative) for the first m observations
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![A quarterly series of 12 values (30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51) and three forecasts for the next 8 periods, each step computed by the package: Holt–Winters additive and multiplicative (m = 4, α = 0](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/holt-winters-additive-forecast.svg)
+
+*A quarterly series of 12 values (30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51) and three forecasts for the next 8 periods, each step computed by the package: Holt–Winters additive and multiplicative (m = 4, α = 0.5, β = 0.3, γ = 0.2) and a linear trend with seasonal effects; 8-step forecasts 67.8788, 68.1074 and 69.875.*
+
 ```python
 time_series_ai999x.solve('holt_winters_additive', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4, alpha=0.5, beta=0.3, gamma=0.2)
 # -> forecast = 56.1588, level = 49.5983, trend = 2.04838, sse = 146.553   (SOLVED)
@@ -854,6 +858,10 @@ $$
 - **Method:** $r_k = c_k / c_0$, $c_k = (1/n)$ sum_{$t=1$}^{n-k} (x_t - xbar)(x_{t+k} - xbar)
 - **Assumes:** the series is not constant; $1  \leq  k  \leq  n - 1$; denominator n (not n - k)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Sample autocorrelations of the series 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 at lags 1 to 6 (0](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/sample-autocorrelation-acf.svg)
+
+*Sample autocorrelations of the series 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 at lags 1 to 6 (0.512567, 0.361929, 0.190263, 0.157039, -0.138822, -0.267831) and the 95 % band ±0.565793 … ±0.789621 from Bartlett's standard errors, all returned by the package.*
 
 ```python
 time_series_ai999x.solve('sample_autocorrelation', x='4, 6, 5, 8, 7, 9, 8, 10', k=1)
@@ -1740,6 +1748,10 @@ $$
 - **Assumes:** a modulus of exactly 1 (unit root) counts as not stationary
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane — stationary with real roots (120 points), stationary with complex roots, i](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/ar2-stationarity-region.svg)
+
+*Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane — stationary with real roots (120 points), stationary with complex roots, i.e. damped oscillation (223), or not stationary (682); together they trace the stationarity triangle. Marked: φ₁ = 0.5, φ₂ = 0.3, real roots, largest modulus 0.85208.*
+
 ```python
 time_series_ai999x.solve('ar2_stationarity', phi1=0.5, phi2=0.3)
 # -> stationary = yes, max_modulus = 0.85208, roots = real   (SOLVED)
@@ -2563,6 +2575,10 @@ $$
 - **Assumes:** each segment has at least min_size values; ties: the smallest first, then second index
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The two change points the package finds in x = 5, 6, 5, 12, 13, 12, 20, 21, 19: after observations 3 and 6, splitting the series into segments with means 5](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/two-change-points-segments.svg)
+
+*The two change points the package finds in x = 5, 6, 5, 12, 13, 12, 20, 21, 19: after observations 3 and 6, splitting the series into segments with means 5.33333, 12.3333, 20 (total squared error 3.33333).*
+
 ```python
 time_series_ai999x.solve('two_change_points', x='5, 6, 5, 12, 13, 12, 20, 21, 19')
 # -> change_1 = 3, change_2 = 6, means = [5.333333333333333, 12.333333333333334, 20.0], cost = 3.33333   (SOLVED)
@@ -2832,6 +2848,10 @@ $$
 - **Method:** P- = P + q; $S = P$- + r; $K = P$-/S; $x = x + K$(z - x); $P = (1 - K)$ P-
 - **Assumes:** $q  \geq  0$, $r > 0$, $p_{0}  \geq  0$; the initial estimate is the state before the first measurement
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![A local-level model (state noise q = 0](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/kalman-filter-local-level-filter.svg)
+
+*A local-level model (state noise q = 0.5, observation noise r = 2, start m₀ = 10, p₀ = 5) run by the package on 12 observations: the filtered level after each observation and the smoothed level from the backward pass; marked: t = 12, filtered level = 13.8669 (variance 0.780786, gain 0.390393).*
 
 ```python
 time_series_ai999x.solve('kalman_filter_local_level', x='10.4, 11.1, 10.7, 11.9, 12.3', q=0.5, r=2, m0=10, p0=5)
@@ -3329,6 +3349,10 @@ $$
 - **Method:** closed forms of the AR(1) recursion
 - **Assumes:** |phi| < 1; known parameters; normal innovations for the interval
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![AR(1) forecasts from the last value x = 58 with φ = 0](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/ar1-forecast-forecast.svg)
+
+*AR(1) forecasts from the last value x = 58 with φ = 0.7, μ = 50 and innovation variance σ² = 4, 1 to 12 steps ahead, with the 95 % interval the package returns at each step (it widens to [44.6223, 55.5992] at h = 12); marked: h = 3, forecast = 52.744.*
 
 ```python
 time_series_ai999x.solve('ar1_forecast', x=58, phi=0.7, mu=50, h=3)
