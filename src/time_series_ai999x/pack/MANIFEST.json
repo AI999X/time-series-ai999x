@@ -1,5 +1,5 @@
 {
- "package": "1.0.1",
+ "package": "1.0.2",
  "pack": "1.0.0",
  "knowledge_db": null,
  "files": {
@@ -10,7 +10,7 @@
   "capabilities/_expected.py": "2e844e14a2b86d56a1d40492dfe0c14122ee6031834bcae5f55852a30b246a39",
   "capabilities/procedures.py": "56adc7fb0052c0fba26e81d4eabd8900c0bf0f5dab0e3c006cfae56913b9140a",
   "capabilities/procedures_certified.json": "ccbcf752f1b6d5dab3e483bf822a3eb1bc2bd17dfe8c8a08c33afc9db2fd83c5",
-  "time_series_knowledge_public.sqlite": "27dd49ec02b2e65739b638bdb79563cca10683f9804fb9d84e102473ea9dc947",
+  "time_series_knowledge_public.sqlite": "53cb84bf798e4ab3789f29b425d0368c9576432800cb5cba5aeeb422d6759829",
   "search/encoder.int8.onnx": "521452d928a72da4d241b1835ab0f46b0e81ff58ffff0367b9a7029bd129fbd9",
   "search/tokenizer.json": "b2f2deb461e6ad672b8e42aac29773e7a9be77d582cdf58808113ea43fda565e",
   "search/index.json": "d8f81d9706c9a0efa7d9643bcec3d39a6c3500766ce0f44937d85ad90f772507",

@@ -174,6 +174,10 @@ $$
 - **Assumes:** $1  \leq  k  \leq  n$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 10, 12, 14, 13, 15 with its simple moving average over k = 3 periods (each value placed at the end of its window: 12, 13, 14) and, for comparison, the exponential moving average with the same span (dashed), both returned by the package](https://www.ai999x.com/?ax_fig=time-series-ai999x/simple-moving-average-smooth)
+
+*The series x = 10, 12, 14, 13, 15 with its simple moving average over k = 3 periods (each value placed at the end of its window: 12, 13, 14) and, for comparison, the exponential moving average with the same span (dashed), both returned by the package.*
+
 ```python
 time_series_ai999x.solve('simple_moving_average', x='10, 12, 14, 13, 15', k=3)
 # -> sma = [12.0, 13.0, 14.0], last = 14, count = 3   (SOLVED)
@@ -223,6 +227,10 @@ $$
 - **Assumes:** $1  \leq  k  \leq  n$; the newest value of a window has weight k, the oldest weight 1
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 10, 12, 14, 13, 15 with its linearly weighted moving average over k = 3 periods (weights 1 … 3, newest heaviest: 12](https://www.ai999x.com/?ax_fig=time-series-ai999x/linearly-weighted-moving-average-smooth)
+
+*The series x = 10, 12, 14, 13, 15 with its linearly weighted moving average over k = 3 periods (weights 1 … 3, newest heaviest: 12.6667, 13.1667, 14.1667) and the equally weighted simple moving average (dashed: 12, 13, 14), each placed at the end of its window; all from the package.*
+
 ```python
 time_series_ai999x.solve('linearly_weighted_moving_average', x='10, 12, 14, 13, 15', k=3)
 # -> lwma = [12.666666666666666, 13.166666666666666, 14.166666666666666], last = 14.1667   (SOLVED)
@@ -265,6 +273,10 @@ $$
 - **Method:** EMA_t = alpha $x_t + (1 - \alpha)$ EMA_{$t-1$}, $\alpha = 2/(k+1)$
 - **Assumes:** $k  \geq  1$; EMA_1 = x_1 (no averaging of a start-up window)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The series x = 10, 12, 14, 13, 15 with exponential moving averages of three spans k, each returned by the package: k = 2: α = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/exponential-moving-average-smooth)
+
+*The series x = 10, 12, 14, 13, 15 with exponential moving averages of three spans k, each returned by the package: k = 2: α = 0.666667, last 14.3457; k = 3: α = 0.5, last 13.875; k = 5: α = 0.333333, last 13.1235. A longer span means a smaller α and a smoother, slower average.*
 
 ```python
 time_series_ai999x.solve('exponential_moving_average', x='10, 12, 14, 13, 15', k=3)
@@ -309,6 +321,10 @@ $$
 - **Assumes:** $k  \geq  2$; odd k: $k  \leq  n$; even k: $k + 1  \leq  n$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 12, 15, 14, 18, 20, 19, 23, 25 and its centred moving average of order k = 4, as returned by the package: 4 values 15](https://www.ai999x.com/?ax_fig=time-series-ai999x/centred-moving-average-smooth)
+
+*The series x = 12, 15, 14, 18, 20, 19, 23, 25 and its centred moving average of order k = 4, as returned by the package: 4 values 15.75, 17.25, 18.875, 20.875, the first centred on period 3 (the ends, where the window does not fit, have none); marked: the first value 15.75.*
+
 ```python
 time_series_ai999x.solve('centred_moving_average', x='12, 15, 14, 18, 20, 19, 23, 25', k=4)
 # -> cma = [15.75, 17.25, 18.875, 20.875], first_index = 3, first = 15.75   (SOLVED)
@@ -352,6 +368,10 @@ $$
 - **Method:** $l_t = l_${$t-1$} + alpha (x_t - l_{$t-1$}); forecast = l_n
 - **Assumes:** $0 < \alpha  \leq  1$; $l_0 = x_1$ unless an initial level is stated
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Simple exponential smoothing of x = 20, 22, 21, 24, 23: after each observation t the package's forecast for period t + 1 (the run on the first t values), for three smoothing constants α; α = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/simple-exponential-smoothing-forecasts)
+
+*Simple exponential smoothing of x = 20, 22, 21, 24, 23: after each observation t the package's forecast for period t + 1 (the run on the first t values), for three smoothing constants α; α = 0.1: next 20.8868; α = 0.3: next 22.0928; α = 0.8: next 23.0848. A larger α follows the data more closely.*
 
 ```python
 time_series_ai999x.solve('simple_exponential_smoothing', x='20, 22, 21, 24, 23', alpha=0.3)
@@ -401,6 +421,10 @@ $$
 - **Method:** $l_t = \alpha$ $x_t + (1-\alpha)$(l_{$t-1$}+b_{$t-1$}); $b_t = \beta$ (l_t - l_{$t-1$}) + $(1-\beta)$ b_{$t-1$}
 - **Assumes:** $0 < \alpha$, $\beta  \leq  1$; $l_0 = x_1$, $b_0 = x_2 - x_1$ unless stated; trend form: beta multiplies (l_t - l_{$t-1$}) (the error-correction $\beta of$ many texts)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![History x = 10, 12, 15, 16, 19, 21 and forecasts h = 1 … 8 from Holt's method with α = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/holt-linear-trend-forecast)
+
+*History x = 10, 12, 15, 16, 19, 21 and forecasts h = 1 … 8 from Holt's method with α = 0.5, β = 0.3 (linear trend), beside the damped trend with the same α and β and φ = 0.9, every point a run of the package; marked: h = 8, forecast = 36.6389 (the other method gives 28.5769).*
 
 ```python
 time_series_ai999x.solve('holt_linear_trend', x='10, 12, 15, 16, 19, 21', alpha=0.5, beta=0.3)
@@ -457,6 +481,10 @@ $$
 - **Assumes:** $0 < \alpha$, beta, $\phi  \leq  1$; $l_0 = x_1$, $b_0 = x_2 - x_1$ unless stated
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![History x = 10, 12, 15, 16, 19, 21 and forecasts h = 1 … 8 from Holt's method with α = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/holt-damped-trend-forecast)
+
+*History x = 10, 12, 15, 16, 19, 21 and forecasts h = 1 … 8 from Holt's method with α = 0.5, β = 0.3, damping φ = 0.9 (damped trend), beside the undamped linear trend with the same α and β, every point a run of the package; marked: h = 8, forecast = 28.5769 (the other method gives 36.6389).*
+
 ```python
 time_series_ai999x.solve('holt_damped_trend', x='10, 12, 15, 16, 19, 21', alpha=0.5, beta=0.3, phi=0.9)
 # -> forecast = 21.6649, level = 20.1927, trend = 1.63569, sse = 13.0169   (SOLVED)
@@ -509,6 +537,10 @@ $$
 
 *A quarterly series of 12 values (30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51) and three forecasts for the next 8 periods, each step computed by the package: Holt–Winters additive and multiplicative (m = 4, α = 0.5, β = 0.3, γ = 0.2) and a linear trend with seasonal effects; 8-step forecasts 67.8788, 68.1074 and 69.875.*
 
+![Holt–Winters additive forecasts (m = 4, β = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/holt-winters-additive-forecast-2)
+
+*Holt–Winters additive forecasts (m = 4, β = 0.3, γ = 0.2) of the series x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 for h = 1 … 8, at three level-smoothing constants α (each point a run of the package); 8-step forecasts α = 0.2: 68.0228, α = 0.5: 67.8788, α = 0.8: 65.057.*
+
 ```python
 time_series_ai999x.solve('holt_winters_additive', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4, alpha=0.5, beta=0.3, gamma=0.2)
 # -> forecast = 56.1588, level = 49.5983, trend = 2.04838, sse = 146.553   (SOLVED)
@@ -558,6 +590,10 @@ $$
 - **Assumes:** $n  \geq  2m$; $0 < \alpha$, beta, $\gamma  \leq  1$; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, $s_j = x_j - l_0$ (additive) or $x_j / l_0$ (multiplicative) for the first m observations; positive data
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Holt–Winters multiplicative forecasts of x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 (m = 4, α = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/holt-winters-multiplicative-forecast)
+
+*Holt–Winters multiplicative forecasts of x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 (m = 4, α = 0.5, β = 0.3, γ = 0.2) for h = 1 … 8, each a run of the package: the seasonal swing grows with the level (the series' multiplicative seasonal indices are 1.16759, 0.839034, 1.00204, 0.991336); marked: h = 8, forecast = 68.1074.*
+
 ```python
 time_series_ai999x.solve('holt_winters_multiplicative', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4, alpha=0.5, beta=0.3, gamma=0.2)
 # -> forecast = 58.6565, level = 49.6462, trend = 1.85098, sse = 219.27   (SOLVED)
@@ -600,6 +636,10 @@ $$
 - **Method:** differences x_t - CMA_t averaged by season, minus their mean
 - **Assumes:** $n  \geq  2m$; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The additive seasonal indices of x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 for its m = 4 seasons, as returned by the package: 6](https://www.ai999x.com/?ax_fig=time-series-ai999x/seasonal-indices-additive-bars)
+
+*The additive seasonal indices of x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 for its m = 4 seasons, as returned by the package: 6.48438, -6.45312, 0.171875, -0.203125 (relative to 0).*
 
 ```python
 time_series_ai999x.solve('seasonal_indices_additive', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4)
@@ -644,6 +684,10 @@ $$
 - **Assumes:** $n  \geq  2m$; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 and its additive seasonally adjusted values (m = 4), as returned by the package: the seasonal swing is removed and the trend remains; marked: last adjusted value 51](https://www.ai999x.com/?ax_fig=time-series-ai999x/seasonally-adjusted-additive-adjusted)
+
+*The series x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 and its additive seasonally adjusted values (m = 4), as returned by the package: the seasonal swing is removed and the trend remains; marked: last adjusted value 51.2031.*
+
 ```python
 time_series_ai999x.solve('seasonally_adjusted_additive', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4)
 # -> adjusted = [23.515625, 27.453125, 28.828125, 31.203125, 33.515625, 36.453125, 38.828125, 41.203125, 43.515625, 45.453125, 47.828125, 51.203125], last = 51.2031   (SOLVED)
@@ -679,6 +723,10 @@ $$
 - **Method:** ratios x_t / CMA_t averaged by season, divided by their mean
 - **Assumes:** $n  \geq  2m$; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season); positive data
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The multiplicative seasonal indices of x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 for its m = 4 seasons, as returned by the package: 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/seasonal-indices-multiplicative-bars)
+
+*The multiplicative seasonal indices of x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 for its m = 4 seasons, as returned by the package: 1.16759, 0.839034, 1.00204, 0.991336 (relative to 1).*
 
 ```python
 time_series_ai999x.solve('seasonal_indices_multiplicative', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4)
@@ -723,6 +771,10 @@ $$
 - **Assumes:** $n  \geq  2m$; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season); positive data
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 and its multiplicative seasonally adjusted values (m = 4), as returned by the package: the seasonal swing is removed and the trend remains; marked: last adjusted value 51](https://www.ai999x.com/?ax_fig=time-series-ai999x/seasonally-adjusted-multiplicative-adjusted)
+
+*The series x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 and its multiplicative seasonally adjusted values (m = 4), as returned by the package: the seasonal swing is removed and the trend remains; marked: last adjusted value 51.4457.*
+
 ```python
 time_series_ai999x.solve('seasonally_adjusted_multiplicative', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4)
 # -> adjusted = [25.694050712757576, 25.02878897387461, 28.940819267265272, 31.27093608902728, 34.25873428367677, 35.755412819820876, 38.9204121180464, 41.35833482742318, 42.82341785459596, 46.48203666576713, 47.902045683749414, 51.445733565819076], last = 51.4457   (SOLVED)
@@ -761,6 +813,10 @@ $$
 - **Method:** seasonal differences $y_t = x_t - x_${t-s} (D times), then regular differences y_t - y_{$t-1$} (d times)
 - **Assumes:** $d + D  \geq  1$; the series is longer than d + D s
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The series x = 3, 5, 9, 15, 23, 33 and its differences of order 1 and 2 as returned by the package: d = 1: 2, 4, 6, 8, 10; d = 2: 2, 2, 2, 2](https://www.ai999x.com/?ax_fig=time-series-ai999x/differencing-differences)
+
+*The series x = 3, 5, 9, 15, 23, 33 and its differences of order 1 and 2 as returned by the package: d = 1: 2, 4, 6, 8, 10; d = 2: 2, 2, 2, 2. Each difference is placed at the later of its periods; constant second differences show a quadratic trend.*
 
 ```python
 time_series_ai999x.solve('differencing', x='3, 5, 9, 15, 23, 33', d=2)
@@ -817,6 +873,10 @@ $$
 - **Assumes:** all values positive; equally spaced periods
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 100, 110, 125, 133, 150 and the constant-growth path x₁(1 + r)^(t−1) with the returned compound average growth rate r = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/compound-average-growth-rate-growth)
+
+*The series x = 100, 110, 125, 133, 150 and the constant-growth path x₁(1 + r)^(t−1) with the returned compound average growth rate r = 0.106682 (10.6682 % per period over 4 periods), drawn from that value: it starts and ends on the data; total growth 0.5.*
+
 ```python
 time_series_ai999x.solve('compound_average_growth_rate', x='100, 110, 125, 133, 150')
 # -> rate = 0.106682, rate_percent = 10.6682, total_growth = 0.5, periods = 4   (SOLVED)
@@ -863,6 +923,10 @@ $$
 
 *Sample autocorrelations of the series 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 at lags 1 to 6 (0.512567, 0.361929, 0.190263, 0.157039, -0.138822, -0.267831) and the 95 % band ±0.565793 … ±0.789621 from Bartlett's standard errors, all returned by the package.*
 
+![Lag plot of the series x = 4, 6, 5, 8, 7, 9, 8, 10: each point pairs a value with the one before it](https://www.ai999x.com/?ax_fig=time-series-ai999x/sample-autocorrelation-lag-plot)
+
+*Lag plot of the series x = 4, 6, 5, 8, 7, 9, 8, 10: each point pairs a value with the one before it. The package's lag-1 sample autocorrelation of these values is 0.272186.*
+
 ```python
 time_series_ai999x.solve('sample_autocorrelation', x='4, 6, 5, 8, 7, 9, 8, 10', k=1)
 # -> acf = 0.272186, acf_list = [0.2721861471861472]   (SOLVED)
@@ -906,6 +970,10 @@ $$
 - **Assumes:** $0  \leq  k  \leq  n - 1$; denominator n (not n - k)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Sample autocovariances of x = 4, 6, 5, 8, 7, 9, 8, 10 at lags 0 … 6, each a run of the package: γ(0) = 3](https://www.ai999x.com/?ax_fig=time-series-ai999x/sample-autocovariance-acov)
+
+*Sample autocovariances of x = 4, 6, 5, 8, 7, 9, 8, 10 at lags 0 … 6, each a run of the package: γ(0) = 3.60938 is the variance (divisor n), then 0.9824, 1.6055, -0.7715, -0.1328, -1.6191, -0.7461.*
+
 ```python
 time_series_ai999x.solve('sample_autocovariance', x='4, 6, 5, 8, 7, 9, 8, 10', k=2)
 # -> acov = 1.60547, gamma0 = 3.60938   (SOLVED)
@@ -947,6 +1015,10 @@ $$
 - **Method:** Durbin-Levinson: phi_kk = (r_k - sum phi_{$k-1$,j} r_{k-j}) / (1 - sum phi_{$k-1$,j} r_j)
 - **Assumes:** the series is not constant; $1  \leq  k < n/2$; autocovariances divided by n
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Sample partial autocorrelations of x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12 at lags 1 … 4, as returned by the package (0](https://www.ai999x.com/?ax_fig=time-series-ai999x/sample-partial-autocorrelation-pacf)
+
+*Sample partial autocorrelations of x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12 at lags 1 … 4, as returned by the package (0.3597, 0.4017, -0.3953, 0.0295), with the approximate 95 % band ±1.96/√n for n = 10 (computed from n).*
 
 ```python
 time_series_ai999x.solve('sample_partial_autocorrelation', x='4, 6, 5, 8, 7, 9, 8, 10, 9, 12', k=2)
@@ -991,6 +1063,10 @@ $$
 - **Assumes:** $1  \leq  k  \leq  n - 1$; autocorrelations with denominator n
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Sample autocorrelations of x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12 at lags 1 … 6 and the 95 % band ±1](https://www.ai999x.com/?ax_fig=time-series-ai999x/bartlett-standard-error-acf)
+
+*Sample autocorrelations of x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12 at lags 1 … 6 and the 95 % band ±1.96·SE whose half-width the package returns at each lag (Bartlett's standard error grows with the lag: ±0.619795 … ±0.852123); worked example k = 3: SE = 0.41446.*
+
 ```python
 time_series_ai999x.solve('bartlett_standard_error', x='4, 6, 5, 8, 7, 9, 8, 10, 9, 12', k=3)
 # -> se = 0.41446, half_width_95 = 0.812326, acf = -0.0410853   (SOLVED)
@@ -1033,6 +1109,10 @@ $$
 - **Method:** $Q = n$(n+2) sum_{$k=1$}^h $r_k^{2}/(n-k)$; $p = P$(chi2_{h-model_df} > Q)
 - **Assumes:** $1  \leq  h  \leq  n - 1$; model_df < h (default 0: raw series)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Portmanteau tests for autocorrelation in x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13 using h = 1 … 8 lags, every value a run of the package: the Ljung–Box and Box–Pierce statistics (top) and the Ljung–Box p-values with the 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ljung-box-test-q-by-lag)
+
+*Portmanteau tests for autocorrelation in x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13 using h = 1 … 8 lags, every value a run of the package: the Ljung–Box and Box–Pierce statistics (top) and the Ljung–Box p-values with the 0.05 level (bottom). Worked example h = 3: Q = 9.3191, 3 degrees of freedom, p-value 0.0253358.*
 
 ```python
 time_series_ai999x.solve('ljung_box_test', x='4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13', h=3)
@@ -1084,6 +1164,10 @@ $$
 - **Assumes:** $1  \leq  h  \leq  n - 1$; model_df < h (default 0: raw series)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Portmanteau tests for autocorrelation in x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13 using h = 1 … 8 lags, every value a run of the package: the Box–Pierce and Ljung–Box statistics (top) and the Box–Pierce p-values with the 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/box-pierce-test-q-by-lag)
+
+*Portmanteau tests for autocorrelation in x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13 using h = 1 … 8 lags, every value a run of the package: the Box–Pierce and Ljung–Box statistics (top) and the Box–Pierce p-values with the 0.05 level (bottom). Worked example h = 3: Q = 6.9439, 3 degrees of freedom, p-value 0.0737077.*
+
 ```python
 time_series_ai999x.solve('box_pierce_test', x='4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13', h=3)
 # -> q = 6.9439, p_value = 0.0737077, df = 3   (SOLVED)
@@ -1133,6 +1217,10 @@ $$
 - **Assumes:** the series is not constant; $1  \leq  p < n - 1$; denominator n
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Yule–Walker AR fits of x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12 for orders p = 1 … 4, each a run of the package: the coefficients (top) and the innovation variance (bottom)](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar-yule-walker-orders)
+
+*Yule–Walker AR fits of x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12 for orders p = 1 … 4, each a run of the package: the coefficients (top) and the innovation variance (bottom). p = 1: φ = 0.3597, σ² = 4.49242; p = 2: φ = 0.2152, 0.4017, σ² = 3.76766; p = 3: φ = 0.374, 0.4867, -0.3953, σ² = 3.1788; p = 4: φ = 0.3857, 0.4724, -0.4064, 0.0295, σ² = 3.17604.*
+
 ```python
 time_series_ai999x.solve('ar_yule_walker', x='4, 6, 5, 8, 7, 9, 8, 10, 9, 12', p=2)
 # -> phi = [0.21521751734534134, 0.40165819531144314], phi1 = 0.215218, sigma2 = 3.76766   (SOLVED)
@@ -1177,6 +1265,10 @@ $$
 - **Assumes:** $n - p > p + 2$; regressors not collinear; the first p values are conditioned on
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Lag plot of the series x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12: each point pairs a value with the one before it](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar-least-squares-lag-plot)
+
+*Lag plot of the series x = 4, 6, 5, 8, 7, 9, 8, 10, 9, 12: each point pairs a value with the one before it. The package's least-squares AR(1) fit is x(t) = 3.5625 + 0.635417·x(t−1) (innovation variance 2.51505), drawn from those returned values.*
+
 ```python
 time_series_ai999x.solve('ar_least_squares', x='4, 6, 5, 8, 7, 9, 8, 10, 9, 12', p=1)
 # -> const = 3.5625, phi = [0.6354166666666665], phi1 = 0.635417, sigma2 = 2.51505   (SOLVED)
@@ -1218,6 +1310,10 @@ $$
 - **Method:** Durbin-Levinson recursion on rho_1..rho_p
 - **Assumes:** the autocorrelations form a positive definite sequence
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The Yule–Walker equations turn the stated autocorrelations ρ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/yule-walker-from-autocorrelations-acf)
+
+*The Yule–Walker equations turn the stated autocorrelations ρ = 0.6, 0.2 into AR(2) coefficients φ₁ = 0.75, φ₂ = -0.25 (innovation variance ratio 0.6); the stems are the theoretical autocorrelations of that AR(2), lags 1 … 8, from the package — they pass through the given values and continue the pattern.*
 
 ```python
 time_series_ai999x.solve('yule_walker_from_autocorrelations', rho='0.6, 0.2')
@@ -1266,6 +1362,10 @@ $$
 - **Assumes:** the autocorrelations form a positive definite sequence
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The stated autocorrelations ρ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/partial-autocorrelations-from-autocorrelations-acf-pacf)
+
+*The stated autocorrelations ρ = 0.6, 0.3, 0.1 and the partial autocorrelations the package derives from them: 0.6, -0.0938, -0.064; the first equals ρ(1), later ones remove the part explained by shorter lags.*
+
 ```python
 time_series_ai999x.solve('partial_autocorrelations_from_autocorrelations', rho='0.6, 0.3, 0.1')
 # -> pacf = [0.6, -0.09375, -0.06403940886699507], last = -0.0640394   (SOLVED)
@@ -1310,6 +1410,10 @@ $$
 - **Assumes:** phi_1 multiplies the latest observation
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![An AR model with coefficients φ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar-forecast-forecast)
+
+*An AR model with coefficients φ = 0.5, 0.2 and constant c = 1. History x = 10, 11, 12 and the forecasts the package returns for h = 1 … 8 periods ahead (other inputs as in the worked example); marked: h = 8, forecast = 4.23965.*
+
 ```python
 time_series_ai999x.solve('ar_forecast', x='10, 11, 12', phi='0.5, 0.2', c=1, h=3)
 # -> forecasts = [9.2, 8.0, 6.84], forecast = 6.84   (SOLVED)
@@ -1353,6 +1457,10 @@ $$
 - **Assumes:** stationary AR part; no constant (no drift); $n  \geq  p + 2$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![ARIMA(1,1,0) with AR coefficient φ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/arima-p10-forecast-forecast)
+
+*ARIMA(1,1,0) with AR coefficient φ = 0.4 on the first differences. History x = 100, 102, 105, 104, 108 and the forecasts the package returns for h = 1 … 8 periods ahead (other inputs as in the worked example); marked: h = 8, forecast = 110.665.*
+
 ```python
 time_series_ai999x.solve('arima_p10_forecast', x='100, 102, 105, 104, 108', phi='0.4', h=3)
 # -> forecasts = [109.6, 110.24, 110.496], forecast = 110.496   (SOLVED)
@@ -1394,6 +1502,10 @@ $$
 - **Method:** rho_k = (theta_k + sum_{$j=1$}^{q-k} theta_j theta_{j+k}) / (1 + sum theta_j^2), 0 for $k > q$
 - **Assumes:** x_t = e_t + sum theta_j e_{t-j} (plus signs)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Theoretical autocorrelations of the MA(2) process with θ = (0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma-theoretical-acf-acf)
+
+*Theoretical autocorrelations of the MA(2) process with θ = (0.5, 0.3): zero beyond lag 2. Lags 1 … 6 as returned by the package: 0.4851, 0.2239, 0, 0, 0, 0; marked: lag 1, 0.485075.*
 
 ```python
 time_series_ai999x.solve('ma_theoretical_acf', theta='0.5, 0.3')
@@ -1444,6 +1556,14 @@ $$
 - **Assumes:** |phi| < 1; $x_t = \phi$ x_{$t-1$} + e_t + theta e_{$t-1$}
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Theoretical autocorrelations of the ARMA(1,1) process φ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/arma11-theoretical-acf-acf)
+
+*Theoretical autocorrelations of the ARMA(1,1) process φ = 0.6, θ = 0.3 at lags 1 … 10 (ρ(1) = 0.732414), beside the pure AR(1) with the same φ (θ = 0, ρ(1) = 0.6), both from the package: the MA term changes the first lag, after which both decay by the factor φ.*
+
+![rho1 (rho_1) against theta (MA coefficient (plus-sign convention)) from 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/arma11-theoretical-acf-curve)
+
+*rho1 (rho_1) against theta (MA coefficient (plus-sign convention)) from 0.02 to 0.98. One curve for each value of phi (AR coefficient, |phi| < 1): 0.6, 0.26, 0.74. 41 points per curve computed by time-series-ai999x; marked: the worked example, theta = 0.3, rho1 = 0.732414.*
+
 ```python
 time_series_ai999x.solve('arma11_theoretical_acf', phi=0.6, theta=0.3)
 # -> acf = [0.7324137931034482, 0.4394482758620689, 0.26366896551724134, 0.1582013793103448, 0.09492082758620689], rho1 = 0.732414   (SOLVED)
@@ -1486,6 +1606,10 @@ $$
 - **Method:** solve the linear equations for gamma_0..gamma_p, then gamma_k = sum phi_i gamma_{k-i} + $\sigma^{2}$ sum theta_j psi_{j-k}
 - **Assumes:** stationary AR part; plus-sign MA convention
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Theoretical autocorrelations of the ARMA process with φ = (0](https://www.ai999x.com/?ax_fig=time-series-ai999x/arma-theoretical-acf-acf)
+
+*Theoretical autocorrelations of the ARMA process with φ = (0.5, 0.2), θ = (0.4). Lags 1 … 10 as returned by the package: 0.8012, 0.6006, 0.4605, 0.3504, 0.2673, 0.2037, 0.1553, 0.1184, 0.0903, 0.0688; marked: lag 1, 0.801205.*
 
 ```python
 time_series_ai999x.solve('arma_theoretical_acf', phi='0.5, 0.2', theta='0.4')
@@ -1530,6 +1654,10 @@ $$
 - **Assumes:** stationary AR part; $\sigma^{2} > 0$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Variance γ(0) and lag-1 autocovariance γ(1) of the ARMA(1,1) process with φ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/arma-variance-curve)
+
+*Variance γ(0) and lag-1 autocovariance γ(1) of the ARMA(1,1) process with φ = 0.5 and σ² = 2 as the MA coefficient θ runs from −0.9 to 0.9 (37 runs of the package each); marked: the worked example θ = 0.4: γ(0) = 4.16, γ(1) = 2.88.*
+
 ```python
 time_series_ai999x.solve('arma_variance', phi='0.5', theta='0.4', sigma2=2)
 # -> gamma0 = 4.16, gamma1 = 2.88   (SOLVED)
@@ -1573,6 +1701,10 @@ $$
 - **Assumes:** stationary AR part; plus-sign MA convention
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The ψ weights of the ARMA model φ = (0](https://www.ai999x.com/?ax_fig=time-series-ai999x/psi-weights-weights)
+
+*The ψ weights of the ARMA model φ = (0.5), θ = (0.3), j = 1 … 10. Lags 1 … 10 as returned by the package: 0.8, 0.4, 0.2, 0.1, 0.05, 0.025, 0.0125, 0.0063, 0.0031, 0.0016; marked: lag 1, 0.8.*
+
 ```python
 time_series_ai999x.solve('psi_weights', phi='0.5', theta='0.3', K=5)
 # -> psi = [0.8, 0.4, 0.2, 0.1, 0.05], psi1 = 0.8   (SOLVED)
@@ -1614,6 +1746,10 @@ $$
 - **Method:** coefficients c_j of phi(L)/theta(L); $pi_j = -c_j$
 - **Assumes:** invertible MA part; stationary AR part; plus-sign MA convention
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The π weights of the ARMA model φ = (0](https://www.ai999x.com/?ax_fig=time-series-ai999x/pi-weights-weights)
+
+*The π weights of the ARMA model φ = (0.5), θ = (0.3), j = 1 … 10. Lags 1 … 10 as returned by the package: 0.8, -0.24, 0.072, -0.0216, 0.0065, -0.0019, 0.0006, -0.0002, 0.0001, -0; marked: lag 1, 0.8.*
 
 ```python
 time_series_ai999x.solve('pi_weights', phi='0.5', theta='0.3', K=5)
@@ -1659,6 +1795,10 @@ $$
 - **Assumes:** stationary AR part; known parameters (no estimation error)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The standard deviation of the h-step forecast error of the ARMA model φ = (0](https://www.ai999x.com/?ax_fig=time-series-ai999x/forecast-error-variance-fan)
+
+*The standard deviation of the h-step forecast error of the ARMA model φ = (0.5), θ = (0.3), σ² = 2 for h = 1 … 10 (runs of the package) and the 95 % band ±1.96·sd computed from it; it grows towards the process standard deviation. Marked: h = 3, sd = 1.89737 (variance 3.6).*
+
 ```python
 time_series_ai999x.solve('forecast_error_variance', phi='0.5', theta='0.3', sigma2=2, h=3)
 # -> variance = 3.6, sd = 1.89737   (SOLVED)
@@ -1703,6 +1843,10 @@ $$
 - **Method:** stationary moments of the AR(1) recursion
 - **Assumes:** |phi| < 1; $\sigma^{2} > 0$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The autocorrelation function of the AR(1) process with φ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar1-properties-acf)
+
+*The autocorrelation function of the AR(1) process with φ = 0.6, σ² = 4, c = 2 at lags 0 … 10 (each a run of the package): it decays geometrically, ρ(k) = φ^k. The process mean is 5 and its variance 6.25; marked: ρ(1) = 0.6.*
 
 ```python
 time_series_ai999x.solve('ar1_properties', phi=0.6, sigma2=4, c=2)
@@ -1751,6 +1895,10 @@ $$
 ![Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane — stationary with real roots (120 points), stationary with complex roots, i](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/ar2-stationarity-region.svg)
 
 *Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane — stationary with real roots (120 points), stationary with complex roots, i.e. damped oscillation (223), or not stationary (682); together they trace the stationarity triangle. Marked: φ₁ = 0.5, φ₂ = 0.3, real roots, largest modulus 0.85208.*
+
+![The largest root modulus the package returns for AR(2) models as φ₁ runs from −2 to 2 (step 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar2-stationarity-modulus)
+
+*The largest root modulus the package returns for AR(2) models as φ₁ runs from −2 to 2 (step 0.067), for three values of φ₂; the model is stationary where the curve is below 1 (φ₂ = -0.5: stationary for φ₁ in [-1.4667, 1.4667]; φ₂ = 0.3: stationary for φ₁ in [-0.6667, 0.6667]; φ₂ = 0.6: stationary for φ₁ in [-0.3333, 0.3333]). Marked: the worked example φ₁ = 0.5, φ₂ = 0.3, modulus 0.85208.*
 
 ```python
 time_series_ai999x.solve('ar2_stationarity', phi1=0.5, phi2=0.3)
@@ -1801,6 +1949,14 @@ $$
 - **Assumes:** plus-sign MA convention; a modulus of exactly 1 counts as not invertible
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Which MA(2) models are invertible: the package's verdict at 4717 points of the (θ1, θ2) plane — invertible with real roots (577 points), with complex roots (1104), or not (3036); together they trace a triangle](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma2-invertibility-region)
+
+*Which MA(2) models are invertible: the package's verdict at 4717 points of the (θ1, θ2) plane — invertible with real roots (577 points), with complex roots (1104), or not (3036); together they trace a triangle. Marked: the worked example θ1 = 0.5, θ2 = 0.3: yes, complex roots, largest root modulus 0.547723.*
+
+![The largest root modulus the package returns for MA(2) models as θ₁ runs from −2 to 2, for three values of θ₂; the model is invertible where the curve is below 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma2-invertibility-modulus)
+
+*The largest root modulus the package returns for MA(2) models as θ₁ runs from −2 to 2, for three values of θ₂; the model is invertible where the curve is below 1. Marked: the worked example θ₁ = 0.5, θ₂ = 0.3, modulus 0.547723.*
+
 ```python
 time_series_ai999x.solve('ma2_invertibility', theta1=0.5, theta2=0.3)
 # -> invertible = yes, max_modulus = 0.547723, roots = complex   (SOLVED)
@@ -1842,6 +1998,10 @@ $$
 - **Method:** r_xy(k) = (1/n) sum_t (x_{t+k} - xbar)(y_t - ybar) / (s_x s_y)
 - **Assumes:** equal lengths; $0  \leq  k  \leq  n - 1$; denominator n, standard deviations with divisor n
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Cross-correlations of x = 1, 3, 2, 5, 4, 6 and y = 2, 1, 4, 3, 6, 5 at lags −3 … 3 (non-negative lags are runs of the package; a negative lag −k is the run with x and y swapped at lag k): -3: -0](https://www.ai999x.com/?ax_fig=time-series-ai999x/cross-correlation-at-lag-ccf)
+
+*Cross-correlations of x = 1, 3, 2, 5, 4, 6 and y = 2, 1, 4, 3, 6, 5 at lags −3 … 3 (non-negative lags are runs of the package; a negative lag −k is the run with x and y swapped at lag k): -3: -0.1286, -2: -0.1429, -1: 0.6429, 0: 0.4857, 1: 0.6429, 2: -0.1429, 3: -0.1286; marked: the worked example k = 1.*
 
 ```python
 time_series_ai999x.solve('cross_correlation_at_lag', x='1, 3, 2, 5, 4, 6', y='2, 1, 4, 3, 6, 5', k=1)
@@ -1886,6 +2046,10 @@ $$
 - **Assumes:** equal lengths; $K  \leq  n - 1$; ties: the smallest |k|, then the positive k
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Two series x = 1, 3, 2, 5, 4, 6, 5, 8 and y = 3, 2, 5, 4, 6, 5, 8, 7 (top) and their cross-correlations at lags −3 … 3 (bottom; non-negative lags run directly, negative ones with x and y swapped): the package returns the best lag 1 with correlation 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/cross-correlation-best-lag-series-ccf)
+
+*Two series x = 1, 3, 2, 5, 4, 6, 5, 8 and y = 3, 2, 5, 4, 6, 5, 8, 7 (top) and their cross-correlations at lags −3 … 3 (bottom; non-negative lags run directly, negative ones with x and y swapped): the package returns the best lag 1 with correlation 0.713657 — y follows x by 1 period(s).*
+
 ```python
 time_series_ai999x.solve('cross_correlation_best_lag', x='1, 3, 2, 5, 4, 6, 5, 8', y='3, 2, 5, 4, 6, 5, 8, 7', K=3)
 # -> lag = 1, ccf = 0.713657   (SOLVED)
@@ -1926,6 +2090,14 @@ $$
 - **Method:** mean of |actual - forecast|
 - **Assumes:** equal lengths; errors e_t = actual - forecast
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns MAE = 1 over n = 4 periods](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-absolute-error-errors)
+
+*Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns MAE = 1 over n = 4 periods.*
+
+![How the MAE of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, MAE = 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-absolute-error-curve)
+
+*How the MAE of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, MAE = 1.*
 
 ```python
 time_series_ai999x.solve('mean_absolute_error', y='10, 12, 14, 13', f='11, 12, 13, 15')
@@ -1970,6 +2142,14 @@ $$
 - **Assumes:** equal lengths; errors e_t = actual - forecast
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns MSE = 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-squared-error-errors)
+
+*Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns MSE = 1.5 over n = 4 periods.*
+
+![How the MSE of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, MSE = 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-squared-error-curve)
+
+*How the MSE of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, MSE = 1.5.*
+
 ```python
 time_series_ai999x.solve('mean_squared_error', y='10, 12, 14, 13', f='11, 12, 13, 15')
 # -> mse = 1.5, n = 4   (SOLVED)
@@ -2012,6 +2192,14 @@ $$
 - **Method:** square root of the mean squared error
 - **Assumes:** equal lengths; errors e_t = actual - forecast
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns RMSE = 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/root-mean-squared-error-errors)
+
+*Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns RMSE = 1.22474 over n = 4 periods.*
+
+![How the RMSE of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, RMSE = 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/root-mean-squared-error-curve)
+
+*How the RMSE of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, RMSE = 1.22474.*
 
 ```python
 time_series_ai999x.solve('root_mean_squared_error', y='10, 12, 14, 13', f='11, 12, 13, 15')
@@ -2056,6 +2244,14 @@ $$
 - **Assumes:** equal lengths; errors e_t = actual - forecast; no actual value is 0; the result is in percent
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns MAPE = 8](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-absolute-percentage-error-errors)
+
+*Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns MAPE = 8.13187 % over n = 4 periods.*
+
+![How the MAPE (%) of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, MAPE (%) = 8](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-absolute-percentage-error-curve)
+
+*How the MAPE (%) of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, MAPE (%) = 8.13187.*
+
 ```python
 time_series_ai999x.solve('mean_absolute_percentage_error', y='10, 12, 14, 13', f='11, 12, 13, 15')
 # -> mape = 8.13187, n = 4   (SOLVED)
@@ -2099,6 +2295,14 @@ $$
 - **Assumes:** equal lengths; errors e_t = actual - forecast
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns mean forecast error = -0](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-forecast-error-errors)
+
+*Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns mean forecast error = -0.5 over n = 4 periods.*
+
+![How the mean forecast error of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, mean forecast error = -0](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-forecast-error-curve)
+
+*How the mean forecast error of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, mean forecast error = -0.5.*
+
 ```python
 time_series_ai999x.solve('mean_forecast_error', y='10, 12, 14, 13', f='11, 12, 13, 15')
 # -> mean_error = -0.5, n = 4   (SOLVED)
@@ -2141,6 +2345,14 @@ $$
 - **Method:** 100 x mean of 2|actual - forecast| / (|actual| + |forecast|)
 - **Assumes:** equal lengths; errors e_t = actual - forecast; no pair with actual and forecast both 0; the result is in percent (range 0 to 200)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns sMAPE = 7](https://www.ai999x.com/?ax_fig=time-series-ai999x/symmetric-mape-errors)
+
+*Actual values y = 10, 12, 14, 13 and forecasts f = 11, 12, 13, 15, with each error f − y drawn between them (differences of the stated inputs); the package returns sMAPE = 7.80423 % over n = 4 periods.*
+
+![How the sMAPE (%) of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, sMAPE (%) = 7](https://www.ai999x.com/?ax_fig=time-series-ai999x/symmetric-mape-curve)
+
+*How the sMAPE (%) of the forecasts f = 11, 12, 13, 15 for y = 10, 12, 14, 13 changes as the forecast of period 4 moves from 9 to 17 (41 runs of the package, the other forecasts kept); marked: the worked example, sMAPE (%) = 7.80423.*
 
 ```python
 time_series_ai999x.solve('symmetric_mape', y='10, 12, 14, 13', f='11, 12, 13, 15')
@@ -2188,6 +2400,10 @@ $$
 - **Assumes:** the training data are longer than sp and not constant at lag sp
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Training data 10, 12, 11, 14, 13, test values y = 15, 14, 16 and forecasts f = 14, 15, 15, errors drawn between them: the package scales the forecast MAE 1 by the in-sample naive one-step error 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/mean-absolute-scaled-error-errors)
+
+*Training data 10, 12, 11, 14, 13, test values y = 15, 14, 16 and forecasts f = 14, 15, 15, errors drawn between them: the package scales the forecast MAE 1 by the in-sample naive one-step error 1.75, giving MASE = 0.571429 (below 1: better than the naive forecast).*
+
 ```python
 time_series_ai999x.solve('mean_absolute_scaled_error', y_train='10, 12, 11, 14, 13', y='15, 14, 16', f='14, 15, 15')
 # -> mase = 0.571429, mae = 1, scale = 1.75   (SOLVED)
@@ -2231,6 +2447,10 @@ $$
 - **Method:** ordinary least squares of x_t on (1, t)
 - **Assumes:** $t = 1..n$; the series is not constant
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The returned trend: intercept 9](https://www.ai999x.com/?ax_fig=time-series-ai999x/linear-trend-forecast-forecast)
+
+*The returned trend: intercept 9.6, slope 2.54286 per period (t = 1 … n), drawn dashed. History x = 12, 15, 17, 20, 22, 25 and the forecasts the package returns for h = 1 … 4 periods ahead (other inputs as in the worked example); marked: h = 4, forecast = 35.0286.*
 
 ```python
 time_series_ai999x.solve('linear_trend_forecast', x='12, 15, 17, 20, 22, 25', h=2)
@@ -2276,6 +2496,10 @@ $$
 - **Assumes:** $t = 1..n$; $n  \geq  4$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The returned quadratic trend b₀ = 2](https://www.ai999x.com/?ax_fig=time-series-ai999x/quadratic-trend-forecast-forecast)
+
+*The returned quadratic trend b₀ = 2.8, b₁ = -0.728571, b₂ = 0.928571 (t = 1 … n), drawn dashed from those coefficients. History x = 3, 5, 9, 15, 22, 32 and the forecasts the package returns for h = 1 … 3 periods ahead (other inputs as in the worked example); marked: h = 3, forecast = 71.4571.*
+
 ```python
 time_series_ai999x.solve('quadratic_trend_forecast', x='3, 5, 9, 15, 22, 32', h=1)
 # -> b0 = 2.8, b1 = -0.728571, b2 = 0.928571, forecast = 43.2   (SOLVED)
@@ -2319,6 +2543,10 @@ $$
 - **Assumes:** positive values; least squares on the logarithms (not on the values)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The returned exponential trend a = 89](https://www.ai999x.com/?ax_fig=time-series-ai999x/exponential-trend-forecast-forecast)
+
+*The returned exponential trend a = 89.6495, b = 0.109965 (growth 11.6239 % per period, t = 1 … n), drawn dashed from those values. History x = 100, 112, 124, 140, 155 and the forecasts the package returns for h = 1 … 4 periods ahead (other inputs as in the worked example); marked: h = 4, forecast = 241.193.*
+
 ```python
 time_series_ai999x.solve('exponential_trend_forecast', x='100, 112, 124, 140, 155', h=1)
 # -> a = 89.6495, b = 0.109965, growth_rate = 0.116239, forecast = 173.417   (SOLVED)
@@ -2359,6 +2587,10 @@ $$
 - **Method:** median of the n(n-1)/2 pairwise slopes
 - **Assumes:** $t = 1..n$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Sen's slope of x = 12, 14, 13, 17, 16, 19, 25 — the median of all pairwise slopes, robust to the outlying last value — is 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/sens-slope-trend)
+
+*Sen's slope of x = 12, 14, 13, 17, 16, 19, 25 — the median of all pairwise slopes, robust to the outlying last value — is 1.66667 per period with intercept 9.33333; for comparison the least-squares trend (the package's linear trend fit) has slope 1.85714. Both lines drawn from the returned values (t = 1 … n).*
 
 ```python
 time_series_ai999x.solve('sens_slope', x='12, 14, 13, 17, 16, 19, 25')
@@ -2402,6 +2634,10 @@ $$
 - **Assumes:** $n  \geq  4$; ties corrected in the variance; continuity correction of 1 in z
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The Mann–Kendall trend test on x = 12, 14, 13, 17, 16, 19, 25, 21, 24: the package returns S = 28 (concordant minus discordant pairs), variance 92, z = 2](https://www.ai999x.com/?ax_fig=time-series-ai999x/mann-kendall-test-trend)
+
+*The Mann–Kendall trend test on x = 12, 14, 13, 17, 16, 19, 25, 21, 24: the package returns S = 28 (concordant minus discordant pairs), variance 92, z = 2.81494 and p-value 0.00487856 — a significant upward trend; the dashed line is the package's Sen slope 1.5 with intercept 9.5.*
+
 ```python
 time_series_ai999x.solve('mann_kendall_test', x='12, 14, 13, 17, 16, 19, 25, 21, 24')
 # -> s = 28, var_s = 92, z = 2.81494, p_value = 0.00487856   (SOLVED)
@@ -2444,6 +2680,10 @@ $$
 - **Assumes:** times strictly increasing; t0 within the observed times (no extrapolation)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Linear interpolation between the given points t = 1, 2, 3, 4, y = 10, 14, 13, 18: the package's value at 61 times t₀ across the range, with exponential interpolation dashed for comparison; marked: t₀ = 2](https://www.ai999x.com/?ax_fig=time-series-ai999x/linear-interpolation-interpolation)
+
+*Linear interpolation between the given points t = 1, 2, 3, 4, y = 10, 14, 13, 18: the package's value at 61 times t₀ across the range, with exponential interpolation dashed for comparison; marked: t₀ = 2.5, value 13.5.*
+
 ```python
 time_series_ai999x.solve('linear_interpolation', t='1, 2, 3, 4', y='10, 14, 13, 18', t0=2.5)
 # -> value = 13.5   (SOLVED)
@@ -2485,6 +2725,10 @@ $$
 - **Method:** y_i (y_{$i+1$}/y_i)^((t0 - t_i)/(t_{$i+1$} - t_i))
 - **Assumes:** positive values; times strictly increasing; t0 within the observed times
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Exponential interpolation between the given points t = 1, 2, 3, 4, y = 100, 120, 150, 170: the package's value at 61 times t₀ across the range, with linear interpolation dashed for comparison; marked: t₀ = 2](https://www.ai999x.com/?ax_fig=time-series-ai999x/exponential-interpolation-interpolation)
+
+*Exponential interpolation between the given points t = 1, 2, 3, 4, y = 100, 120, 150, 170: the package's value at 61 times t₀ across the range, with linear interpolation dashed for comparison; marked: t₀ = 2.5, value 134.164.*
 
 ```python
 time_series_ai999x.solve('exponential_interpolation', t='1, 2, 3, 4', y='100, 120, 150, 170', t0=2.5)
@@ -2530,6 +2774,10 @@ $$
 - **Method:** exhaustive search over every admissible split
 - **Assumes:** each segment has at least min_size values; ties: the smallest k
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The single mean shift the package finds in x = 5, 6, 5, 7, 6, 12, 13, 12, 14: after observation 5, with mean 5](https://www.ai999x.com/?ax_fig=time-series-ai999x/change-point-mean-shift-segments)
+
+*The single mean shift the package finds in x = 5, 6, 5, 7, 6, 12, 13, 12, 14: after observation 5, with mean 5.8 before and 12.75 after (squared error 5.55, a reduction of 107.339 against one common mean).*
 
 ```python
 time_series_ai999x.solve('change_point_mean_shift', x='5, 6, 5, 7, 6, 12, 13, 12, 14')
@@ -2579,6 +2827,10 @@ $$
 
 *The two change points the package finds in x = 5, 6, 5, 12, 13, 12, 20, 21, 19: after observations 3 and 6, splitting the series into segments with means 5.33333, 12.3333, 20 (total squared error 3.33333).*
 
+![Data x = 5, 6, 5, 12, 13, 12, 20, 21, 19 split by the package at one change (after t = 6, means 8](https://www.ai999x.com/?ax_fig=time-series-ai999x/two-change-points-comparison)
+
+*Data x = 5, 6, 5, 12, 13, 12, 20, 21, 19 split by the package at one change (after t = 6, means 8.83333 and 20, squared error 76.8333) and at two changes (after t = 3 and 6, means 5.33333, 12.3333, 20, squared error 3.33333).*
+
 ```python
 time_series_ai999x.solve('two_change_points', x='5, 6, 5, 12, 13, 12, 20, 21, 19')
 # -> change_1 = 3, change_2 = 6, means = [5.333333333333333, 12.333333333333334, 20.0], cost = 3.33333   (SOLVED)
@@ -2620,6 +2872,10 @@ $$
 - **Method:** optimal partitioning F(b) = min_a F(a) + SS($a+1$:b) + penalty
 - **Assumes:** penalty > 0; segments of any length >= 1; ties: the earlier last change
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Penalised change-point search on x = 5, 6, 5, 12, 13, 12, 20, 21, 19, 20: with penalty 10 the package returns 2 changes, after observations 3, 6 (cost 3](https://www.ai999x.com/?ax_fig=time-series-ai999x/penalised-change-points-segments)
+
+*Penalised change-point search on x = 5, 6, 5, 12, 13, 12, 20, 21, 19, 20: with penalty 10 the package returns 2 changes, after observations 3, 6 (cost 3.33333); the segment means drawn (top) are the means of the stated data between them. Bottom: the number of changes returned for penalties 1 → 2, 2 → 2, 5 → 2, 10 → 2, 20 → 2, 50 → 2, 100 → 1, 200 → 1, 500 → 0.*
 
 ```python
 time_series_ai999x.solve('penalised_change_points', x='5, 6, 5, 12, 13, 12, 20, 21, 19, 20', penalty=10)
@@ -2663,6 +2919,10 @@ $$
 - **Method:** running sum of deviations from the mean; argmax of its absolute value
 - **Assumes:** $k = 1..n-1$; ties: the smallest k
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The cumulative sum of deviations from the overall mean (8](https://www.ai999x.com/?ax_fig=time-series-ai999x/cusum-change-point-cusum)
+
+*The cumulative sum of deviations from the overall mean (8.88889, computed from the stated data x = 5, 6, 5, 7, 6, 12, 13, 12, 14): it peaks in size where the mean changes. The package returns the change after t = 5, maximum |cusum| 15.4444, mean 5.8 before and 12.75 after.*
 
 ```python
 time_series_ai999x.solve('cusum_change_point', x='5, 6, 5, 7, 6, 12, 13, 12, 14')
@@ -2709,6 +2969,10 @@ $$
 - **Assumes:** $C+_0 = C-_0 = 0$; an alarm needs a value strictly above h
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Tabular cusum of x = 10](https://www.ai999x.com/?ax_fig=time-series-ai999x/tabular-cusum-cusum)
+
+*Tabular cusum of x = 10.2, 9.8, 10.5, 11.2, 11.8, 12.1, 11.9 against target μ₀ = 10 with allowance k = 0.5: the upper and lower sums after each observation (the package's run on the first t values), and the decision limit ±4; the package signals on the upper side at t = 7 (C⁺ = 5, C⁻ = 0).*
+
 ```python
 time_series_ai999x.solve('tabular_cusum', x='10.2, 9.8, 10.5, 11.2, 11.8, 12.1, 11.9', mu0=10, k=0.5, h=4)
 # -> c_plus = 5, c_minus = 0, alarm_index = 7, side = upper   (SOLVED)
@@ -2753,6 +3017,10 @@ $$
 - **Method:** $K = p/(p+r)$; m' = m + K(z - m); p' = $(1 - K)$ p
 - **Assumes:** $p > 0$, $r > 0$; the measurement observes the state directly $(H = 1)$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![A Kalman update of the estimate m = 10 with variance p = 4; the measurement z = 12 has noise variance r = 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/kalman-update-densities)
+
+*A Kalman update of the estimate m = 10 with variance p = 4; the measurement z = 12 has noise variance r = 1. The package returns the gain 0.8, the posterior mean 11.6 and variance 0.8. The normal curves are drawn from these means and variances; the posterior is narrower than both.*
 
 ```python
 time_series_ai999x.solve('kalman_update', m=10, p=4, z=12, r=1)
@@ -2800,6 +3068,10 @@ $$
 - **Method:** predict P- = P + Q; $K = P$-/(P- + R); $x = x + K$(z - x); $P = (1 - K)$ P-
 - **Assumes:** p, $q  \geq  0$, $r > 0$; $F = H = 1$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![One Kalman filter step: the previous estimate m = 10 with variance p = 4 is predicted forward with process noise q = 1 to the returned prior variance 5; the measurement z = 12 has noise variance r = 2](https://www.ai999x.com/?ax_fig=time-series-ai999x/kalman-step-densities)
+
+*One Kalman filter step: the previous estimate m = 10 with variance p = 4 is predicted forward with process noise q = 1 to the returned prior variance 5; the measurement z = 12 has noise variance r = 2. The package returns the gain 0.714286, the posterior mean 11.4286 and variance 1.42857. The normal curves are drawn from these means and variances; the posterior is narrower than both.*
 
 ```python
 time_series_ai999x.solve('kalman_step', m=10, p=4, z=12, q=1, r=2)
@@ -2853,6 +3125,10 @@ $$
 
 *A local-level model (state noise q = 0.5, observation noise r = 2, start m₀ = 10, p₀ = 5) run by the package on 12 observations: the filtered level after each observation and the smoothed level from the backward pass; marked: t = 12, filtered level = 13.8669 (variance 0.780786, gain 0.390393).*
 
+![The local-level Kalman filter (q = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/kalman-filter-local-level-band)
+
+*The local-level Kalman filter (q = 0.5, r = 2, m₀ = 10, p₀ = 5) on x = 10.4, 11.1, 10.7, 11.9, 12.3: after each observation t the package's run on the first t values gives the level, its variance (the band ±1.96·√variance) and the gain, which settles as the variance shrinks; final level 11.6241, variance 0.79064, gain 0.39532.*
+
 ```python
 time_series_ai999x.solve('kalman_filter_local_level', x='10.4, 11.1, 10.7, 11.9, 12.3', q=0.5, r=2, m0=10, p0=5)
 # -> estimate = 11.6241, variance = 0.79064, gain = 0.39532, estimates = [10.293333333333333, 10.693277310924369, 10.696149217809866, 11.182224215246636, 11.624103148133084], log_likelihood = -8.61712   (SOLVED)
@@ -2899,6 +3175,10 @@ $$
 - **Assumes:** $q > 0$, $r > 0$, $p_{0}  \geq  0$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Smoothed levels (forward filter and backward pass) of x = 10](https://www.ai999x.com/?ax_fig=time-series-ai999x/rts-smoother-local-level-smoothing)
+
+*Smoothed levels (forward filter and backward pass) of x = 10.4, 11.1, 10.7, 11.9, 12.3 with r = 2, m₀ = 10, p₀ = 5, for three state-noise variances q, each returned by the package: q = 0.05: 11.1265 … 11.2555; q = 0.5: 10.8304 … 11.6241; q = 5: 10.4845 … 12.1431. Small q gives a nearly constant level; large q follows the data.*
+
 ```python
 time_series_ai999x.solve('rts_smoother_local_level', x='10.4, 11.1, 10.7, 11.9, 12.3', q=0.5, r=2, m0=10, p0=5)
 # -> smoothed = [10.83039127959001, 11.013479215813877, 11.174936955991214, 11.455128935166355, 11.624103148133084], first = 10.8304, first_variance = 0.694975   (SOLVED)
@@ -2940,6 +3220,14 @@ $$
 - **Method:** P- = (q + sqrt($q^{2} + 4$ q r))/2, $K = P$-/(P- + r)
 - **Assumes:** $q > 0$, $r > 0$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The Kalman gain step by step for a local-level model with q = 1, r = 4, starting from variance p = 10 (each step a run of the package's Kalman step, which feeds its returned variance to the next), converging to the steady-state gain the package returns, 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/kalman-steady-state-gain-convergence)
+
+*The Kalman gain step by step for a local-level model with q = 1, r = 4, starting from variance p = 10 (each step a run of the package's Kalman step, which feeds its returned variance to the next), converging to the steady-state gain the package returns, 0.390388 (prior variance 2.56155, posterior 1.56155).*
+
+![gain (steady-state gain) over q (process noise variance (> 0)) from 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/kalman-steady-state-gain-field)
+
+*gain (steady-state gain) over q (process noise variance (> 0)) from 0.1 to 10 and r (measurement noise variance (> 0)) from 0.4 to 40 (logarithmic axes): each of the 21 × 15 cells is one run of time-series-ai999x, shaded by its value (light 0.0487656 to dark 0.962912); iso-lines at gain = 0.2, 0.4, 0.6, 0.8. Marked: the worked example, q = 1, r = 4, gain = 0.390388.*
 
 ```python
 time_series_ai999x.solve('kalman_steady_state_gain', q=1, r=4)
@@ -2991,6 +3279,10 @@ $$
 - **Assumes:** F = [[1, dt], [0, 1]], H = [1, 0]; $Q = q$ [[$dt^{4}/4$, $dt^{3}/2$], [$dt^{3}/2$, $dt^{2}$]]; predict then update at every measurement
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![A constant-velocity Kalman filter (dt = 1, q = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/kalman-filter-constant-velocity-filter)
+
+*A constant-velocity Kalman filter (dt = 1, q = 0.1, r = 1, start position 0, velocity 1, variance 10) on the measurements x = 1.1, 1.9, 3.2, 4.0, 4.8: after each measurement t the package's run on the first t values gives the position (with the band ±1.96·√p11 from its returned variance) and the velocity; final position 4.89695, velocity 0.938562.*
+
 ```python
 time_series_ai999x.solve('kalman_filter_constant_velocity', x='1.1, 1.9, 3.2, 4.0, 4.8', dt=1, q=0.1, r=1, p0=0, v0=1, var0=10)
 # -> position = 4.89695, velocity = 0.938562, p11 = 0.61539, p12 = 0.24431, p22 = 0.224491   (SOLVED)
@@ -3034,6 +3326,10 @@ $$
 - **Assumes:** dt, q, $r > 0$; $Q = q$ [[$dt^{4}/4$, $dt^{3}/2$], [$dt^{3}/2$, $dt^{2}$]]
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Steady-state Kalman gains of a constant-velocity tracker (dt = 1, measurement noise r = 1) as the acceleration noise q runs over 10⁻³ … 10² (41 runs of the package): more process noise, more trust in the measurements](https://www.ai999x.com/?ax_fig=time-series-ai999x/kalman-steady-state-constant-velocity-gains)
+
+*Steady-state Kalman gains of a constant-velocity tracker (dt = 1, measurement noise r = 1) as the acceleration noise q runs over 10⁻³ … 10² (41 runs of the package): more process noise, more trust in the measurements. Marked: q = 0.1, position gain 0.546211, velocity gain 0.213023.*
+
 ```python
 time_series_ai999x.solve('kalman_steady_state_constant_velocity', dt=1, q=0.1, r=1)
 # -> k_position = 0.546211, k_velocity = 0.213023, prior_p11 = 1.20367   (SOLVED)
@@ -3076,6 +3372,10 @@ $$
 - **Method:** least squares of Delta x_t on x_{$t-1$} (and constant / trend t = 1..n-1)
 - **Assumes:** the series is not constant; default deterministic terms: a constant; no lagged differences (see augmented_dickey_fuller_test)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The series x = 10](https://www.ai999x.com/?ax_fig=time-series-ai999x/dickey-fuller-test-series)
+
+*The series x = 10.2, 10.8, 10.5, 11.3, 11.0, 11.9, 11.6, 12.4, 12.0, 12.9 (top) and the tau statistic the package returns for each deterministic terms (bottom; other inputs as in the worked example): n: 1.42409, c: -0.927858, ct: -17.4204. Worked example: tau = -0.927858, gamma = -0.269585, se = 0.290546, nobs = 9.*
 
 ```python
 time_series_ai999x.solve('dickey_fuller_test', x='10.2, 10.8, 10.5, 11.3, 11.0, 11.9, 11.6, 12.4, 12.0, 12.9', regression='c')
@@ -3128,6 +3428,10 @@ $$
 - **Assumes:** p <= n/2 - (deterministic terms) - 1; default deterministic terms: a constant; the lag length is given, not selected
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 10](https://www.ai999x.com/?ax_fig=time-series-ai999x/augmented-dickey-fuller-test-series)
+
+*The series x = 10.2, 10.8, 10.5, 11.3, 11.0, 11.9, 11.6, 12.4, 12.0, 12.9, 12.5, 13.4 (top) and the tau statistic the package returns for each lag order p (bottom; other inputs as in the worked example): 0: -0.907733, 1: 0.458222, 2: -1.18653, 3: -0.57081. Worked example: tau = -1.18653, gamma = -0.0390526, se = 0.0329132, nobs = 9.*
+
 ```python
 time_series_ai999x.solve('augmented_dickey_fuller_test', x='10.2, 10.8, 10.5, 11.3, 11.0, 11.9, 11.6, 12.4, 12.0, 12.9, 12.5, 13.4', p=2, regression='c')
 # -> tau = -1.18653, gamma = -0.0390526, se = 0.0329132, nobs = 9   (SOLVED)
@@ -3171,6 +3475,10 @@ $$
 - **Assumes:** 0 <= lags < n; residuals from the mean (c) or a linear trend $t = 1..n$ (ct)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![The series x = 10](https://www.ai999x.com/?ax_fig=time-series-ai999x/kpss-test-series)
+
+*The series x = 10.2, 10.8, 10.5, 11.3, 11.0, 11.9, 11.6, 12.4 (top) and the kpss statistic the package returns for each number of lags (bottom; other inputs as in the worked example): 0: 0.687459, 1: 0.520938, 2: 0.401275, 3: 0.378482, 4: 0.371027. Worked example: kpss = 0.401275, long_run_variance = 0.811354.*
+
 ```python
 time_series_ai999x.solve('kpss_test', x='10.2, 10.8, 10.5, 11.3, 11.0, 11.9, 11.6, 12.4', nlags=2, regression='c')
 # -> kpss = 0.401275, long_run_variance = 0.811354   (SOLVED)
@@ -3213,6 +3521,10 @@ $$
 - **Method:** F_new = F + alpha $(A - F) = \alpha$ $A + (1 - \alpha)$ F
 - **Assumes:** $0 < \alpha  \leq  1$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![One exponential-smoothing update from the previous forecast F = 100 after observing A = 110: the new forecast for α = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/exponential-smoothing-update-update)
+
+*One exponential-smoothing update from the previous forecast F = 100 after observing A = 110: the new forecast for α = 0.05 … 1 (each a run of the package) moves along the error 10 from F to A; marked: α = 0.2, new forecast 102.*
 
 ```python
 time_series_ai999x.solve('exponential_smoothing_update', F=100, A=110, alpha=0.2)
@@ -3261,6 +3573,10 @@ $$
 - **Assumes:** $0 < \alpha$, $\beta  \leq  1$; $b_t = \beta$ (l_t - l_{$t-1$}) + $(1 - \beta)$ b_{$t-1$}
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![One step of Holt's method with α = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/holt-update-update)
+
+*One step of Holt's method with α = 0.3, β = 0.1: before the update the line level 50 + trend 2 predicts 52 for t = 1 (dashed, from the stated inputs); the observation y = 55 pulls it to the returned level 52.9 and trend 2.09, and the forecasts h = 1 … 4 (runs of the package) continue from there (54.99 at h = 1).*
+
 ```python
 time_series_ai999x.solve('holt_update', l=50, b=2, y=55, alpha=0.3, beta=0.1)
 # -> level = 52.9, trend = 2.09, forecast = 54.99   (SOLVED)
@@ -3302,6 +3618,10 @@ $$
 - **Method:** drift = (x_n - x_1)/(n - 1)
 - **Assumes:** $n  \geq  2$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The drift method: the returned drift 3 is the slope of the line from the first to the last value (dashed)](https://www.ai999x.com/?ax_fig=time-series-ai999x/drift-forecast-forecast)
+
+*The drift method: the returned drift 3 is the slope of the line from the first to the last value (dashed). History x = 100, 104, 103, 109, 112 and the forecasts the package returns for h = 1 … 6 periods ahead (other inputs as in the worked example); marked: h = 6, forecast = 130.*
 
 ```python
 time_series_ai999x.solve('drift_forecast', x='100, 104, 103, 109, 112', h=3)
@@ -3354,6 +3674,10 @@ $$
 
 *AR(1) forecasts from the last value x = 58 with φ = 0.7, μ = 50 and innovation variance σ² = 4, 1 to 12 steps ahead, with the 95 % interval the package returns at each step (it widens to [44.6223, 55.5992] at h = 12); marked: h = 3, forecast = 52.744.*
 
+![AR(1) forecasts from the last value x = 58 towards the mean μ = 50, h = 1 … 12 steps ahead, for three AR coefficients (each point a run of the package): φ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar1-forecast-paths)
+
+*AR(1) forecasts from the last value x = 58 towards the mean μ = 50, h = 1 … 12 steps ahead, for three AR coefficients (each point a run of the package): φ = 0.3: 50.216 at h = 3, 50 at h = 12; φ = 0.7: 52.744 at h = 3, 50.1107 at h = 12; φ = 0.95: 56.859 at h = 3, 54.3229 at h = 12. The larger φ, the slower the return to the mean.*
+
 ```python
 time_series_ai999x.solve('ar1_forecast', x=58, phi=0.7, mu=50, h=3)
 # -> forecast = 52.744   (SOLVED)
@@ -3396,6 +3720,10 @@ $$
 - **Method:** simple exponential smoothing for each candidate; the smallest SSE
 - **Assumes:** $l_0 = x_1$; ties: the first candidate listed
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![The sum of squared one-step errors of simple exponential smoothing on x = 20, 22, 21, 24, 23, 26 as α varies (each point the package's run with a single candidate); among the candidates 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ses-best-alpha-sse)
+
+*The sum of squared one-step errors of simple exponential smoothing on x = 20, 22, 21, 24, 23, 26 as α varies (each point the package's run with a single candidate); among the candidates 0.1, 0.3, 0.5 the package chooses α = 0.5 with SSE = 23.8125 and next forecast 24.375.*
 
 ```python
 time_series_ai999x.solve('ses_best_alpha', x='20, 22, 21, 24, 23, 26', alphas='0.1, 0.3, 0.5')
@@ -3441,6 +3769,10 @@ $$
 - **Assumes:** $n  \geq  m + 3$; x_1 is in season 1; season 1 is the baseline
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![A linear trend with seasonal effects fitted to x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 (m = 4): returned intercept 27](https://www.ai999x.com/?ax_fig=time-series-ai999x/trend-seasonal-regression-fit)
+
+*A linear trend with seasonal effects fitted to x = 30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51 (m = 4): returned intercept 27.9688, slope 2.40625 per period and season effects 0, -12.4062, -6.14583, -6.21875; the fitted values are drawn from these coefficients (t = 1 … n) and the forecasts h = 1 … 8 are runs of the package (59.25 at h = 1).*
+
 ```python
 time_series_ai999x.solve('trend_seasonal_regression', x='30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51', m=4, h=1)
 # -> forecast = 59.25, intercept = 27.9688, slope = 2.40625, season_effects = [0.0, -12.406249999999996, -6.145833333333333, -6.218749999999999]   (SOLVED)
@@ -3484,6 +3816,10 @@ $$
 - **Assumes:** stationary AR(2)
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
+![Theoretical autocorrelations of two stationary AR(2) processes at lags 1 … 12, from the package: the worked example φ₁ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar2-theoretical-acf-acf)
+
+*Theoretical autocorrelations of two stationary AR(2) processes at lags 1 … 12, from the package: the worked example φ₁ = 0.5, φ₂ = 0.3 decays smoothly (ρ(1) = 0.714286), while φ₁ = 1, φ₂ = −0.6 (chosen for contrast) has complex roots and oscillates as it decays (ρ(1) = 0.625, ρ(3) = -0.35). Stems are offset slightly to keep both visible.*
+
 ```python
 time_series_ai999x.solve('ar2_theoretical_acf', phi1=0.5, phi2=0.3)
 # -> acf = [0.7142857142857143, 0.6571428571428571, 0.5428571428571428, 0.4685714285714285, 0.39714285714285713], rho1 = 0.714286   (SOLVED)
@@ -3525,6 +3861,14 @@ $$
 - **Method:** closed form phi_kk = -$(-\theta)^{k}$ (1 - theta^2)/(1 - theta^(2(k+1)))
 - **Assumes:** |theta| != 1; plus-sign MA convention
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Theoretical partial autocorrelations of the MA(1) process with θ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma1-theoretical-pacf-pacf)
+
+*Theoretical partial autocorrelations of the MA(1) process with θ = 0.6. Lags 1 … 10 as returned by the package: 0.4412, -0.2417, 0.1406, -0.0834, 0.0499, -0.0299, 0.0179, -0.0108, 0.0064, -0.0039; marked: lag 1, 0.441176.*
+
+![pacf1 (phi_11 = theta/(1 + theta^2)) against theta (MA coefficient, |theta| != 1) from 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma1-theoretical-pacf-curve)
+
+*pacf1 (phi_11 = theta/(1 + theta^2)) against theta (MA coefficient, |theta| != 1) from 0.02 to 0.98. 41 points computed by time-series-ai999x; marked: the worked example, theta = 0.6, pacf1 = 0.441176.*
 
 ```python
 time_series_ai999x.solve('ma1_theoretical_pacf', theta=0.6)
@@ -3568,6 +3912,10 @@ $$
 - **Method:** exact autocovariances, then the Durbin-Levinson recursion
 - **Assumes:** stationary AR part; plus-sign MA convention
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![Theoretical partial autocorrelations of the ARMA process with φ = (0](https://www.ai999x.com/?ax_fig=time-series-ai999x/arma-theoretical-pacf-pacf)
+
+*Theoretical partial autocorrelations of the ARMA process with φ = (0.5), θ = (0.4): the MA part makes them alternate and decay instead of cutting off. Lags 1 … 10 as returned by the package: 0.6923, -0.2557, 0.101, -0.0403, 0.0161, -0.0065, 0.0026, -0.001, 0.0004, -0.0002; marked: lag 1, 0.692308.*
 
 ```python
 time_series_ai999x.solve('arma_theoretical_pacf', phi='0.5', theta='0.4')
