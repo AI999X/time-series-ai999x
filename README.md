@@ -4,7 +4,7 @@
 
 **[Install](https://pypi.org/project/time-series-ai999x/)** · **[Capability guide](https://huggingface.co/AI999X/time-series-ai999x/tree/main/docs)** · **[Evaluation](https://huggingface.co/AI999X/time-series-ai999x/tree/main/evaluation)** · **[AI999X on Hugging Face](https://huggingface.co/AI999X)** · **[Website](https://ai999x.com)** · **[Support: Buy Me a Coffee](https://buymeacoffee.com/ibnuljaiffarabi)**
 
-License: Apache-2.0 · Author: Ibnul Jaif Farabi (creator and engineer) · Organization: AI999X · Version 1.0.2
+License: Apache-2.0 · Author: Ibnul Jaif Farabi (creator and engineer) · Organization: AI999X · Version 1.0.3
 
 Field: **Mathematics & Statistics** · Tasks: Question Answering, Token Classification, Text Classification, Time Series Forecasting, Sentence Similarity, Feature Extraction
 
@@ -27,7 +27,7 @@ time-series-ai999x is an offline, deterministic Python solver that answers time 
 
 | Property | Value |
 |---|---|
-| Package | `time-series-ai999x` 1.0.2 (import `time_series_ai999x`) |
+| Package | `time-series-ai999x` 1.0.3 (import `time_series_ai999x`) |
 | Type | Deterministic neuro-symbolic time series engine (rule-based reading + certified symbolic capabilities) |
 | Capabilities | 77 certified procedures |
 | Knowledge pack | version 1.0.0 |
@@ -61,7 +61,7 @@ time_series.ask("Who created you?").message
 # -> time-series-ai999x was created and engineered by Ibnul Jaif Farabi at AI999X.
 ```
 
-Command line: `time-series-ai999x "<question>"`, `time-series-ai999x --capabilities`. The outputs above were produced by running this exact code on time-series-ai999x 1.0.2.
+Command line: `time-series-ai999x "<question>"`, `time-series-ai999x --capabilities`. The outputs above were produced by running this exact code on time-series-ai999x 1.0.3.
 
 ## Find the right capability, and draw it
 
@@ -222,10 +222,10 @@ _Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: 
 ## Citation
 
 ```bibtex
-@software{time_series_ai999x_1_0_2,
+@software{time_series_ai999x_1_0_3,
   title  = {time-series-ai999x: an offline, verified time series solver},
   author = {Farabi, Ibnul Jaif}, organization = {AI999X},
-  year   = {2026}, version = {1.0.2},
+  year   = {2026}, version = {1.0.3},
   url    = {https://huggingface.co/AI999X/time-series-ai999x}
 }
 ```
