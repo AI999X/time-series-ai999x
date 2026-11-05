@@ -2,7 +2,7 @@
 
 [![tests](https://github.com/AI999X/time-series-ai999x/actions/workflows/ci.yml/badge.svg)](https://github.com/AI999X/time-series-ai999x/actions/workflows/ci.yml) [![PyPI](https://img.shields.io/pypi/v/time-series-ai999x)](https://pypi.org/project/time-series-ai999x/) [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Hugging%20Face-yellow)](https://huggingface.co/AI999X/time-series-ai999x)
 
-**[Install](https://pypi.org/project/time-series-ai999x/)** · **[Capability guide](https://huggingface.co/AI999X/time-series-ai999x/tree/main/docs)** · **[Evaluation](https://huggingface.co/AI999X/time-series-ai999x/tree/main/evaluation)** · **[AI999X on Hugging Face](https://huggingface.co/AI999X)** · **[Website](https://ai999x.com)** · **[Support: Buy Me a Coffee](https://buymeacoffee.com/ibnuljaiffarabi)**
+**[Desktop app & command line](https://www.ai999x.com/desktop-cli/)** · **[Compute in your browser](https://www.ai999x.com/models/time-series-ai999x/#try)** · **[Install (Python)](https://pypi.org/project/time-series-ai999x/)** · **[Guides](https://huggingface.co/AI999X/time-series-ai999x/tree/main/docs)** · **[Evaluation](https://huggingface.co/AI999X/time-series-ai999x/tree/main/evaluation)** · **[AI999X on Hugging Face](https://huggingface.co/AI999X)** · **[Website](https://ai999x.com)** · **[Support: Buy Me a Coffee](https://buymeacoffee.com/ibnuljaiffarabi)**
 
 License: Apache-2.0 · Author: Ibnul Jaif Farabi (creator and engineer) · Organization: AI999X · Version 1.0.3
 
@@ -12,7 +12,290 @@ time-series-ai999x is an offline, deterministic Python solver that answers time 
 
 **time-series-ai999x** is a compact, deterministic time series engine for Python. It reads a question in plain English (or a typed call), picks a certified time series capability, computes the answer exactly, checks it, and returns the result with its steps, units, LaTeX and assumptions — or an honest refusal that says what is missing. It runs fully offline on any CPU, needs no GPU, no API key and no internet, and is built to give **zero wrong answers**: when it is not sure, it refuses instead of guessing.
 
-[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-support%20development-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/ibnuljaiffarabi) ![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue) ![Offline](https://img.shields.io/badge/runs-offline%20on%20CPU-green)
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-support%20development-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/ibnuljaiffarabi) ![License](https://img.shields.io/badge/license-Apache--2.0-blue) ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue) ![Offline](https://img.shields.io/badge/runs-offline%20on%20CPU-green) ![Rust](https://img.shields.io/badge/Rust-Windows%20%7C%20Linux%20%7C%20WebAssembly-orange)
+
+**Run it your way.** time-series-ai999x comes as the AI999X desktop app and as the command-line program `time-series` for Windows and Linux, runs in your browser as WebAssembly, and installs as a Python package. The desktop app, the command line and the browser run the same compiled Rust program on your own device: offline, no Python needed.
+
+## Get it
+
+| Way to run it | For | Get it |
+|---|---|---|
+| **AI999X Time Series desktop app** 1.2.0 | Windows, Linux — this model in its own app: search, ask in words, forms, live figures, explanations, offline | [Windows (x86-64)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-time-series-1.2.0-windows-x86_64.zip) · [Linux (x86-64)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-time-series-1.2.0-linux-x86_64.tar.gz) |
+| **AI999X desktop app** 1.2.0 | Windows, Linux — every AI999X model in one app: search, ask in words, forms, live figures, explanations, offline | [Windows (x86-64)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-1.2.0-windows-x86_64.zip) · [Linux (x86-64)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-1.2.0-linux-x86_64.tar.gz) |
+| **Command line** (`time-series`) | Windows, Linux — one program per model, offline, no Python | [Windows (x86-64)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-cli-1.2.0-windows-x86_64.zip) · [Linux (x86-64)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-cli-1.2.0-linux-x86_64.tar.gz) |
+| **In your browser** | any device — nothing to install | [Compute on the model page](https://www.ai999x.com/models/time-series-ai999x/#try) |
+| **Python** | Python 3.10+ | `pip install time-series-ai999x` |
+
+Checksums: [SHA256SUMS](https://www.ai999x.com/downloads/desktop/1.2.0/SHA256SUMS) · every version: [https://www.ai999x.com/downloads/desktop/latest/](https://www.ai999x.com/downloads/desktop/latest/) · install guide: [desktop & command line](https://www.ai999x.com/desktop-cli/)
+
+## Rust versions
+
+Time Series also comes as native programs compiled from Rust, version 1.2.0 of the AI999X desktop app and command line: they run offline on your computer and need no Python. Each file is in this repository's `rust/` folder, on the [GitHub release v1.0.3](https://github.com/AI999X/time-series-ai999x/releases/tag/v1.0.3) and on the website.
+
+| Program | System | File | Size | Download | Use |
+|---|---|---|---|---|---|
+| Desktop app (Time Series) | Windows x86-64 | `ai999x-time-series-1.2.0-windows-x86_64.zip` | 7.1 MB | [Hub](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/rust/ai999x-time-series-1.2.0-windows-x86_64.zip) · [GitHub](https://github.com/AI999X/time-series-ai999x/releases/download/v1.0.3/ai999x-time-series-1.2.0-windows-x86_64.zip) · [website](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-time-series-1.2.0-windows-x86_64.zip) | unzip, then double-click `ai999x-time-series.exe` (no installer) |
+| Desktop app (Time Series) | Linux x86-64 | `ai999x-time-series-1.2.0-linux-x86_64.tar.gz` | 8.1 MB | [Hub](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/rust/ai999x-time-series-1.2.0-linux-x86_64.tar.gz) · [GitHub](https://github.com/AI999X/time-series-ai999x/releases/download/v1.0.3/ai999x-time-series-1.2.0-linux-x86_64.tar.gz) · [website](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-time-series-1.2.0-linux-x86_64.tar.gz) | extract, then run `./ai999x-time-series` (X11 or Wayland desktop) |
+| Command line (`time-series`) | Windows x86-64 | `ai999x-time-series-cli-1.2.0-windows-x86_64.zip` | 2.9 MB | [Hub](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/rust/ai999x-time-series-cli-1.2.0-windows-x86_64.zip) · [GitHub](https://github.com/AI999X/time-series-ai999x/releases/download/v1.0.3/ai999x-time-series-cli-1.2.0-windows-x86_64.zip) · [website (all models)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-cli-1.2.0-windows-x86_64.zip) | unzip, then `time-series.exe ask "<question>"` or `time-series.exe solve <capability> name=value` |
+| Command line (`time-series`) | Linux x86-64 | `ai999x-time-series-cli-1.2.0-linux-x86_64.tar.gz` | 2.8 MB | [Hub](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/rust/ai999x-time-series-cli-1.2.0-linux-x86_64.tar.gz) · [GitHub](https://github.com/AI999X/time-series-ai999x/releases/download/v1.0.3/ai999x-time-series-cli-1.2.0-linux-x86_64.tar.gz) · [website (all models)](https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-cli-1.2.0-linux-x86_64.tar.gz) | extract, then `./time-series ask "<question>"` or `./time-series solve <capability> name=value` |
+
+The command-line archive holds `time-series` with a README of its commands and examples, the licence and the notice. Checksums: [`rust/SHA256SUMS`](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/rust/SHA256SUMS) (`sha256sum -c SHA256SUMS`).
+
+## Quick start
+
+### Desktop app
+
+Download **AI999X Time Series** for your system (above), unpack it and start it; type a question in words or pick a capability, fill in the form and press Compute. Figures and an explanation of the answer appear beside it. The AI999X desktop app has the same, with Time Series among all AI999X models.
+
+Linux, from a terminal:
+
+```bash
+curl -LO https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-time-series-1.2.0-linux-x86_64.tar.gz
+curl -LO https://www.ai999x.com/downloads/desktop/1.2.0/SHA256SUMS
+sha256sum -c --ignore-missing SHA256SUMS
+tar xzf ai999x-time-series-1.2.0-linux-x86_64.tar.gz
+./ai999x-time-series-1.2.0-linux-x86_64/ai999x-time-series
+```
+
+### Command line
+
+Linux:
+
+```bash
+curl -LO https://www.ai999x.com/downloads/desktop/1.2.0/ai999x-cli-1.2.0-linux-x86_64.tar.gz
+curl -LO https://www.ai999x.com/downloads/desktop/1.2.0/SHA256SUMS
+sha256sum -c --ignore-missing SHA256SUMS
+mkdir -p ~/.local/share && tar xzf ai999x-cli-1.2.0-linux-x86_64.tar.gz -C ~/.local/share
+echo 'export PATH="$HOME/.local/share/ai999x-cli-1.2.0-linux-x86_64:$PATH"' >> ~/.bashrc && source ~/.bashrc
+time-series --version
+```
+
+Windows (PowerShell):
+
+```powershell
+$F = "ai999x-cli-1.2.0-windows-x86_64.zip"
+Invoke-WebRequest "https://www.ai999x.com/downloads/desktop/1.2.0/$F" -OutFile $F
+Invoke-WebRequest "https://www.ai999x.com/downloads/desktop/1.2.0/SHA256SUMS" -OutFile SHA256SUMS
+(Get-FileHash $F -Algorithm SHA256).Hash.ToLower() -eq ((Select-String -SimpleMatch $F SHA256SUMS).Line -split ' ')[0]
+Expand-Archive $F -DestinationPath "$env:LOCALAPPDATA\AI999X" -Force
+$D = "$env:LOCALAPPDATA\AI999X\ai999x-cli-1.2.0-windows-x86_64"; $env:Path += ";$D"
+[Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$D", "User")
+time-series --version
+```
+
+Every command below was run as shown; the text under it is what the program printed.
+
+**Ask in words** — Write the question as you would say it: the program reads the quantities and their units, picks the capability and answers.
+
+```console
+$ time-series ask "Find the 3-period simple moving average of [10, 12, 14, 13, 15]."
+Read as: Simple moving average
+sma = [12.0,13.0,14.0]
+last = 14
+count = 3
+  by: Simple moving average  (mean of each window of k consecutive values)
+  assumes: 1 <= k <= n
+```
+
+**What a capability needs** — The equation or method, every input and output with its SI unit. Read this before solve: it tells you the input names.
+
+```console
+$ time-series info simple_moving_average
+Simple moving average
+  mean of each window of k consecutive values
+  in   x        the series, oldest first (vector) [1]
+  in   k        the window length (number of periods) (integer) [1]
+  out  sma      the moving averages, one per complete window (the first covers x_1..x_k) [1]
+  out  last     the latest moving average (forecast of the next period) [1]
+  out  count    number of moving averages (n - k + 1) [1]
+```
+
+**Solve** — Inputs as name=value, each with any unit of the right kind. The answer lists every output, the method used, each input converted to SI, and the conditions the answer assumes.
+
+```console
+$ time-series solve simple_moving_average "x=[10, 12, 14, 13, 15]" k=3
+sma = [12.0,13.0,14.0]
+last = 14
+count = 3
+  by: Simple moving average  (mean of each window of k consecutive values)
+  assumes: 1 <= k <= n
+```
+
+**Draw the figures** — The live figures for your own inputs, written as SVG files into the folder given with --out (here the current folder); open them in any browser. Without --out the SVG text comes back as JSON.
+
+```console
+$ time-series figures simple_moving_average "x=[10, 12, 14, 13, 15]" k=3 --out .
+[
+  {
+    "slug": "simple-moving-average-live-1",
+    "title": "The latest moving average (forecast of the ne... as the window length (number of periods) varies",
+    "caption": "The latest moving average (forecast of the ne... as k runs from 1 to 5, every other input as you entered it (5 solutions). Marked: your k = 3 gives last = 14. Your inputs: x = (list), k = 3.",
+    "file": "./simple-moving-average-live-1.svg"
+  },
+  {
+    "slug": "simple-moving-average-live-2",
+    "title": "The moving averages, one per complete window..., as computed",
+    "caption": "Every entry of sma as computed for your inputs (3 entries: 12, 13, 14). Your inputs: x = (list), k = 3.",
+    "file": "./simple-moving-average-live-2.svg"
+  },
+  {
+    "slug": "simple-moving-average-live-3",
+    "title": "The latest moving average (forecast of the ne... as the series, oldest first, entry 5 varies",
+    "caption": "The latest moving average (forecast of the ne... as x[5] runs from 3.75 to 26.25, every other input as you entered it (29 solutions). Marked: your x[5] = 15 gives last = 14. Your inputs: x = (list), k = 3.",
+    "file": "./simple-moving-average-live-3.svg"
+  }
+]
+```
+
+**Many questions at once** — One JSON request per line in, one JSON answer per line out, in order: for scripts, notebooks and agents (the program starts once). In PowerShell: Get-Content cases.jsonl | time-series batch
+
+`cases.jsonl`:
+
+```json
+{"key": "simple_moving_average", "inputs": {"x": "[10, 12, 14, 13, 15]", "k": "3"}}
+{"key": "holt_linear_trend", "inputs": {"x": "[10, 12, 15, 16, 19, 21]", "alpha": 0.5, "beta": 0.3}}
+```
+
+```console
+$ time-series batch < cases.jsonl
+{"outcome":"SOLVED","message":"","value":14.0,"unit":"","solved_for":"last","values":[["sma",[12.0,13.0,14.0],""],["last",14.0,""],["count",3,""]],"target":"last","phrase":"the moving averages, one per complete window (the first covers x_1..x_k)","assumptions":["1 <= k <= n"],"name":"Simple moving average","equation":"mean of each window of k consecutive values"}
+{"outcome":"SOLVED","message":"","value":22.653285906249998,"unit":"","solved_for":"forecast","si":[["alpha",0.5],["beta",0.3]],"values":[["forecast",22.653285906249998,""],["level",20.6553396875,""],["trend",1.9979462187499992,""],["sse",7.492761855456635,""]],"target":"forecast","phrase":"the h-step-ahead forecast","assumptions":["0 < alpha, beta <= 1","l_0 = x_1, b_0 = x_2 - x_1 unless stated","trend form: beta multiplies (l_t - l_{t-1}) (the error-correction beta* of many texts)"],"name":"Holt's linear trend method","equation":"l_t = alpha x_t + (1-alpha)(l_{t-1}+b_{t-1}); b_t = beta (l_t - l_{t-1}) + (1-beta) b_{t-1}"}
+```
+
+### In your browser
+
+Open [Time Series on ai999x.com](https://www.ai999x.com/models/time-series-ai999x/#try), choose a capability and press **Compute**: the model runs on your own device as WebAssembly; nothing is sent anywhere. Change any input (any unit of the right kind) and the answer, its explanation and the figures follow.
+
+In your own page: `time_series_ai999x.wasm` and the loader `ax-wasm.js` (https://www.ai999x.com/compute/rust/ax-wasm.js).
+
+### Python
+
+```bash
+pip install time-series-ai999x
+```
+
+## Worked examples in every form
+
+The same worked example from the command line, from Python and in the browser. Each command-line output is what the program printed.
+
+### AR(1) forecast towards the mean
+
+The h-step forecast mu + phi^h (x_n - mu) of a stationary AR(1) with mean mu, and (when the innovation variance is given) its forecast error variance and 95 % prediction interval.
+
+Command line:
+
+```console
+$ time-series solve ar1_forecast x=58 phi=0.7 mu=50 h=3
+forecast = 52.744
+  by: AR(1) forecast towards the mean  (closed forms of the AR(1) recursion)
+  x = 58
+  phi = 0.7
+  mu = 50
+  assumes: |phi| < 1; known parameters; normal innovations for the interval
+```
+
+Python:
+
+```python
+import time_series_ai999x as m
+
+a = m.solve("ar1_forecast", x="58", phi="0.7", mu="50", h="3")
+print(a.values or (a.value, a.unit))
+```
+
+Browser: [open this capability on the model page](https://www.ai999x.com/models/time-series-ai999x/#cap-ar1_forecast) and press **Compute in your browser**.
+
+### AR(p) estimation by conditional least squares
+
+Fit x_t = c + phi_1 x_{t-1} + ... + phi_p x_{t-p} + e_t by ordinary least squares on t = p+1..n; the innovation variance is the residual sum of squares divided by n - p.
+
+Command line:
+
+```console
+$ time-series solve ar_least_squares "x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12]" p=1
+const = 3.5625
+phi = [0.6354166666666665]
+phi1 = 0.6354166667
+sigma2 = 2.515046296
+  by: AR(p) estimation by conditional least squares  (least squares (Householder QR) of x_t on (1, x_{t-1}, ..., x_{t-p}), t = p+1..n)
+  assumes: n - p > p + 2; regressors not collinear; the first p values are conditioned on
+```
+
+Python:
+
+```python
+import time_series_ai999x as m
+
+a = m.solve("ar_least_squares", x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12], p="1")
+print(a.values or (a.value, a.unit))
+```
+
+Browser: [open this capability on the model page](https://www.ai999x.com/models/time-series-ai999x/#cap-ar_least_squares) and press **Compute in your browser**.
+
+_What this means:_ This procedure fits an autoregressive model of order p by minimizing the sum of squared errors for observations after the initial p values. The resulting constant term is 3.5625, while the lag coefficients are given in [0.635417]. The innovation variance, calculated as the residual sum of squares divided by the degrees of freedom, is 2.51505. This approach conditions on the first p data points, treating them as fixed starting values rather than estimating their distribution.
+
+### AR(p) estimation by Yule-Walker
+
+Estimate the coefficients phi_1..phi_p and the innovation variance of an AR(p) model from data by the Yule-Walker equations (sample autocovariances divided by n, mean removed).
+
+Command line:
+
+```console
+$ time-series solve ar_yule_walker "x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12]" p=2
+phi = [0.21521751734534134,0.40165819531144314]
+phi1 = 0.2152175173
+sigma2 = 3.767657229
+  by: AR(p) estimation by Yule-Walker  (solve the Toeplitz system R phi = r (Durbin-Levinson); sigma^2 = c_0 prod(1 - phi_kk^2))
+  assumes: the series is not constant; 1 <= p < n - 1; denominator n
+```
+
+Python:
+
+```python
+import time_series_ai999x as m
+
+a = m.solve("ar_yule_walker", x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12], p="2")
+print(a.values or (a.value, a.unit))
+```
+
+Browser: [open this capability on the model page](https://www.ai999x.com/models/time-series-ai999x/#cap-ar_yule_walker) and press **Compute in your browser**.
+
+_What this means:_ This calculation estimates the autoregressive parameters for order 2 using the Yule-Walker equations. It solves a system of linear equations based on sample autocovariances to determine the coefficients [0.215218, 0.401658], specifically identifying phi one as 0.215218. The resulting innovation variance, which measures the unpredictability of the series given past values, is computed as 3.76766. These values describe how much current observations depend on previous ones in the stationary process.
+
+### Forecasts of an AR(p) model
+
+h-step forecasts of x_t = c + phi_1 x_{t-1} + ... + phi_p x_{t-p} + e_t from the last p observations (future shocks set to 0).
+
+Command line:
+
+```console
+$ time-series solve ar_forecast "phi=[0.5, 0.2]" "x=[10, 11, 12]" c=1 h=3
+forecasts = [9.2,8.0,6.84]
+forecast = 6.84
+  by: Forecasts of an AR(p) model  (recursion xhat_{n+j} = c + sum_i phi_i xhat_{n+j-i} (observed values where available))
+  c = 1
+  assumes: phi_1 multiplies the latest observation
+```
+
+Python:
+
+```python
+import time_series_ai999x as m
+
+a = m.solve("ar_forecast", phi=[0.5, 0.2], x=[10, 11, 12], c="1", h="3")
+print(a.values or (a.value, a.unit))
+```
+
+Browser: [open this capability on the model page](https://www.ai999x.com/models/time-series-ai999x/#cap-ar_forecast) and press **Compute in your browser**.
+
+_What this means:_ This calculation produces forecasts for an Autoregressive model of order p using the recursion formula. It combines the constant term with weighted past values, where future shocks are set to zero. The result shows the predicted value at horizon 3, which is 6.84, based on the series ending in [10, 11, 12] and coefficients [0.5, 0.2].
+
+## Documentation
+
+- **Rust user guide** — the command line, every capability with a command and what it printed: [PDF](https://huggingface.co/AI999X/time-series-ai999x/blob/main/docs/time_series_ai999x_rust_guide.pdf) · [Markdown](https://huggingface.co/AI999X/time-series-ai999x/blob/main/docs/time_series_ai999x_rust_guide.md)
+- **Python guide** — every capability with a Python example: [PDF](https://huggingface.co/AI999X/time-series-ai999x/blob/main/docs/time_series_ai999x_capabilities.pdf) · [Markdown](https://huggingface.co/AI999X/time-series-ai999x/blob/main/docs/time_series_ai999x_capabilities.md)
+- **Desktop app & command line** — downloads, install, ask and search, figures, offline use, checksums: https://www.ai999x.com/desktop-cli/
+- **Model page** — compute in your browser, every capability explained: https://www.ai999x.com/models/time-series-ai999x/
 
 ## Highlights
 
@@ -20,6 +303,7 @@ time-series-ai999x is an offline, deterministic Python solver that answers time 
 - **Zero wrong answers by design.** Seven explicit outcomes — SOLVED, NEEDS_INPUT, AMBIGUOUS, INVALID_INPUT, OUT_OF_SCOPE, UNRECOGNIZED_FORMAT, INTERNAL_ERROR — never a silent guess. Every one of its 403 documented answers is reproduced exactly on every tested platform.
 - **Plain-English questions and a guaranteed typed interface.** `ask()` reads documented question forms; `solve(capability_id, **inputs)` always solves a supported task with valid inputs.
 - **Explains itself.** Steps, formulas in LaTeX, units, assumptions and the model used, ready for notebooks, tutoring apps and homework checkers.
+- **Native and in the browser.** Every capability also computes natively in Rust: the desktop app and the `time-series` command line for Windows and Linux, and WebAssembly on the model page — no Python, no network.
 - **Small and portable.** Pure Python (sympy, mpmath); identical answers on Windows and Linux (Python 3.10, 3.11, 3.12, 3.13, 3.14).
 - **Coverage:** moving averages, exponential smoothing and Holt-Winters, autocorrelation, ARIMA basics, stationarity tests, change points, forecast accuracy and Kalman filtering.
 
@@ -38,7 +322,7 @@ time-series-ai999x is an offline, deterministic Python solver that answers time 
 | Creator / engineer | Ibnul Jaif Farabi |
 | Organization | AI999X |
 
-## Quickstart
+## Python quick start
 
 ```bash
 pip install time-series-ai999x
@@ -61,7 +345,7 @@ time_series.ask("Who created you?").message
 # -> time-series-ai999x was created and engineered by Ibnul Jaif Farabi at AI999X.
 ```
 
-Command line: `time-series-ai999x "<question>"`, `time-series-ai999x --capabilities`. The outputs above were produced by running this exact code on time-series-ai999x 1.0.3.
+The Python package also installs a Python command, `time-series-ai999x "<question>"`; for the native program use `time-series` (above). The outputs above were produced by running this exact code on time-series-ai999x 1.0.3.
 
 ## Find the right capability, and draw it
 
@@ -83,7 +367,7 @@ time_series.search("Solve x^2 - 5x + 6 = 0", k=2)
 
 Capabilities are certified before they ship: each must reproduce hand-worked reference cases, reject a deliberately wrong variant (a control), and leave every benchmark answer unchanged.
 
-## Worked examples
+## Python worked examples, with their steps
 
 Each question was put to `time-series-ai999x`; the answer is the one it returned, with the steps it took.
 

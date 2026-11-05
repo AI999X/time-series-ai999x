@@ -1,5 +1,5 @@
 {
- "package": "1.0.3",
+ "package": "1.1.0",
  "pack": "1.0.0",
  "knowledge_db": null,
  "files": {
@@ -10,10 +10,10 @@
   "capabilities/_expected.py": "2e844e14a2b86d56a1d40492dfe0c14122ee6031834bcae5f55852a30b246a39",
   "capabilities/procedures.py": "56adc7fb0052c0fba26e81d4eabd8900c0bf0f5dab0e3c006cfae56913b9140a",
   "capabilities/procedures_certified.json": "ccbcf752f1b6d5dab3e483bf822a3eb1bc2bd17dfe8c8a08c33afc9db2fd83c5",
-  "time_series_knowledge_public.sqlite": "b3b6236ef3d49319bc28224467e6afa8fe47a1108e29fcd9292f95acc6c8dd89",
+  "time_series_knowledge_public.sqlite": "48df3c2d683bea529dd96487cb9c68b4868385c2a427351a5d7525cc996d3142",
   "search/encoder.int8.onnx": "521452d928a72da4d241b1835ab0f46b0e81ff58ffff0367b9a7029bd129fbd9",
   "search/tokenizer.json": "b2f2deb461e6ad672b8e42aac29773e7a9be77d582cdf58808113ea43fda565e",
-  "search/index.json": "d8f81d9706c9a0efa7d9643bcec3d39a6c3500766ce0f44937d85ad90f772507",
+  "search/index.json": "cbd28f9d940abc33d3bfd4a61beed818eda670deffcfe40b46845d84423f9ef9",
   "reader/reader.int8.onnx": "ecee16f238097a01129c8c071809cc24d3edb25c7d73ca29bd5c383981ca0c33",
   "reader/tokenizer.json": "a54ec88bce54ad97ea91cd47911b41025e80d47e13af62d47cf5758a65ba8387",
   "reader/labels.json": "328c9073146573ae8e9890ac487d5a4cfe6914fef45fb0047633ac580f8fff80"
@@ -27,11 +27,13 @@
   "derivations.py",
   "engine.py",
   "explain.py",
+  "explanations.py",
   "expr.py",
   "formula_solver.py",
   "identity.py",
   "inputs.py",
   "knowledge_store.py",
+  "native.py",
   "pack.py",
   "planner.py",
   "policy.py",

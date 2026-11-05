@@ -1,0 +1,1220 @@
+<!doctype html><html><head><meta charset="utf-8"><title>time-series — user guide (Rust build)</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+<style>
+@page{size:A4;margin:16mm 15mm}
+body{font-family:"Segoe UI",Arial,sans-serif;font-size:10.5pt;line-height:1.45;color:#1b1f24;max-width:880px;margin:auto}
+h1{font-size:22pt;border-bottom:2px solid #2b5c8a;padding-bottom:4px;margin-top:28px;page-break-before:always}
+h1:first-of-type{page-break-before:avoid}
+h2{font-size:15pt;color:#2b5c8a;margin-top:22px;page-break-after:avoid}
+h3{font-size:12pt;margin-top:16px;page-break-after:avoid}
+pre{background:#f4f6f8;border:1px solid #dde3e8;border-radius:4px;padding:8px 10px;font-size:8.8pt;white-space:pre-wrap;page-break-inside:avoid}
+code{font-family:Consolas,monospace;font-size:9pt;background:#f4f6f8;padding:0 2px}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;margin:8px 0;font-size:9pt;width:100%;page-break-inside:auto}
+th,td{border:1px solid #cfd6dd;padding:3px 6px;vertical-align:top;text-align:left}
+th{background:#eaf0f5}
+.math{margin:6px 0;overflow-x:auto}
+.badge{display:inline-block;color:#fff;border-radius:3px;padding:0 5px;font-size:8.5pt;white-space:nowrap}
+figure{margin:10px 0;text-align:center;page-break-inside:avoid}figure img{max-width:88%}.svgfig svg{max-width:88%;height:auto}
+figcaption{font-size:9pt;color:#555}
+.pb{page-break-after:always}
+</style></head><body>
+<h1>time-series: the Time Series program — user guide</h1>
+<p><strong>time-series-ai999x 1.0.3</strong>, Rust build: command line, desktop app and browser. <strong>Creator / engineer:</strong> Ibnul Jaif Farabi · <strong>Company:</strong> AI999X · support@ai999x.com</p>
+<p>Time Series covers moving averages, exponential smoothing, autocorrelation, ARIMA basics, stationarity tests, change points, forecasting accuracy and Kalman filtering. This guide is about <code>time-series</code>, the model as a self-contained program for Windows and Linux: 77 capabilities in 14 topics, answered on your own computer with no network, no Python and nothing else to install. The same compiled model runs in the AI999X desktop app and in the browser on the model&#x27;s page (https://www.ai999x.com/models/time-series-ai999x/); the Python package (<code>pip install time-series-ai999x</code>) has its own guide. Every command output printed here is what the program printed.</p>
+<h2>Contents</h2>
+<ul><li>1. Get it: desktop app, command line, browser, Python</li><li>2. Quick start</li><li>3. Writing inputs</li><li>4. Outcomes and exit codes</li><li>5. Scripts and agents: batch and JSON</li><li>6. Figures</li><li>7. In a web page or Node.js: WebAssembly</li><li>8. Every capability</li></ul>
+<h2>1. Get it</h2>
+<p>Version 1.4.0 of the AI999X desktop app and of the command-line bundle. Checksums for every file: https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS; the newest version is always under https://downloads.ai999x.com/desktop/latest/. Full instructions: https://www.ai999x.com/desktop-cli/</p>
+<table><thead><tr><th>what</th><th>system</th><th>download</th></tr></thead><tbody><tr><td>Desktop app: Time Series</td><td>Windows x86-64</td><td>https://downloads.ai999x.com/desktop/1.4.0/ai999x-time-series-1.4.0-windows-x86_64.zip</td></tr><tr><td>Desktop app: Time Series</td><td>Linux x86-64</td><td>https://downloads.ai999x.com/desktop/1.4.0/ai999x-time-series-1.4.0-linux-x86_64.tar.gz</td></tr><tr><td>Desktop app: all models</td><td>Windows x86-64</td><td>https://downloads.ai999x.com/desktop/1.4.0/ai999x-1.4.0-windows-x86_64.zip</td></tr><tr><td>Desktop app: all models</td><td>Linux x86-64</td><td>https://downloads.ai999x.com/desktop/1.4.0/ai999x-1.4.0-linux-x86_64.tar.gz</td></tr><tr><td>Command line</td><td>Windows x86-64</td><td>https://downloads.ai999x.com/desktop/1.4.0/ai999x-cli-1.4.0-windows-x86_64.zip</td></tr><tr><td>Command line</td><td>Linux x86-64</td><td>https://downloads.ai999x.com/desktop/1.4.0/ai999x-cli-1.4.0-linux-x86_64.tar.gz</td></tr></tbody></table>
+<h3>Desktop app</h3>
+<p>Time Series in its own app: search, questions in words, input forms, live figures and explanations. Windows: Download ai999x-time-series-1.4.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x-time-series.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:</p>
+<pre><code class="shell">curl -LO https://downloads.ai999x.com/desktop/1.4.0/ai999x-time-series-1.4.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS
+sha256sum -c --ignore-missing SHA256SUMS
+tar xzf ai999x-time-series-1.4.0-linux-x86_64.tar.gz
+./ai999x-time-series-1.4.0-linux-x86_64/ai999x-time-series</code></pre>
+<p>It opens on this model: type a question or pick a capability, fill in the form and press Compute. The AI999X desktop app with every model works the same way (choose the model first). Windows: Download ai999x-1.4.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:</p>
+<pre><code class="shell">curl -LO https://downloads.ai999x.com/desktop/1.4.0/ai999x-1.4.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS
+sha256sum -c --ignore-missing SHA256SUMS
+tar xzf ai999x-1.4.0-linux-x86_64.tar.gz
+./ai999x-1.4.0-linux-x86_64/ai999x</code></pre>
+<h3>Command line — Linux</h3>
+<p>The bundle holds one program per model; <code>time-series</code> is this one. The checksum line should print OK.</p>
+<pre><code class="shell">curl -LO https://downloads.ai999x.com/desktop/1.4.0/ai999x-cli-1.4.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS
+sha256sum -c --ignore-missing SHA256SUMS
+mkdir -p ~/.local/share &amp;&amp; tar xzf ai999x-cli-1.4.0-linux-x86_64.tar.gz -C ~/.local/share
+echo &#x27;export PATH=&quot;$HOME/.local/share/ai999x-cli-1.4.0-linux-x86_64:$PATH&quot;&#x27; &gt;&gt; ~/.bashrc &amp;&amp; source ~/.bashrc
+time-series --version</code></pre>
+<h3>Command line — Windows (PowerShell)</h3>
+<p>The fourth line should print True.</p>
+<pre><code class="powershell">$F = &quot;ai999x-cli-1.4.0-windows-x86_64.zip&quot;
+Invoke-WebRequest &quot;https://downloads.ai999x.com/desktop/1.4.0/$F&quot; -OutFile $F
+Invoke-WebRequest &quot;https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS&quot; -OutFile SHA256SUMS
+(Get-FileHash $F -Algorithm SHA256).Hash.ToLower() -eq ((Select-String -SimpleMatch $F SHA256SUMS).Line -split &#x27; &#x27;)[0]
+Expand-Archive $F -DestinationPath &quot;$env:LOCALAPPDATA\AI999X&quot; -Force
+$D = &quot;$env:LOCALAPPDATA\AI999X\ai999x-cli-1.4.0-windows-x86_64&quot;; $env:Path += &quot;;$D&quot;
+[Environment]::SetEnvironmentVariable(&quot;Path&quot;, [Environment]::GetEnvironmentVariable(&quot;Path&quot;, &quot;User&quot;) + &quot;;$D&quot;, &quot;User&quot;)
+time-series --version</code></pre>
+<h3>In your browser</h3>
+<p>Open https://www.ai999x.com/models/time-series-ai999x/, choose a capability and press Compute in your browser: the same program runs on your device as WebAssembly; nothing is sent anywhere.</p>
+<h3>Python</h3>
+<pre><code class="shell">pip install time-series-ai999x</code></pre>
+<h2>2. Quick start</h2>
+<h3>2.1 Check the install</h3>
+<p>Prints the model, its version and that this is the Rust build.</p>
+<pre><code class="shell">$ time-series --version
+time-series-ai999x 1.0.3 (Rust build, ax-engine 0.1.0)</code></pre>
+<h3>2.2 Ask in words</h3>
+<p>Write the question as you would say it: the program reads the quantities and their units, picks the capability and answers.</p>
+<pre><code class="shell">$ time-series ask &quot;Find the 3-period simple moving average of [10, 12, 14, 13, 15].&quot;
+Read as: Simple moving average
+sma = [12.0,13.0,14.0]
+last = 14
+count = 3
+  by: Simple moving average  (mean of each window of k consecutive values)
+  assumes: 1 &lt;= k &lt;= n</code></pre>
+<h3>2.3 Find a capability</h3>
+<p>Search the capabilities by what you want to know; the first column is the id to pass to info and solve.</p>
+<pre><code class="shell">$ time-series search &quot;simple moving average&quot;
+simple_moving_average                Simple moving average  (moving averages)
+exponential_moving_average           Exponential moving average  (moving averages)
+centred_moving_average               Centred moving average  (moving averages)
+linearly_weighted_moving_average     Linearly weighted moving average  (moving averages)
+simple_exponential_smoothing         Simple exponential smoothing  (exponential smoothing)
+compound_average_growth_rate         Compound average growth rate of a series  (transformations and growth)
+sample_autocorrelation               Sample autocorrelation at lag k  (autocorrelation)
+sample_autocovariance                Sample autocovariance at lag k  (autocorrelation)
+… 8 more</code></pre>
+<h3>2.4 List the capabilities</h3>
+<p>Every capability the program answers: its id (what you pass to solve) and its name.</p>
+<pre><code class="shell">$ time-series list
+ar1_forecast                             AR(1) forecast towards the mean
+ar1_properties                           Mean, variance and autocorrelation of an AR(1) process
+ar2_stationarity                         Stationarity of an AR(2) process
+ar2_theoretical_acf                      Theoretical autocorrelations of an AR(2) process
+ar_forecast                              Forecasts of an AR(p) model
+ar_least_squares                         AR(p) estimation by conditional least squares
+ar_yule_walker                           AR(p) estimation by Yule-Walker
+arima_p10_forecast                       Forecasts of an ARIMA(p,1,0) model
+… 69 more</code></pre>
+<h3>2.5 What a capability needs</h3>
+<p>The equation or method, every input and output with its SI unit. Read this before solve: it tells you the input names.</p>
+<pre><code class="shell">$ time-series info simple_moving_average
+Simple moving average
+  mean of each window of k consecutive values
+  in   x        the series, oldest first (vector) [1]
+  in   k        the window length (number of periods) (integer) [1]
+  out  sma      the moving averages, one per complete window (the first covers x_1..x_k) [1]
+  out  last     the latest moving average (forecast of the next period) [1]
+  out  count    number of moving averages (n - k + 1) [1]</code></pre>
+<h3>2.6 Solve</h3>
+<p>Inputs as name=value, each with any unit of the right kind. The answer lists every output, the method used, each input converted to SI, and the conditions the answer assumes.</p>
+<pre><code class="shell">$ time-series solve simple_moving_average &quot;x=[10, 12, 14, 13, 15]&quot; k=3
+sma = [12.0,13.0,14.0]
+last = 14
+count = 3
+  by: Simple moving average  (mean of each window of k consecutive values)
+  assumes: 1 &lt;= k &lt;= n</code></pre>
+<h3>2.7 Machine-readable answer</h3>
+<p>--json prints the same answer as one line of JSON (values in SI): for scripts and other programs.</p>
+<pre><code class="shell">$ time-series solve simple_moving_average &quot;x=[10, 12, 14, 13, 15]&quot; k=3 --json
+{&quot;outcome&quot;:&quot;SOLVED&quot;,&quot;message&quot;:&quot;&quot;,&quot;value&quot;:14.0,&quot;unit&quot;:&quot;&quot;,&quot;solved_for&quot;:&quot;last&quot;,&quot;values&quot;:[[&quot;sma&quot;,[12.0,13.0,14.0],&quot;&quot;],[&quot;last&quot;,14.0,&quot;&quot;],[&quot;count&quot;,3,&quot;&quot;]],&quot;target&quot;:&quot;last&quot;,&quot;phrase&quot;:&quot;the moving averages, one per complete window (the first covers x_1..x_k)&quot;,&quot;assumptions&quot;:[&quot;1 &lt;= k &lt;= n&quot;],&quot;name&quot;:&quot;Simple moving average&quot;,&quot;equation&quot;:&quot;mean of each window of k consecutive values&quot;}</code></pre>
+<h3>2.8 When an input is missing</h3>
+<p>No number is guessed: the answer names what is missing, shows a complete call, and the program exits with status 1.</p>
+<pre><code class="shell">$ time-series solve simple_moving_average &quot;x=[10, 12, 14, 13, 15]&quot;
+NEEDS_INPUT: simple_moving_average needs k (the window length (number of periods)). Example: solve(&#x27;simple_moving_average&#x27;, x=&#x27;10, 12, 14, 13, 15&#x27;, k=3).</code></pre>
+<h3>2.9 Draw the figures</h3>
+<p>The live figures for your own inputs, written as SVG files into the folder given with --out (here the current folder); open them in any browser. Without --out the SVG text comes back as JSON.</p>
+<pre><code class="shell">$ time-series figures simple_moving_average &quot;x=[10, 12, 14, 13, 15]&quot; k=3 --out .
+[
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-smooth&quot;,
+    &quot;title&quot;: &quot;Simple moving average trailing the data&quot;,
+    &quot;caption&quot;: &quot;The series x = 10, 12, 14, 13, 15 with its simple moving average over k = 3 periods (each value placed at the end of its window: 12, 13, 14) and, for comparison, the exponential moving average with the same span (dashed), returned by the model. Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-smooth.svg&quot;
+  },
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-live-1&quot;,
+    &quot;title&quot;: &quot;The latest moving average (forecast of the ne... as the window length (number of periods) varies&quot;,
+    &quot;caption&quot;: &quot;The latest moving average (forecast of the ne... as k runs from 1 to 5, every other input as you entered it (5 solutions). Marked: your k = 3 gives last = 14. Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-live-1.svg&quot;
+  },
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-live-2&quot;,
+    &quot;title&quot;: &quot;The moving averages, one per complete window..., as computed&quot;,
+    &quot;caption&quot;: &quot;Every entry of sma as computed for your inputs (3 entries: 12, 13, 14). Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-live-2.svg&quot;
+  },
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-live-3&quot;,
+    &quot;title&quot;: &quot;The latest moving average (forecast of the ne... as the series, oldest first, entry 5 varies&quot;,
+    &quot;caption&quot;: &quot;The latest moving average (forecast of the ne... as x[5] runs from 3.75 to 26.25, every other input as you entered it (29 solutions). Marked: your x[5] = 15 gives last = 14. Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-live-3.svg&quot;
+  }
+]</code></pre>
+<h3>2.10 Many questions at once</h3>
+<p>One JSON request per line in, one JSON answer per line out, in order: for scripts, notebooks and agents (the program starts once). In PowerShell: Get-Content cases.jsonl | time-series batch</p>
+<p><code>cases.jsonl</code>:</p>
+<pre><code class="json">{&quot;key&quot;: &quot;simple_moving_average&quot;, &quot;inputs&quot;: {&quot;x&quot;: &quot;[10, 12, 14, 13, 15]&quot;, &quot;k&quot;: &quot;3&quot;}}
+{&quot;key&quot;: &quot;holt_linear_trend&quot;, &quot;inputs&quot;: {&quot;x&quot;: &quot;[10, 12, 15, 16, 19, 21]&quot;, &quot;alpha&quot;: 0.5, &quot;beta&quot;: 0.3}}</code></pre>
+<pre><code class="shell">$ time-series batch &lt; cases.jsonl
+{&quot;outcome&quot;:&quot;SOLVED&quot;,&quot;message&quot;:&quot;&quot;,&quot;value&quot;:14.0,&quot;unit&quot;:&quot;&quot;,&quot;solved_for&quot;:&quot;last&quot;,&quot;values&quot;:[[&quot;sma&quot;,[12.0,13.0,14.0],&quot;&quot;],[&quot;last&quot;,14.0,&quot;&quot;],[&quot;count&quot;,3,&quot;&quot;]],&quot;target&quot;:&quot;last&quot;,&quot;phrase&quot;:&quot;the moving averages, one per complete window (the first covers x_1..x_k)&quot;,&quot;assumptions&quot;:[&quot;1 &lt;= k &lt;= n&quot;],&quot;name&quot;:&quot;Simple moving average&quot;,&quot;equation&quot;:&quot;mean of each window of k consecutive values&quot;}
+{&quot;outcome&quot;:&quot;SOLVED&quot;,&quot;message&quot;:&quot;&quot;,&quot;value&quot;:22.653285906249998,&quot;unit&quot;:&quot;&quot;,&quot;solved_for&quot;:&quot;forecast&quot;,&quot;si&quot;:[[&quot;alpha&quot;,0.5],[&quot;beta&quot;,0.3]],&quot;values&quot;:[[&quot;forecast&quot;,22.653285906249998,&quot;&quot;],[&quot;level&quot;,20.6553396875,&quot;&quot;],[&quot;trend&quot;,1.9979462187499992,&quot;&quot;],[&quot;sse&quot;,7.492761855456635,&quot;&quot;]],&quot;target&quot;:&quot;forecast&quot;,&quot;phrase&quot;:&quot;the h-step-ahead forecast&quot;,&quot;assumptions&quot;:[&quot;0 &lt; alpha, beta &lt;= 1&quot;,&quot;l_0 = x_1, b_0 = x_2 - x_1 unless stated&quot;,&quot;trend form: beta multiplies (l_t - l_{t-1}) (the error-correction beta* of many texts)&quot;],&quot;name&quot;:&quot;Holt&#x27;s linear trend method&quot;,&quot;equation&quot;:&quot;l_t = alpha x_t + (1-alpha)(l_{t-1}+b_{t-1}); b_t = beta (l_t - l_{t-1}) + (1-beta) b_{t-1}&quot;}</code></pre>
+<h2>3. Writing inputs</h2>
+<p>Inputs are written <code>name=value</code>, one per argument; <code>time-series info &lt;capability&gt;</code> lists the names. Quote an argument that holds a space or brackets (bash, zsh and PowerShell all accept double quotes). The answer always states each input as it was read, converted to SI, so a misread unit is visible at once.</p>
+<table><thead><tr><th>kind</th><th>example</th><th>how it is read</th></tr></thead><tbody><tr><td>a number with a unit</td><td><code>&quot;R=0.128 nm&quot;</code></td><td>any unit of the same kind; converted to SI</td></tr><tr><td>a number in SI</td><td><code>R=1.28e-10</code></td><td>no unit means the SI unit shown by info</td></tr><tr><td>a choice</td><td><code>structure=FCC</code></td><td>one of the values info lists</td></tr><tr><td>a list or vector</td><td><code>&quot;v=[1, 2, 3]&quot; or &quot;v=1, 2, 3&quot;</code></td><td>brackets keep it a list</td></tr><tr><td>a matrix</td><td><code>&quot;A=[[1, 2], [3, 4]]&quot;</code></td><td>one list per row</td></tr><tr><td>true / false</td><td><code>inclusive=true</code></td><td>for yes/no options</td></tr></tbody></table>
+<p>An equation can be solved for any of its quantities: give the others and add <code>--target &lt;symbol&gt;</code>. Without <code>--target</code>, the program solves for the quantity the capability is named after.</p>
+<h2>4. Outcomes and exit codes</h2>
+<p>The program never guesses a number: when it cannot answer, it says why and exits with status 1, so a script can tell an answer from a refusal without reading the text.</p>
+<table><thead><tr><th>outcome</th><th>meaning</th><th>exit status</th></tr></thead><tbody><tr><td>SOLVED</td><td>the answer: every output with its unit, the method, the inputs in SI, the conditions assumed</td><td>0</td></tr><tr><td>NEEDS_INPUT</td><td>an input is missing; the message names it and shows a complete call</td><td>1</td></tr><tr><td>INVALID_INPUT</td><td>a value or unit of the wrong kind, an unknown input name, or a value outside the conditions</td><td>1</td></tr><tr><td>AMBIGUOUS</td><td>the inputs allow two different answers; say which one is meant</td><td>1</td></tr><tr><td>OUT_OF_SCOPE</td><td>the model has no capability for this, or the result would not be meaningful</td><td>1</td></tr><tr><td>(usage)</td><td>a command the program does not know: it prints its usage</td><td>2</td></tr></tbody></table>
+<h2>5. Scripts and agents: batch and JSON</h2>
+<p><code>time-series solve ... --json</code> prints one answer as one line of JSON. <code>time-series batch</code> reads one request per line on standard input and writes one JSON answer per line, in order, starting the program once for any number of requests. A request is <code>{&quot;key&quot;: &quot;&lt;capability&gt;&quot;, &quot;inputs&quot;: {&quot;name&quot;: &quot;value&quot;, ...}, &quot;target&quot;: null}</code>. In PowerShell, pipe the file in: <code>Get-Content cases.jsonl | time-series batch</code>. <code>time-series catalog</code> prints every capability with its inputs as JSON, to build forms or tool definitions.</p>
+<table><thead><tr><th>answer field</th><th>meaning</th></tr></thead><tbody><tr><td>outcome</td><td>one of the outcomes above</td></tr><tr><td>message</td><td>why there is no answer (empty when SOLVED)</td></tr><tr><td>value, unit</td><td>the main result in SI units</td></tr><tr><td>values</td><td>every output: [symbol, value, unit] (procedures)</td></tr><tr><td>target</td><td>the quantity solved for</td></tr><tr><td>si</td><td>each numeric input converted to SI: [symbol, value]</td></tr><tr><td>assumptions</td><td>the conditions the answer relies on</td></tr><tr><td>name, equation</td><td>the capability and its equation or method</td></tr></tbody></table>
+<pre><code class="python">import json, subprocess
+
+reqs = [{&quot;key&quot;: &quot;&lt;capability&gt;&quot;, &quot;inputs&quot;: {&quot;name&quot;: &quot;value&quot;}}]
+out = subprocess.run([&quot;time-series&quot;, &quot;batch&quot;], input=&quot;\n&quot;.join(map(json.dumps, reqs)),
+                     capture_output=True, text=True, check=True).stdout
+answers = [json.loads(line) for line in out.splitlines()]</code></pre>
+<h2>6. Figures</h2>
+<p><code>time-series figures &lt;capability&gt; name=value ... --out DIR</code> draws the live figures for those inputs and writes each as an SVG file into DIR (an existing folder); without <code>--out</code> the SVG text comes back as JSON. The desktop app and the model page draw the same figures as soon as you press Compute.</p>
+<pre><code class="shell">$ time-series figures simple_moving_average &quot;x=[10, 12, 14, 13, 15]&quot; k=3 --out .
+[
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-smooth&quot;,
+    &quot;title&quot;: &quot;Simple moving average trailing the data&quot;,
+    &quot;caption&quot;: &quot;The series x = 10, 12, 14, 13, 15 with its simple moving average over k = 3 periods (each value placed at the end of its window: 12, 13, 14) and, for comparison, the exponential moving average with the same span (dashed), returned by the model. Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-smooth.svg&quot;
+  },
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-live-1&quot;,
+    &quot;title&quot;: &quot;The latest moving average (forecast of the ne... as the window length (number of periods) varies&quot;,
+    &quot;caption&quot;: &quot;The latest moving average (forecast of the ne... as k runs from 1 to 5, every other input as you entered it (5 solutions). Marked: your k = 3 gives last = 14. Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-live-1.svg&quot;
+  },
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-live-2&quot;,
+    &quot;title&quot;: &quot;The moving averages, one per complete window..., as computed&quot;,
+    &quot;caption&quot;: &quot;Every entry of sma as computed for your inputs (3 entries: 12, 13, 14). Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-live-2.svg&quot;
+  },
+  {
+    &quot;slug&quot;: &quot;simple-moving-average-live-3&quot;,
+    &quot;title&quot;: &quot;The latest moving average (forecast of the ne... as the series, oldest first, entry 5 varies&quot;,
+    &quot;caption&quot;: &quot;The latest moving average (forecast of the ne... as x[5] runs from 3.75 to 26.25, every other input as you entered it (29 solutions). Marked: your x[5] = 15 gives last = 14. Your inputs: x = (list), k = 3.&quot;,
+    &quot;file&quot;: &quot;.\\simple-moving-average-live-3.svg&quot;
+  }
+]</code></pre>
+<h2>7. In a web page or Node.js: WebAssembly</h2>
+<p>The same model is a WebAssembly module, <code>time_series_ai999x.wasm</code> (https://www.ai999x.com/compute/rust/time_series_ai999x.wasm), with a small loader, <code>ax-wasm.js</code> (https://www.ai999x.com/compute/rust/ax-wasm.js). It runs in a browser, a Web Worker or Node.js, with no server.</p>
+<pre><code class="html">&lt;script src=&quot;ax-wasm.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  AXWasm.load(&quot;time_series_ai999x.wasm&quot;).then(function (m) {
+    var a = m.solve({key: &quot;&lt;capability&gt;&quot;, inputs: {name: &quot;value&quot;}});
+    console.log(a.outcome, a.values || a.value);
+    console.log(m.catalog().capabilities.length + &quot; capabilities&quot;);
+  });
+&lt;/script&gt;</code></pre>
+<h2>8. Every capability</h2>
+<p>By topic. For each: what it does, what it needs and gives, when it applies, and a command with what the program printed for it. <code>time-series info &lt;id&gt;</code> shows the same inputs and outputs in the terminal.</p>
+<h3>ARIMA models (7)</h3>
+<h4 id="ar1_forecast">AR(1) forecast towards the mean — <code>ar1_forecast</code></h4>
+<p>The h-step forecast mu + phi^h (x_n - mu) of a stationary AR(1) with mean mu, and (when the innovation variance is given) its forecast error variance and 95 % prediction interval.</p>
+<div class="math">\[\hat x_{n+h} = \mu + \phi^h(x_n - \mu),\ \operatorname{Var} = \sigma^2\frac{1-\phi^{2h}}{1-\phi^2}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the last observed value x_n</td><td>—</td></tr><tr><td><code>phi</code></td><td>in</td><td>AR coefficient, |phi| &lt; 1</td><td>—</td></tr><tr><td><code>mu</code></td><td>in</td><td>the process mean</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon (default 1) (optional)</td><td>—</td></tr><tr><td><code>sigma2</code></td><td>in</td><td>innovation variance (optional, for the interval) (optional)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>mu + phi^h (x_n - mu)</td><td>—</td></tr><tr><td><code>variance</code></td><td>out</td><td>sigma^2 (1 - phi^(2h)) / (1 - phi^2)</td><td>—</td></tr><tr><td><code>lower</code></td><td>out</td><td>lower 95 % limit</td><td>—</td></tr><tr><td><code>upper</code></td><td>out</td><td>upper 95 % limit</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> |phi| &lt; 1; known parameters; normal innovations for the interval.</p>
+<pre><code class="shell">$ time-series solve ar1_forecast x=58 phi=0.7 mu=50 h=3
+forecast = 52.744
+  by: AR(1) forecast towards the mean  (closed forms of the AR(1) recursion)
+  x = 58
+  phi = 0.7
+  mu = 50
+  assumes: |phi| &lt; 1; known parameters; normal innovations for the interval</code></pre>
+<p>In the worked example, x = 58, phi = 0.7, mu = 50, h = 3 go through the equation above and give forecast = 52.744. It applies only when |phi| &lt; 1; known parameters; normal innovations for the interval: outside that it says what is wrong instead of returning a number.</p>
+<h4 id="ar_least_squares">AR(p) estimation by conditional least squares — <code>ar_least_squares</code></h4>
+<p>Fit x_t = c + phi_1 x_{t-1} + ... + phi_p x_{t-p} + e_t by ordinary least squares on t = p+1..n; the innovation variance is the residual sum of squares divided by n - p.</p>
+<div class="math">\[\min_{c,\phi}\sum_{t=p+1}^{n}\Big(x_t - c - \sum_{j=1}^{p}\phi_j x_{t-j}\Big)^2\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>p</code></td><td>in</td><td>the AR order p</td><td>—</td></tr><tr><td><code>const</code></td><td>out</td><td>the constant c</td><td>—</td></tr><tr><td><code>phi</code></td><td>out</td><td>the coefficients phi_1..phi_p</td><td>—</td></tr><tr><td><code>phi1</code></td><td>out</td><td>phi_1</td><td>—</td></tr><tr><td><code>sigma2</code></td><td>out</td><td>residual sum of squares / (n - p)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n - p &gt; p + 2; regressors not collinear; the first p values are conditioned on.</p>
+<pre><code class="shell">$ time-series solve ar_least_squares &quot;x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12]&quot; p=1
+const = 3.5625
+phi = [0.6354166666666665]
+phi1 = 0.6354166667
+sigma2 = 2.515046296
+  by: AR(p) estimation by conditional least squares  (least squares (Householder QR) of x_t on (1, x_{t-1}, ..., x_{t-p}), t = p+1..n)
+  assumes: n - p &gt; p + 2; regressors not collinear; the first p values are conditioned on</code></pre>
+<p><strong>What the worked example means:</strong> This procedure fits an autoregressive model of order p by minimizing the sum of squared errors for observations after the initial p values. The resulting constant term is 3.5625, while the lag coefficients are given in [0.635417]. The innovation variance, calculated as the residual sum of squares divided by the degrees of freedom, is 2.51505. This approach conditions on the first p data points, treating them as fixed starting values rather than estimating their distribution.</p>
+<h4 id="ar_yule_walker">AR(p) estimation by Yule-Walker — <code>ar_yule_walker</code></h4>
+<p>Estimate the coefficients phi_1..phi_p and the innovation variance of an AR(p) model from data by the Yule-Walker equations (sample autocovariances divided by n, mean removed).</p>
+<div class="math">\[\begin{pmatrix}1&amp;r_1&amp;\cdots\\ r_1&amp;1&amp;\cdots\\ \vdots&amp;&amp;\ddots\end{pmatrix}\phi = \begin{pmatrix}r_1\\ \vdots\\ r_p\end{pmatrix}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>p</code></td><td>in</td><td>the AR order p</td><td>—</td></tr><tr><td><code>phi</code></td><td>out</td><td>the coefficients phi_1..phi_p</td><td>—</td></tr><tr><td><code>phi1</code></td><td>out</td><td>phi_1</td><td>—</td></tr><tr><td><code>sigma2</code></td><td>out</td><td>the innovation variance c_0 (1 - sum phi_j r_j)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> the series is not constant; 1 &lt;= p &lt; n - 1; denominator n.</p>
+<pre><code class="shell">$ time-series solve ar_yule_walker &quot;x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12]&quot; p=2
+phi = [0.21521751734534134,0.40165819531144314]
+phi1 = 0.2152175173
+sigma2 = 3.767657229
+  by: AR(p) estimation by Yule-Walker  (solve the Toeplitz system R phi = r (Durbin-Levinson); sigma^2 = c_0 prod(1 - phi_kk^2))
+  assumes: the series is not constant; 1 &lt;= p &lt; n - 1; denominator n</code></pre>
+<p><strong>What the worked example means:</strong> This calculation estimates the autoregressive parameters for order 2 using the Yule-Walker equations. It solves a system of linear equations based on sample autocovariances to determine the coefficients [0.215218, 0.401658], specifically identifying phi one as 0.215218. The resulting innovation variance, which measures the unpredictability of the series given past values, is computed as 3.76766. These values describe how much current observations depend on previous ones in the stationary process.</p>
+<h4 id="ar_forecast">Forecasts of an AR(p) model — <code>ar_forecast</code></h4>
+<p>h-step forecasts of x_t = c + phi_1 x_{t-1} + ... + phi_p x_{t-p} + e_t from the last p observations (future shocks set to 0).</p>
+<div class="math">\[\hat x_{n+j} = c + \sum_{i=1}^{p}\phi_i\,\hat x_{n+j-i}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least p values)</td><td>—</td></tr><tr><td><code>phi</code></td><td>in</td><td>the coefficients phi_1..phi_p</td><td>—</td></tr><tr><td><code>c</code></td><td>in</td><td>the constant c (default 0) (optional)</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon (default 1) (optional)</td><td>—</td></tr><tr><td><code>forecasts</code></td><td>out</td><td>the forecasts for steps 1..h</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the h-step forecast</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> phi_1 multiplies the latest observation.</p>
+<pre><code class="shell">$ time-series solve ar_forecast &quot;phi=[0.5, 0.2]&quot; &quot;x=[10, 11, 12]&quot; c=1 h=3
+forecasts = [9.2,8.0,6.84]
+forecast = 6.84
+  by: Forecasts of an AR(p) model  (recursion xhat_{n+j} = c + sum_i phi_i xhat_{n+j-i} (observed values where available))
+  c = 1
+  assumes: phi_1 multiplies the latest observation</code></pre>
+<p><strong>What the worked example means:</strong> This calculation produces forecasts for an Autoregressive model of order p using the recursion formula. It combines the constant term with weighted past values, where future shocks are set to zero. The result shows the predicted value at horizon 3, which is 6.84, based on the series ending in [10, 11, 12] and coefficients [0.5, 0.2].</p>
+<h4 id="arima_p10_forecast">Forecasts of an ARIMA(p,1,0) model — <code>arima_p10_forecast</code></h4>
+<p>h-step forecasts of an ARIMA(p,1,0) model without constant: the differences follow a stationary AR(p); forecast differences are accumulated onto the last observation.</p>
+<div class="math">\[(1-\phi_1L-\dots-\phi_pL^p)(1-L)x_t = e_t\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least p + 2 values)</td><td>—</td></tr><tr><td><code>phi</code></td><td>in</td><td>AR coefficients of the differences</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon (default 1) (optional)</td><td>—</td></tr><tr><td><code>forecasts</code></td><td>out</td><td>the forecasts for steps 1..h</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the h-step forecast</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> stationary AR part; no constant (no drift); n &gt;= p + 2.</p>
+<pre><code class="shell">$ time-series solve arima_p10_forecast &quot;phi=[0.4]&quot; &quot;x=[100, 102, 105, 104, 108]&quot; h=3
+forecasts = [109.6,110.24,110.496]
+forecast = 110.496
+  by: Forecasts of an ARIMA(p,1,0) model  (forecast d_t = x_t - x_{t-1} by the AR(p) recursion, xhat_{n+j} = xhat_{n+j-1} + dhat_{n+j})
+  assumes: stationary AR part; no constant (no drift); n &gt;= p + 2</code></pre>
+<p><strong>What the worked example means:</strong> This calculation produces an h-step forecast for an ARIMA model with a single integration order and no drift. It begins by modeling the differenced series as a stationary autoregressive process of order p, using coefficients [0.4] to predict future changes in the level. These predicted differences are then summed cumulatively starting from the most recent observed value [100, 102, 105, 104, 108]. The resulting output 110.496 represents the expected level of the series at horizon 3, assuming the underlying trend continues without additional constant shifts.</p>
+<h4 id="partial_autocorrelations_from_autocorrelations">Partial autocorrelations from autocorrelations — <code>partial_autocorrelations_from_autocorrelations</code></h4>
+<p>The partial autocorrelations phi_11..phi_pp implied by autocorrelations rho_1..rho_p (Durbin-Levinson).</p>
+<div class="math">\[\phi_{kk} = \frac{\rho_k-\sum_{j=1}^{k-1}\phi_{k-1,j}\rho_{k-j}}{1-\sum_{j=1}^{k-1}\phi_{k-1,j}\rho_j}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>rho</code></td><td>in</td><td>the autocorrelations rho_1..rho_p</td><td>—</td></tr><tr><td><code>pacf</code></td><td>out</td><td>partial autocorrelations at lags 1..p</td><td>—</td></tr><tr><td><code>last</code></td><td>out</td><td>phi_pp</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> the autocorrelations form a positive definite sequence.</p>
+<pre><code class="shell">$ time-series solve partial_autocorrelations_from_autocorrelations &quot;rho=[0.6, 0.3, 0.1]&quot;
+pacf = [0.6,-0.09375,-0.06403940886699507]
+last = -0.06403940887
+  by: Partial autocorrelations from autocorrelations  (Durbin-Levinson recursion)
+  assumes: the autocorrelations form a positive definite sequence</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the partial autocorrelations implied by a given sequence of autocorrelations using the Durbin-Levinson recursion. The process iteratively isolates the direct relationship between observations separated by specific lags, removing the influence of intermediate time points. The resulting value for the last lag, -0.0640394, represents the strength of this direct link after accounting for all prior dependencies captured in the output set [0.6, -0.09375, -0.0640394].</p>
+<h4 id="yule_walker_from_autocorrelations">Yule-Walker equations from autocorrelations — <code>yule_walker_from_autocorrelations</code></h4>
+<p>Solve the Yule-Walker equations for the AR(p) coefficients given the autocorrelations rho_1..rho_p, and the ratio of the innovation variance to the process variance.</p>
+<div class="math">\[\rho_k = \sum_{j=1}^{p}\phi_j\,\rho_{|k-j|},\ k = 1..p\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>rho</code></td><td>in</td><td>the autocorrelations rho_1..rho_p</td><td>—</td></tr><tr><td><code>phi</code></td><td>out</td><td>the AR coefficients phi_1..phi_p</td><td>—</td></tr><tr><td><code>phi1</code></td><td>out</td><td>phi_1</td><td>—</td></tr><tr><td><code>variance_ratio</code></td><td>out</td><td>sigma^2 / gamma_0 = 1 - sum phi_j rho_j</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> the autocorrelations form a positive definite sequence.</p>
+<pre><code class="shell">$ time-series solve yule_walker_from_autocorrelations &quot;rho=[0.6, 0.2]&quot;
+phi = [0.75,-0.24999999999999994]
+phi1 = 0.75
+variance_ratio = 0.6
+  by: Yule-Walker equations from autocorrelations  (Durbin-Levinson recursion on rho_1..rho_p)
+  assumes: the autocorrelations form a positive definite sequence</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the parameters for an autoregressive model of order p by applying the Durbin-Levinson recursion to the provided autocorrelations. The resulting coefficients, denoted as [0.75, -0.25], define how past values influence the current value in the process. Additionally, the method computes the ratio of the innovation variance to the total process variance, shown here as 0.6, which indicates the proportion of variability that cannot be explained by the linear dependence on previous observations.</p>
+<h3>ARMA theory (13)</h3>
+<h4 id="forecast_error_variance">h-step forecast error variance of an ARMA model — <code>forecast_error_variance</code></h4>
+<p>The variance (and standard deviation) of the h-step-ahead forecast error of a stationary ARMA(p,q) with known parameters: sigma^2 (psi_0^2 + ... + psi_{h-1}^2).</p>
+<div class="math">\[\operatorname{Var}(e_n(h)) = \sigma^2\sum_{j=0}^{h-1}\psi_j^2\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>theta</code></td><td>in</td><td>MA coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>sigma2</code></td><td>in</td><td>innovation variance sigma^2</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon</td><td>—</td></tr><tr><td><code>variance</code></td><td>out</td><td>forecast error variance</td><td>—</td></tr><tr><td><code>sd</code></td><td>out</td><td>forecast error standard deviation</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> stationary AR part; known parameters (no estimation error).</p>
+<pre><code class="shell">$ time-series solve forecast_error_variance &quot;phi=[0.5]&quot; &quot;theta=[0.3]&quot; sigma2=2 h=3
+variance = 3.6
+sd = 1.897366596
+  by: h-step forecast error variance of an ARMA model  (psi weights, then sigma^2 sum_{j=0}^{h-1} psi_j^2)
+  sigma2 = 2
+  assumes: stationary AR part; known parameters (no estimation error)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the uncertainty of a forecast made h steps into the future using an ARMA model. It computes the variance of the forecast error as 3.6, derived from the innovation variance and the sum of squared psi weights up to horizon h-1. The corresponding standard deviation, which represents the typical magnitude of the error, is 1.89737. This result assumes that the autoregressive part of the model is stationary and that all parameters are known exactly.</p>
+<h4 id="ma2_invertibility">Invertibility of an MA(2) process — <code>ma2_invertibility</code></h4>
+<p>Whether x_t = e_t + theta1 e_{t-1} + theta2 e_{t-2} is invertible: the largest modulus of the inverse roots (roots of z^2 + theta1 z + theta2) must be below 1.</p>
+<div class="math">\[z^2 + \theta_1 z + \theta_2 = 0,\quad \text{invertible} \iff \max|z_i| &lt; 1\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>theta1</code></td><td>in</td><td>theta_1</td><td>—</td></tr><tr><td><code>theta2</code></td><td>in</td><td>theta_2</td><td>—</td></tr><tr><td><code>invertible</code></td><td>out</td><td>yes or no</td><td>—</td></tr><tr><td><code>max_modulus</code></td><td>out</td><td>largest modulus of the inverse roots</td><td>—</td></tr><tr><td><code>roots</code></td><td>out</td><td>real or complex</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> plus-sign MA convention; a modulus of exactly 1 counts as not invertible.</p>
+<pre><code class="shell">$ time-series solve ma2_invertibility theta1=0.5 theta2=0.3
+invertible = yes
+max_modulus = 0.5477225575
+roots = complex
+  by: Invertibility of an MA(2) process  (roots of z^2 + theta1 z + theta2 by the quadratic formula)
+  theta1 = 0.5
+  theta2 = 0.3
+  assumes: plus-sign MA convention; a modulus of exactly 1 counts as not invertible</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines if the moving average process is invertible by finding the roots of the characteristic equation using the provided coefficients. The result shows that the largest modulus of these inverse roots is 0.547723, leading to an assessment of yes. Invertibility ensures that the current error term can be uniquely recovered from past observations, which is crucial for accurate forecasting and parameter estimation.</p>
+<h4 id="ar1_properties">Mean, variance and autocorrelation of an AR(1) process — <code>ar1_properties</code></h4>
+<p>For a stationary AR(1) x_t = c + phi x_{t-1} + e_t: the mean c/(1 - phi), the variance sigma^2/(1 - phi^2), and the lag-k autocorrelation phi^k and autocovariance.</p>
+<div class="math">\[\mu = \frac{c}{1-\phi},\ \gamma_0 = \frac{\sigma^2}{1-\phi^2},\ \rho_k = \phi^k\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficient, |phi| &lt; 1</td><td>—</td></tr><tr><td><code>sigma2</code></td><td>in</td><td>innovation variance sigma^2</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the lag k (default 1) (optional)</td><td>—</td></tr><tr><td><code>c</code></td><td>in</td><td>the constant c (default 0) (optional)</td><td>—</td></tr><tr><td><code>mean</code></td><td>out</td><td>c / (1 - phi)</td><td>—</td></tr><tr><td><code>variance</code></td><td>out</td><td>sigma^2 / (1 - phi^2)</td><td>—</td></tr><tr><td><code>acf_k</code></td><td>out</td><td>phi^k</td><td>—</td></tr><tr><td><code>acov_k</code></td><td>out</td><td>variance x phi^k</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> |phi| &lt; 1; sigma^2 &gt; 0.</p>
+<pre><code class="shell">$ time-series solve ar1_properties phi=0.6 sigma2=4 c=2
+mean = 5
+variance = 6.25
+acf_k = 0.6
+acov_k = 3.75
+  by: Mean, variance and autocorrelation of an AR(1) process  (stationary moments of the AR(1) recursion)
+  phi = 0.6
+  sigma2 = 4
+  c = 2
+  assumes: |phi| &lt; 1; sigma^2 &gt; 0</code></pre>
+<p>In the worked example, phi = 0.6, sigma2 = 4, c = 2 go through the equation above and give mean = 5, variance = 6.25, acf_k = 0.6, acov_k = 3.75. It applies only when |phi| &lt; 1; sigma^2 &gt; 0: outside that it says what is wrong instead of returning a number.</p>
+<h4 id="pi_weights">Pi weights (AR-infinity representation) of an ARMA process — <code>pi_weights</code></h4>
+<p>The weights pi_1..pi_K of x_t = sum_{j&gt;=1} pi_j x_{t-j} + e_t for an invertible ARMA(p,q).</p>
+<div class="math">\[\pi(L) = 1 - \sum_{j\ge1}\pi_j L^j = \frac{\phi(L)}{\theta(L)}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>theta</code></td><td>in</td><td>MA coefficients ([0] for none), invertible</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of weights (default 10) (optional)</td><td>—</td></tr><tr><td><code>pi</code></td><td>out</td><td>pi_1..pi_K</td><td>—</td></tr><tr><td><code>pi1</code></td><td>out</td><td>pi_1 = phi_1 + theta_1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> invertible MA part; stationary AR part; plus-sign MA convention.</p>
+<pre><code class="shell">$ time-series solve pi_weights &quot;phi=[0.5]&quot; &quot;theta=[0.3]&quot; K=5
+pi = [0.8,-0.24,0.072,-0.021599999999999998,0.006479999999999999]
+pi1 = 0.8
+  by: Pi weights (AR-infinity representation) of an ARMA process  (coefficients c_j of phi(L)/theta(L); pi_j = -c_j)
+  assumes: invertible MA part; stationary AR part; plus-sign MA convention</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the autoregressive weights for an invertible ARMA process, expressing it as an infinite sum of past values. The primary weight, 0.8, captures the direct effect of the lag-one observation on the current value, derived from the input coefficients [0.5] and [0.3]. These weights allow practitioners to interpret how historical data points contribute to the present state under stationarity assumptions.</p>
+<h4 id="psi_weights">Psi weights (MA-infinity representation) of an ARMA process — <code>psi_weights</code></h4>
+<p>The weights psi_1..psi_K of x_t = sum_{j&gt;=0} psi_j e_{t-j} (psi_0 = 1) for a stationary ARMA(p,q); they are also the impulse response.</p>
+<div class="math">\[\psi_j = \theta_j + \sum_{i=1}^{\min(j,p)}\phi_i\,\psi_{j-i},\ \psi_0 = 1\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>theta</code></td><td>in</td><td>MA coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of weights (default 10) (optional)</td><td>—</td></tr><tr><td><code>psi</code></td><td>out</td><td>psi_1..psi_K</td><td>—</td></tr><tr><td><code>psi1</code></td><td>out</td><td>psi_1 = phi_1 + theta_1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> stationary AR part; plus-sign MA convention.</p>
+<pre><code class="shell">$ time-series solve psi_weights &quot;phi=[0.5]&quot; &quot;theta=[0.3]&quot; K=5
+psi = [0.8,0.4,0.2,0.1,0.05]
+psi1 = 0.8
+  by: Psi weights (MA-infinity representation) of an ARMA process  (psi_j = theta_j + sum_{i=1}^{min(j,p)} phi_i psi_{j-i})
+  assumes: stationary AR part; plus-sign MA convention</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the impulse response weights for an autoregressive moving average process. The first weight, 0.8, equals the sum of the first autoregressive coefficient and the first moving average coefficient. These values describe how past errors influence the current observation, with the magnitude indicating the persistence of shocks in the time series.</p>
+<h4 id="ar2_stationarity">Stationarity of an AR(2) process — <code>ar2_stationarity</code></h4>
+<p>Whether x_t = phi1 x_{t-1} + phi2 x_{t-2} + e_t is stationary: the largest modulus of the inverse characteristic roots (roots of z^2 - phi1 z - phi2) must be below 1.</p>
+<div class="math">\[z^2 - \phi_1 z - \phi_2 = 0,\quad \text{stationary} \iff \max|z_i| &lt; 1\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi1</code></td><td>in</td><td>phi_1</td><td>—</td></tr><tr><td><code>phi2</code></td><td>in</td><td>phi_2</td><td>—</td></tr><tr><td><code>stationary</code></td><td>out</td><td>yes or no</td><td>—</td></tr><tr><td><code>max_modulus</code></td><td>out</td><td>largest modulus of the inverse roots</td><td>—</td></tr><tr><td><code>roots</code></td><td>out</td><td>real or complex</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> a modulus of exactly 1 (unit root) counts as not stationary.</p>
+<pre><code class="shell">$ time-series solve ar2_stationarity phi1=0.5 phi2=0.3
+stationary = yes
+max_modulus = 0.8520797289
+roots = real
+  by: Stationarity of an AR(2) process  (roots of z^2 - phi1 z - phi2 by the quadratic formula)
+  phi1 = 0.5
+  phi2 = 0.3
+  assumes: a modulus of exactly 1 (unit root) counts as not stationary</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines if the autoregressive model is stable by solving for the characteristic roots using the coefficients 0.5 and 0.3. The result shows that the largest modulus among these roots is 0.85208, which indicates the process is yes. For stability, this value must be strictly less than one; otherwise, the series may exhibit explosive behavior or contain a unit root.</p>
+<h4 id="ar2_theoretical_acf">Theoretical autocorrelations of an AR(2) process — <code>ar2_theoretical_acf</code></h4>
+<p>The autocorrelations rho_1..rho_K of a stationary AR(2) process from the Yule-Walker recursion rho_1 = phi1/(1 - phi2), rho_k = phi1 rho_{k-1} + phi2 rho_{k-2}.</p>
+<div class="math">\[\rho_1 = \frac{\phi_1}{1-\phi_2},\ \rho_k = \phi_1\rho_{k-1} + \phi_2\rho_{k-2}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi1</code></td><td>in</td><td>phi_1</td><td>—</td></tr><tr><td><code>phi2</code></td><td>in</td><td>phi_2</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of lags (default 5) (optional)</td><td>—</td></tr><tr><td><code>acf</code></td><td>out</td><td>rho_1..rho_K</td><td>—</td></tr><tr><td><code>rho1</code></td><td>out</td><td>rho_1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> stationary AR(2).</p>
+<pre><code class="shell">$ time-series solve ar2_theoretical_acf phi1=0.5 phi2=0.3
+acf = [0.7142857142857143,0.6571428571428571,0.5428571428571428,0.4685714285714285,0.39714285714285713]
+rho1 = 0.7142857143
+  by: Theoretical autocorrelations of an AR(2) process  (Yule-Walker recursion)
+  phi1 = 0.5
+  phi2 = 0.3
+  assumes: stationary AR(2)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the theoretical autocorrelations for a stationary autoregressive process of order two. Using the Yule-Walker recursion, it computes the correlation at lag one as 0.714286 based on the coefficients 0.5 and 0.3. The resulting series [0.714286, 0.657143, 0.542857, 0.468571, 0.397143] describes how observations relate to their past values across multiple lags.</p>
+<h4 id="arma11_theoretical_acf">Theoretical autocorrelations of an ARMA(1,1) process — <code>arma11_theoretical_acf</code></h4>
+<p>The autocorrelations rho_1..rho_K of x_t = phi x_{t-1} + e_t + theta e_{t-1}.</p>
+<div class="math">\[\rho_1 = \frac{(1+\phi\theta)(\phi+\theta)}{1+2\phi\theta+\theta^2},\ \rho_k = \phi\,\rho_{k-1}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficient, |phi| &lt; 1</td><td>—</td></tr><tr><td><code>theta</code></td><td>in</td><td>MA coefficient (plus-sign convention)</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of lags (default 5) (optional)</td><td>—</td></tr><tr><td><code>acf</code></td><td>out</td><td>rho_1..rho_K</td><td>—</td></tr><tr><td><code>rho1</code></td><td>out</td><td>rho_1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> |phi| &lt; 1; x_t = phi x_{t-1} + e_t + theta e_{t-1}.</p>
+<pre><code class="shell">$ time-series solve arma11_theoretical_acf phi=0.6 theta=0.3
+acf = [0.7324137931034482,0.4394482758620689,0.26366896551724134,0.1582013793103448,0.09492082758620689]
+rho1 = 0.7324137931
+  by: Theoretical autocorrelations of an ARMA(1,1) process  (rho_1 = (1 + phi theta)(phi + theta)/(1 + 2 phi theta + theta^2); rho_k = phi rho_{k-1})
+  phi = 0.6
+  theta = 0.3
+  assumes: |phi| &lt; 1; x_t = phi x_{t-1} + e_t + theta e_{t-1}</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the theoretical autocorrelations for an ARMA(1,1) process using the specified autoregressive and moving average coefficients. The lag-one correlation is computed as 0.732414, while subsequent values follow a geometric decay pattern defined by the autoregressive parameter. These results represent the expected linear dependence between observations separated by specific time intervals under the assumption of stationarity.</p>
+<h4 id="arma_theoretical_acf">Theoretical autocorrelations of an ARMA(p,q) process — <code>arma_theoretical_acf</code></h4>
+<p>The autocorrelations rho_1..rho_K of a stationary ARMA(p,q) process x_t = sum phi_i x_{t-i} + e_t + sum theta_j e_{t-j}.</p>
+<div class="math">\[\gamma_k - \sum_{i=1}^{p}\phi_i\gamma_{k-i} = \sigma^2\sum_{j=k}^{q}\theta_j\psi_{j-k}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficients phi_1..phi_p (stationary; [0] for none)</td><td>—</td></tr><tr><td><code>theta</code></td><td>in</td><td>MA coefficients theta_1..theta_q ([0] for none)</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of lags (default 5) (optional)</td><td>—</td></tr><tr><td><code>acf</code></td><td>out</td><td>rho_1..rho_K</td><td>—</td></tr><tr><td><code>rho1</code></td><td>out</td><td>rho_1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> stationary AR part; plus-sign MA convention.</p>
+<pre><code class="shell">$ time-series solve arma_theoretical_acf &quot;phi=[0.5, 0.2]&quot; &quot;theta=[0.4]&quot;
+acf = [0.8012048192771084,0.6006024096385542,0.46054216867469877,0.35039156626506024,0.2673042168674699]
+rho1 = 0.8012048193
+  by: Theoretical autocorrelations of an ARMA(p,q) process  (solve the linear equations for gamma_0..gamma_p, then gamma_k = sum phi_i gamma_{k-i} + sigma^2 sum theta_j psi_{j-k})
+  assumes: stationary AR part; plus-sign MA convention</code></pre>
+<p><strong>What the worked example means:</strong> The theoretical autocorrelation at lag one is 0.801205, derived from the AR coefficients [0.5, 0.2] and MA coefficients [0.4].</p>
+<h4 id="ma_theoretical_acf">Theoretical autocorrelations of an MA(q) process — <code>ma_theoretical_acf</code></h4>
+<p>The autocorrelations rho_1..rho_K of x_t = e_t + theta_1 e_{t-1} + ... + theta_q e_{t-q}; they vanish beyond lag q.</p>
+<div class="math">\[\rho_k = \frac{\theta_k + \sum_{j=1}^{q-k}\theta_j\theta_{j+k}}{1+\sum_{j=1}^{q}\theta_j^2}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>theta</code></td><td>in</td><td>the MA coefficients theta_1..theta_q (plus-sign convention)</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of lags (default q + 1) (optional)</td><td>—</td></tr><tr><td><code>acf</code></td><td>out</td><td>rho_1..rho_K</td><td>—</td></tr><tr><td><code>rho1</code></td><td>out</td><td>rho_1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> x_t = e_t + sum theta_j e_{t-j} (plus signs).</p>
+<pre><code class="shell">$ time-series solve ma_theoretical_acf &quot;theta=[0.5, 0.3]&quot;
+acf = [0.48507462686567165,0.22388059701492535,0.0]
+rho1 = 0.4850746269
+  by: Theoretical autocorrelations of an MA(q) process  (rho_k = (theta_k + sum_{j=1}^{q-k} theta_j theta_{j+k}) / (1 + sum theta_j^2), 0 for k &gt; q)
+  assumes: x_t = e_t + sum theta_j e_{t-j} (plus signs)</code></pre>
+<p>In the worked example, theta = [0.5, 0.3] go through the equation above and give acf = [0.4850746269, 0.223880597, 0], rho1 = 0.4850746269. It applies only when x_t = e_t + sum theta_j e_{t-j} (plus signs): outside that it says what is wrong instead of returning a number.</p>
+<h4 id="arma_theoretical_pacf">Theoretical partial autocorrelations of an ARMA(p,q) process — <code>arma_theoretical_pacf</code></h4>
+<p>The partial autocorrelations phi_11..phi_KK of a stationary ARMA(p,q) process (Durbin-Levinson on its exact autocorrelations).</p>
+<div class="math">\[\phi_{kk} = \frac{\rho_k-\sum_{j=1}^{k-1}\phi_{k-1,j}\rho_{k-j}}{1-\sum_{j=1}^{k-1}\phi_{k-1,j}\rho_j}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>theta</code></td><td>in</td><td>MA coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of lags (default 5) (optional)</td><td>—</td></tr><tr><td><code>pacf</code></td><td>out</td><td>phi_11..phi_KK</td><td>—</td></tr><tr><td><code>pacf1</code></td><td>out</td><td>phi_11 = rho_1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> stationary AR part; plus-sign MA convention.</p>
+<pre><code class="shell">$ time-series solve arma_theoretical_pacf &quot;phi=[0.5]&quot; &quot;theta=[0.4]&quot;
+pacf = [0.6923076923076924,-0.2556818181818184,0.1010327795240235,-0.04033486904612524,0.016128951324258605]
+pacf1 = 0.6923076923
+  by: Theoretical partial autocorrelations of an ARMA(p,q) process  (exact autocovariances, then the Durbin-Levinson recursion)
+  assumes: stationary AR part; plus-sign MA convention</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the theoretical partial autocorrelations for a stationary Autoregressive Moving Average process using the Durbin-Levinson recursion on exact autocovariances. The result, represented as [0.692308, -0.255682, 0.101033, -0.0403349, 0.016129], quantifies the direct linear relationship between observations separated by specific lags after accounting for intermediate correlations. For instance, the first partial autocorrelation 0.692308 equals the lag-one autocorrelation, while subsequent values depend on the AR coefficients [0.5] and MA coefficients [0.4]. These values help identify the order of the autoregressive component in the time series model.</p>
+<h4 id="ma1_theoretical_pacf">Theoretical partial autocorrelations of an MA(1) process — <code>ma1_theoretical_pacf</code></h4>
+<p>The partial autocorrelations phi_11..phi_KK of x_t = e_t + theta e_{t-1} (they decay, never cut off).</p>
+<div class="math">\[\phi_{kk} = -\frac{(-\theta)^k(1-\theta^2)}{1-\theta^{2(k+1)}}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>theta</code></td><td>in</td><td>MA coefficient, |theta| != 1</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>number of lags (default 5) (optional)</td><td>—</td></tr><tr><td><code>pacf</code></td><td>out</td><td>phi_11..phi_KK</td><td>—</td></tr><tr><td><code>pacf1</code></td><td>out</td><td>phi_11 = theta/(1 + theta^2)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> |theta| != 1; plus-sign MA convention.</p>
+<pre><code class="shell">$ time-series solve ma1_theoretical_pacf theta=0.6
+pacf = [0.441176470588,-0.241675617615,0.140601566406,-0.0834485816626,0.0498749669471]
+pacf1 = 0.4411764706
+  by: Theoretical partial autocorrelations of an MA(1) process  (closed form phi_kk = -(-theta)^k (1 - theta^2)/(1 - theta^(2(k+1))))
+  theta = 0.6
+  assumes: |theta| != 1; plus-sign MA convention</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the theoretical partial autocorrelations for an MA(1) process using the coefficient 0.6. The result, represented by [0.441176, -0.241676, 0.140602, -0.0834486, 0.049875], illustrates how these values decline over lags rather than cutting off abruptly. Specifically, the first value 0.441176 establishes the starting point of this decay pattern.</p>
+<h4 id="arma_variance">Variance and lag-1 autocovariance of an ARMA(p,q) process — <code>arma_variance</code></h4>
+<p>The process variance gamma_0 and lag-1 autocovariance gamma_1 of a stationary ARMA(p,q) process with innovation variance sigma^2.</p>
+<div class="math">\[\gamma_0 = \sigma^2\sum_{j\ge0}\psi_j^2\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>phi</code></td><td>in</td><td>AR coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>theta</code></td><td>in</td><td>MA coefficients ([0] for none)</td><td>—</td></tr><tr><td><code>sigma2</code></td><td>in</td><td>innovation (white-noise) variance sigma^2</td><td>—</td></tr><tr><td><code>gamma0</code></td><td>out</td><td>the variance of the process</td><td>—</td></tr><tr><td><code>gamma1</code></td><td>out</td><td>the lag-1 autocovariance</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> stationary AR part; sigma^2 &gt; 0.</p>
+<pre><code class="shell">$ time-series solve arma_variance &quot;phi=[0.5]&quot; &quot;theta=[0.4]&quot; sigma2=2
+gamma0 = 4.16
+gamma1 = 2.88
+  by: Variance and lag-1 autocovariance of an ARMA(p,q) process  (exact linear equations for the autocovariances)
+  sigma2 = 2
+  assumes: stationary AR part; sigma^2 &gt; 0</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the long-run variability and immediate dependence of a stationary autoregressive moving average process. Given the autoregressive coefficients, moving average coefficients, and innovation variance, the method solves exact linear equations for the autocovariances. The resulting variance, 4.16, indicates the overall scale of fluctuations in the series, while the lag-one autocovariance, 2.88, quantifies how strongly consecutive observations are related.</p>
+<h3>Autocorrelation (6)</h3>
+<h4 id="bartlett_standard_error">Bartlett standard error of a sample autocorrelation — <code>bartlett_standard_error</code></h4>
+<p>Bartlett&#x27;s standard error of r_k under the hypothesis that the autocorrelations beyond lag k - 1 are zero, and the 95 % band half-width used in correlograms.</p>
+<div class="math">\[\mathrm{se}(r_k) = \sqrt{\frac{1 + 2\sum_{j=1}^{k-1} r_j^2}{n}}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the lag k</td><td>—</td></tr><tr><td><code>se</code></td><td>out</td><td>Bartlett standard error of r_k</td><td>—</td></tr><tr><td><code>half_width_95</code></td><td>out</td><td>1.959964 x se</td><td>—</td></tr><tr><td><code>acf</code></td><td>out</td><td>the sample autocorrelation r_k</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 1 &lt;= k &lt;= n - 1; autocorrelations with denominator n.</p>
+<pre><code class="shell">$ time-series solve bartlett_standard_error &quot;x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12]&quot; k=3
+se = 0.4144598129
+half_width_95 = 0.8123263063
+acf = -0.04108527132
+  by: Bartlett standard error of a sample autocorrelation  (se_k = sqrt((1 + 2 sum_{j&lt;k} r_j^2) / n))
+  assumes: 1 &lt;= k &lt;= n - 1; autocorrelations with denominator n</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the Bartlett standard error for the sample autocorrelation at lag 3. It uses the sum of squared autocorrelations from previous lags and the sample size to estimate uncertainty under the assumption that correlations beyond lag 3 minus one are zero. The resulting standard error is 0.41446, which translates to a confidence band half-width of 0.812326. This value helps assess whether the observed autocorrelation of -0.0410853 is statistically significant.</p>
+<h4 id="box_pierce_test">Box-Pierce test — <code>box_pierce_test</code></h4>
+<p>The Box-Pierce test portmanteau statistic for no autocorrelation up to lag h and its chi-square p-value (h - model_df degrees of freedom; autocorrelations with denominator n).</p>
+<div class="math">\[Q_{BP} = n\sum_{k=1}^{h} r_k^2\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series (or residuals), oldest first</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>the number of lags h</td><td>—</td></tr><tr><td><code>model_df</code></td><td>in</td><td>parameters of a fitted ARMA model subtracted from the degrees of freedom (default 0) (optional)</td><td>—</td></tr><tr><td><code>q</code></td><td>out</td><td>the test statistic</td><td>—</td></tr><tr><td><code>p_value</code></td><td>out</td><td>upper-tail chi-square probability, df = h - model_df</td><td>—</td></tr><tr><td><code>df</code></td><td>out</td><td>degrees of freedom h - model_df</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 1 &lt;= h &lt;= n - 1; model_df &lt; h (default 0: raw series).</p>
+<pre><code class="shell">$ time-series solve box_pierce_test &quot;x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13]&quot; h=3
+q = 6.943896066
+p_value = 0.07370765771
+df = 3
+  by: Box-Pierce test  (Q = n sum_{k=1}^h r_k^2; p = P(chi2_{h-model_df} &gt; Q))
+  assumes: 1 &lt;= h &lt;= n - 1; model_df &lt; h (default 0: raw series)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the Box-Pierce portmanteau statistic to assess whether significant autocorrelation exists in the series up to lag 3. The resulting statistic is 6.9439, derived from the sum of squared sample autocorrelations scaled by the sample size. With 3 degrees of freedom, the associated p-value is 0.0737077, which indicates the probability of observing such a statistic under the null hypothesis of no serial dependence.</p>
+<h4 id="ljung_box_test">Ljung-Box test — <code>ljung_box_test</code></h4>
+<p>The Ljung-Box test portmanteau statistic for no autocorrelation up to lag h and its chi-square p-value (h - model_df degrees of freedom; autocorrelations with denominator n).</p>
+<div class="math">\[Q_{LB} = n(n+2)\sum_{k=1}^{h}\frac{r_k^2}{n-k}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series (or residuals), oldest first</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>the number of lags h</td><td>—</td></tr><tr><td><code>model_df</code></td><td>in</td><td>parameters of a fitted ARMA model subtracted from the degrees of freedom (default 0) (optional)</td><td>—</td></tr><tr><td><code>q</code></td><td>out</td><td>the test statistic</td><td>—</td></tr><tr><td><code>p_value</code></td><td>out</td><td>upper-tail chi-square probability, df = h - model_df</td><td>—</td></tr><tr><td><code>df</code></td><td>out</td><td>degrees of freedom h - model_df</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 1 &lt;= h &lt;= n - 1; model_df &lt; h (default 0: raw series).</p>
+<pre><code class="shell">$ time-series solve ljung_box_test &quot;x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12, 11, 13]&quot; h=3
+q = 9.319101598
+p_value = 0.0253357685
+df = 3
+  by: Ljung-Box test  (Q = n(n+2) sum_{k=1}^h r_k^2/(n-k); p = P(chi2_{h-model_df} &gt; Q))
+  assumes: 1 &lt;= h &lt;= n - 1; model_df &lt; h (default 0: raw series)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the Ljung-Box portmanteau test statistic for autocorrelation up to lag 3 using the series or residuals provided. The resulting statistic 9.3191 measures the cumulative deviation of sample autocorrelations from zero, adjusted for sample size and model complexity. With 3 degrees of freedom derived from the number of lags minus the model parameters, the associated p-value 0.0253358 indicates whether the observed autocorrelation structure is statistically significant.</p>
+<h4 id="sample_autocorrelation">Sample autocorrelation at lag k — <code>sample_autocorrelation</code></h4>
+<p>The sample autocorrelation r_k of a series (and r_1..r_k), with autocovariances divided by n and taken about the sample mean.</p>
+<div class="math">\[r_k = \frac{\sum_{t=1}^{n-k}(x_t-\bar x)(x_{t+k}-\bar x)}{\sum_{t=1}^{n}(x_t-\bar x)^2}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the lag k (1 &lt;= k &lt;= n - 1)</td><td>—</td></tr><tr><td><code>acf</code></td><td>out</td><td>the sample autocorrelation r_k</td><td>—</td></tr><tr><td><code>acf_list</code></td><td>out</td><td>r_1, ..., r_k</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> the series is not constant; 1 &lt;= k &lt;= n - 1; denominator n (not n - k).</p>
+<pre><code class="shell">$ time-series solve sample_autocorrelation &quot;x=[4, 6, 5, 8, 7, 9, 8, 10]&quot; k=1
+acf = 0.2721861472
+acf_list = [0.2721861471861472]
+  by: Sample autocorrelation at lag k  (r_k = c_k / c_0, c_k = (1/n) sum_{t=1}^{n-k} (x_t - xbar)(x_{t+k} - xbar))
+  assumes: the series is not constant; 1 &lt;= k &lt;= n - 1; denominator n (not n - k)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the linear relationship between data points separated by 1 time steps in the series [4, 6, 5, 8, 7, 9, 8, 10]. The result, 0.272186, represents the correlation coefficient for that specific lag. A value near one indicates strong positive repetition, while a value near zero suggests no linear connection between observations at that distance.</p>
+<h4 id="sample_autocovariance">Sample autocovariance at lag k — <code>sample_autocovariance</code></h4>
+<p>The sample autocovariance c_k of a series, divided by n and taken about the sample mean.</p>
+<div class="math">\[c_k = \frac1n\sum_{t=1}^{n-k}(x_t-\bar x)(x_{t+k}-\bar x)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the lag k (0 &lt;= k &lt;= n - 1)</td><td>—</td></tr><tr><td><code>acov</code></td><td>out</td><td>the sample autocovariance c_k</td><td>—</td></tr><tr><td><code>gamma0</code></td><td>out</td><td>c_0, the variance divided by n</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 0 &lt;= k &lt;= n - 1; denominator n (not n - k).</p>
+<pre><code class="shell">$ time-series solve sample_autocovariance &quot;x=[4, 6, 5, 8, 7, 9, 8, 10]&quot; k=2
+acov = 1.60546875
+gamma0 = 3.609375
+  by: Sample autocovariance at lag k  (c_k = (1/n) sum_{t=1}^{n-k} (x_t - xbar)(x_{t+k} - xbar))
+  assumes: 0 &lt;= k &lt;= n - 1; denominator n (not n - k)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines how strongly values in the series relate to each other when separated by a specific time gap. It uses the mean of the entire dataset to center the data before multiplying pairs of observations that are k steps apart, then averaging these products over the total number of observations n. The resulting value, 1.60547, quantifies this linear dependence, while 3.60938 represents the total variability of the series around its mean.</p>
+<h4 id="sample_partial_autocorrelation">Sample partial autocorrelation at lag k — <code>sample_partial_autocorrelation</code></h4>
+<p>The sample partial autocorrelation phi_kk of a series (and phi_11..phi_kk) by the Durbin-Levinson recursion on the sample autocorrelations (denominator n).</p>
+<div class="math">\[\phi_{kk} = \frac{r_k - \sum_{j=1}^{k-1}\phi_{k-1,j}\,r_{k-j}}{1-\sum_{j=1}^{k-1}\phi_{k-1,j}\,r_j}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the lag k (1 &lt;= k &lt; n/2)</td><td>—</td></tr><tr><td><code>pacf</code></td><td>out</td><td>the partial autocorrelation at lag k</td><td>—</td></tr><tr><td><code>pacf_list</code></td><td>out</td><td>partial autocorrelations at lags 1..k</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> the series is not constant; 1 &lt;= k &lt; n/2; autocovariances divided by n.</p>
+<pre><code class="shell">$ time-series solve sample_partial_autocorrelation &quot;x=[4, 6, 5, 8, 7, 9, 8, 10, 9, 12]&quot; k=2
+pacf = 0.4016581953
+pacf_list = [0.3596899224806201,0.40165819531144314]
+  by: Sample partial autocorrelation at lag k  (Durbin-Levinson: phi_kk = (r_k - sum phi_{k-1,j} r_{k-j}) / (1 - sum phi_{k-1,j} r_j))
+  assumes: the series is not constant; 1 &lt;= k &lt; n/2; autocovariances divided by n</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the sample partial autocorrelation at lag 2 using the Durbin-Levinson recursion on the series data. The result, 0.401658, represents the correlation between observations separated by 2 steps, with the influence of all shorter lags removed. A value near zero suggests that the relationship at this distance is explained by closer dependencies, while a significant non-zero value indicates a direct link in the time series structure.</p>
+<h3>Change points (5)</h3>
+<h4 id="cusum_change_point">CUSUM estimate of a change point — <code>cusum_change_point</code></h4>
+<p>The change point estimated by the cumulative sum of deviations from the overall mean, S_k = sum_{t&lt;=k}(x_t - xbar): the k with the largest |S_k|.</p>
+<div class="math">\[S_k = \sum_{t=1}^{k}(x_t - \bar x),\quad \hat k = \arg\max_k |S_k|\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>change_index</code></td><td>out</td><td>k with the largest |S_k| (first segment x_1..x_k)</td><td>—</td></tr><tr><td><code>max_cusum</code></td><td>out</td><td>max |S_k|</td><td>—</td></tr><tr><td><code>mean_before</code></td><td>out</td><td>mean of x_1..x_k</td><td>—</td></tr><tr><td><code>mean_after</code></td><td>out</td><td>mean of x_{k+1}..x_n</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> k = 1..n-1; ties: the smallest k.</p>
+<pre><code class="shell">$ time-series solve cusum_change_point &quot;x=[5, 6, 5, 7, 6, 12, 13, 12, 14]&quot;
+change_index = 5
+max_cusum = 15.44444444
+mean_before = 5.8
+mean_after = 12.75
+  by: CUSUM estimate of a change point  (running sum of deviations from the mean; argmax of its absolute value)
+  assumes: k = 1..n-1; ties: the smallest k</code></pre>
+<p><strong>What the worked example means:</strong> This calculation identifies the single most likely location of an abrupt shift in the mean level of the time series. Summing the deviations of each observation from the overall average tracks how far the running total drifts from zero. The index with the largest absolute cumulative sum, reported here as 5, marks the boundary between the first segment and the second. At this split, the mean of the initial data points is 5.8, while the mean of the remaining points is 12.75, highlighting the magnitude of the detected structural break.</p>
+<h4 id="penalised_change_points">Multiple change points with a penalty (PELT) — <code>penalised_change_points</code></h4>
+<p>The segmentation minimising the within-segment sum of squares plus a penalty per change point (optimal partitioning, as found by PELT): the number and positions of the changes in the mean.</p>
+<div class="math">\[\min_{K,\tau}\sum_{i=0}^{K}\mathrm{SS}(\tau_i{+}1{:}\tau_{i+1}) + \beta K\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>penalty</code></td><td>in</td><td>penalty per change point (&gt; 0)</td><td>—</td></tr><tr><td><code>n_changes</code></td><td>out</td><td>number of change points</td><td>—</td></tr><tr><td><code>change_indices</code></td><td>out</td><td>ends of all segments but the last</td><td>—</td></tr><tr><td><code>cost</code></td><td>out</td><td>within-segment sum of squares of the chosen segmentation</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> penalty &gt; 0; segments of any length &gt;= 1; ties: the earlier last change.</p>
+<pre><code class="shell">$ time-series solve penalised_change_points &quot;x=[5, 6, 5, 12, 13, 12, 20, 21, 19, 20]&quot; penalty=10
+n_changes = 2
+change_indices = [3,6]
+cost = 3.333333333
+  by: Multiple change points with a penalty (PELT)  (optimal partitioning F(b) = min_a F(a) + SS(a+1:b) + penalty)
+  penalty = 10
+  assumes: penalty &gt; 0; segments of any length &gt;= 1; ties: the earlier last change</code></pre>
+<p><strong>What the worked example means:</strong> This method segments the time series by minimizing the within-segment sum of squares plus a penalty for each detected change. The result indicates that the optimal partitioning found 2 distinct shifts in the mean level of the data. These changes occur at the indices listed in [3, 6], and the overall fit quality is quantified by the cost value of 3.33333. This approach balances the accuracy of the segmentation against the complexity of having too many breakpoints.</p>
+<h4 id="change_point_mean_shift">Single change point in the mean (least squares) — <code>change_point_mean_shift</code></h4>
+<p>The single change point that minimises the total within-segment sum of squares (a shift in the mean), with the means before and after.</p>
+<div class="math">\[\hat k = \arg\min_k\Big[\sum_{t\le k}(x_t-\bar x_{1:k})^2 + \sum_{t&gt;k}(x_t-\bar x_{k+1:n})^2\Big]\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>min_size</code></td><td>in</td><td>minimum segment length (default 2) (optional)</td><td>—</td></tr><tr><td><code>change_index</code></td><td>out</td><td>k: the first segment is x_1..x_k</td><td>—</td></tr><tr><td><code>mean_before</code></td><td>out</td><td>mean of x_1..x_k</td><td>—</td></tr><tr><td><code>mean_after</code></td><td>out</td><td>mean of x_{k+1}..x_n</td><td>—</td></tr><tr><td><code>cost</code></td><td>out</td><td>total within-segment sum of squares</td><td>—</td></tr><tr><td><code>reduction</code></td><td>out</td><td>sum of squares removed by the split</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> each segment has at least min_size values; ties: the smallest k.</p>
+<pre><code class="shell">$ time-series solve change_point_mean_shift &quot;x=[5, 6, 5, 7, 6, 12, 13, 12, 14]&quot;
+change_index = 5
+mean_before = 5.8
+mean_after = 12.75
+cost = 5.55
+reduction = 107.3388889
+  by: Single change point in the mean (least squares)  (exhaustive search over every admissible split)
+  assumes: each segment has at least min_size values; ties: the smallest k</code></pre>
+<p><strong>What the worked example means:</strong> The change point at index 5 yields a pre-mean of 5.8 and post-mean of 12.75, reducing the sum of squares by 107.339.</p>
+<h4 id="tabular_cusum">Tabular CUSUM control chart — <code>tabular_cusum</code></h4>
+<p>The upper and lower tabular CUSUM statistics for a target mean mu0 with allowance k, and the first time either exceeds the decision interval h.</p>
+<div class="math">\[C_t^+ = \max(0,\,C_{t-1}^+ + x_t - \mu_0 - k),\quad C_t^- = \max(0,\,C_{t-1}^- + \mu_0 - k - x_t)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the observations, oldest first</td><td>—</td></tr><tr><td><code>mu0</code></td><td>in</td><td>target (in-control) mean</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>allowance (reference value) k &gt;= 0</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>decision interval h &gt; 0</td><td>—</td></tr><tr><td><code>c_plus</code></td><td>out</td><td>final upper CUSUM C+_n</td><td>—</td></tr><tr><td><code>c_minus</code></td><td>out</td><td>final lower CUSUM C-_n</td><td>—</td></tr><tr><td><code>alarm_index</code></td><td>out</td><td>first t with C+_t &gt; h or C-_t &gt; h (0 if none)</td><td>—</td></tr><tr><td><code>side</code></td><td>out</td><td>upper, lower, both or none</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> C+_0 = C-_0 = 0; an alarm needs a value strictly above h.</p>
+<pre><code class="shell">$ time-series solve tabular_cusum &quot;x=[10.2, 9.8, 10.5, 11.2, 11.8, 12.1, 11.9]&quot; mu0=10 k=0.5 h=4
+c_plus = 5
+c_minus = 0
+alarm_index = 7
+side = upper
+  by: Tabular CUSUM control chart  (C+_t = max(0, C+_{t-1} + x_t - mu0 - k); C-_t = max(0, C-_{t-1} + mu0 - k - x_t))
+  mu0 = 10
+  k = 0.5
+  h = 4
+  assumes: C+_0 = C-_0 = 0; an alarm needs a value strictly above h</code></pre>
+<p><strong>What the worked example means:</strong> This calculation tracks cumulative deviations from the target mean 10 using an allowance of 0.5. The upper statistic reaches 5 while the lower statistic ends at 0. An alarm is triggered if either value strictly exceeds the decision interval 4, which occurs at observation index 7 for the upper direction, indicating a sustained shift in the process mean.</p>
+<h4 id="two_change_points">Two change points in the mean (optimal segmentation) — <code>two_change_points</code></h4>
+<p>The two change points that minimise the total within-segment sum of squares (three mean levels), found by exhaustive dynamic search.</p>
+<div class="math">\[\min_{i&lt;j}\ \mathrm{SS}(1{:}i)+\mathrm{SS}(i{+}1{:}j)+\mathrm{SS}(j{+}1{:}n)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>min_size</code></td><td>in</td><td>minimum segment length (default 2) (optional)</td><td>—</td></tr><tr><td><code>change_1</code></td><td>out</td><td>end of the first segment</td><td>—</td></tr><tr><td><code>change_2</code></td><td>out</td><td>end of the second segment</td><td>—</td></tr><tr><td><code>means</code></td><td>out</td><td>the three segment means</td><td>—</td></tr><tr><td><code>cost</code></td><td>out</td><td>total within-segment sum of squares</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> each segment has at least min_size values; ties: the smallest first, then second index.</p>
+<pre><code class="shell">$ time-series solve two_change_points &quot;x=[5, 6, 5, 12, 13, 12, 20, 21, 19]&quot;
+change_1 = 3
+change_2 = 6
+means = [5.333333333333333,12.333333333333334,20.0]
+cost = 3.333333333
+  by: Two change points in the mean (optimal segmentation)  (exhaustive search over all pairs of admissible splits)
+  assumes: each segment has at least min_size values; ties: the smallest first, then second index</code></pre>
+<p><strong>What the worked example means:</strong> The optimal segmentation places change points at 3 and 6, yielding a total cost of 3.33333.</p>
+<h3>Classical decomposition (4)</h3>
+<h4 id="seasonal_indices_additive">Seasonal indices (additive decomposition) — <code>seasonal_indices_additive</code></h4>
+<p>Seasonal indices of classical additive decomposition: detrend by the centred moving average, average each season, normalise the indices to sum to 0.</p>
+<div class="math">\[S_i = \bar d_i - \tfrac1m\sum_j \bar d_j,\quad d_t = x_t-\mathrm{CMA}_t\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least two full seasons)</td><td>—</td></tr><tr><td><code>m</code></td><td>in</td><td>season length</td><td>—</td></tr><tr><td><code>indices</code></td><td>out</td><td>the m seasonal indices, starting with the season of x_1</td><td>—</td></tr><tr><td><code>first</code></td><td>out</td><td>the index of the first observation&#x27;s season</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season).</p>
+<pre><code class="shell">$ time-series solve seasonal_indices_additive &quot;x=[30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]&quot; m=4
+indices = [6.484375,-6.453125,0.171875,-0.203125]
+first = 6.484375
+  by: Seasonal indices (additive decomposition)  (differences x_t - CMA_t averaged by season, minus their mean)
+  assumes: n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the fixed seasonal adjustments for an additive time series model. It begins by removing the trend using a centred moving average of length 4 from the input data [30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]. The resulting differences are averaged for each specific season position. These raw averages are then normalized so that their sum is zero, producing the final set of indices [6.48438, -6.45312, 0.171875, -0.203125]. The value 6.48438 represents the adjustment applied to observations occurring in the same season as the very first data point.</p>
+<h4 id="seasonal_indices_multiplicative">Seasonal indices (multiplicative decomposition) — <code>seasonal_indices_multiplicative</code></h4>
+<p>Seasonal indices of classical multiplicative decomposition: detrend by the centred moving average, average each season, normalise the indices to average 1.</p>
+<div class="math">\[S_i = \bar r_i \Big/ \tfrac1m\sum_j \bar r_j,\quad r_t = x_t/\mathrm{CMA}_t\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least two full seasons)</td><td>—</td></tr><tr><td><code>m</code></td><td>in</td><td>season length</td><td>—</td></tr><tr><td><code>indices</code></td><td>out</td><td>the m seasonal indices, starting with the season of x_1</td><td>—</td></tr><tr><td><code>first</code></td><td>out</td><td>the index of the first observation&#x27;s season</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season); positive data.</p>
+<pre><code class="shell">$ time-series solve seasonal_indices_multiplicative &quot;x=[30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]&quot; m=4
+indices = [1.1675854591936505,0.8390338031104935,1.002044887955251,0.9913358497406046]
+first = 1.167585459
+  by: Seasonal indices (multiplicative decomposition)  (ratios x_t / CMA_t averaged by season, divided by their mean)
+  assumes: n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season); positive data</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the seasonal indices for a multiplicative time series model. It begins by computing the centred moving average of the input series [30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51] with season length 4. The ratio of each observation to its corresponding centred moving average is then calculated. These ratios are averaged for each specific season position. Finally, these averages are normalised so that their overall mean equals one, producing the output set [1.16759, 0.839034, 1.00204, 0.991336]. The index for the first observation&#x27;s season is reported as 1.16759.</p>
+<h4 id="seasonally_adjusted_additive">Seasonally adjusted series (additive) — <code>seasonally_adjusted_additive</code></h4>
+<p>The seasonally adjusted series of classical additive decomposition: each value minus its seasonal index.</p>
+<div class="math">\[x_t^{\mathrm{SA}} = x_t - S_{t}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least two full seasons)</td><td>—</td></tr><tr><td><code>m</code></td><td>in</td><td>season length</td><td>—</td></tr><tr><td><code>adjusted</code></td><td>out</td><td>the seasonally adjusted series</td><td>—</td></tr><tr><td><code>last</code></td><td>out</td><td>the latest adjusted value</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season).</p>
+<pre><code class="shell">$ time-series solve seasonally_adjusted_additive &quot;x=[30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]&quot; m=4
+adjusted = [23.515625,27.453125,28.828125,31.203125,33.515625,36.453125,38.828125,41.203125,43.515625,45.453125,47.828125,51.203125]
+last = 51.203125
+  by: Seasonally adjusted series (additive)  (seasonal indices of classical decomposition, then x_t - S_{season(t)})
+  assumes: n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation applies classical additive decomposition to strip out regular seasonal patterns. Subtracting the specific seasonal index for each time period from the original observation isolates the trend and irregular components. The resulting adjusted series allows for a clearer comparison of underlying performance across different times without calendar-based biases. For instance, the latest adjusted value is 51.2031, which represents the current state after removing expected seasonal fluctuations.</p>
+<h4 id="seasonally_adjusted_multiplicative">Seasonally adjusted series (multiplicative) — <code>seasonally_adjusted_multiplicative</code></h4>
+<p>The seasonally adjusted series of classical multiplicative decomposition: each value divided by its seasonal index.</p>
+<div class="math">\[x_t^{\mathrm{SA}} = x_t / S_{t}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least two full seasons)</td><td>—</td></tr><tr><td><code>m</code></td><td>in</td><td>season length</td><td>—</td></tr><tr><td><code>adjusted</code></td><td>out</td><td>the seasonally adjusted series</td><td>—</td></tr><tr><td><code>last</code></td><td>out</td><td>the latest adjusted value</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season); positive data.</p>
+<pre><code class="shell">$ time-series solve seasonally_adjusted_multiplicative &quot;x=[30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]&quot; m=4
+adjusted = [25.694050712757576,25.02878897387461,28.940819267265272,31.27093608902728,34.25873428367677,35.755412819820876,38.9204121180464,41.35833482742318,42.82341785459596,46.48203666576713,47.902045683749414,51.445733565819076]
+last = 51.44573357
+  by: Seasonally adjusted series (multiplicative)  (seasonal indices of classical decomposition, then x_t / S_{season(t)})
+  assumes: n &gt;= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation&#x27;s season); positive data</code></pre>
+<p><strong>What the worked example means:</strong> This calculation produces the seasonally adjusted series [25.6941, 25.0288, 28.9408, 31.2709, 34.2587, 35.7554, 38.9204, 41.3583, 42.8234, 46.482, 47.902, 51.4457] by dividing each observation in the input series [30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51] by its corresponding seasonal index. The process assumes a multiplicative relationship where seasonal fluctuations scale with the level of the data. By removing these predictable patterns, the result reveals the underlying trend and irregular components, with the most recent adjusted value reported as 51.4457.</p>
+<h3>Cross-correlation (2)</h3>
+<h4 id="cross_correlation_best_lag">Lag of the strongest cross-correlation — <code>cross_correlation_best_lag</code></h4>
+<p>The lag k in -K..K with the largest |r_xy(k)|, r_xy(k) = corr(x_{t+k}, y_t): a positive k means y leads x by k periods.</p>
+<div class="math">\[k^* = \arg\max_{|k|\le K}|r_{xy}(k)|\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the first series</td><td>—</td></tr><tr><td><code>y</code></td><td>in</td><td>the second series (same length)</td><td>—</td></tr><tr><td><code>K</code></td><td>in</td><td>the largest lag searched</td><td>—</td></tr><tr><td><code>lag</code></td><td>out</td><td>the lag with the largest absolute cross-correlation</td><td>—</td></tr><tr><td><code>ccf</code></td><td>out</td><td>r_xy at that lag</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; K &lt;= n - 1; ties: the smallest |k|, then the positive k.</p>
+<pre><code class="shell">$ time-series solve cross_correlation_best_lag &quot;x=[1, 3, 2, 5, 4, 6, 5, 8]&quot; &quot;y=[3, 2, 5, 4, 6, 5, 8, 7]&quot; K=3
+lag = 1
+ccf = 0.7136566647
+  by: Lag of the strongest cross-correlation  (r_xy(k) for every k in -K..K, the largest in absolute value)
+  assumes: equal lengths; K &lt;= n - 1; ties: the smallest |k|, then the positive k</code></pre>
+<p><strong>What the worked example means:</strong> This calculation identifies the specific time delay where the correlation between the first series and the second series is most pronounced in absolute magnitude. By evaluating the cross-correlation function across all possible lags within the specified search range, the method determines that the peak association happens at 1 periods. The strength of this relationship is quantified by the cross-correlation coefficient of 0.713657, indicating how closely the movements of one series align with the other when shifted by this amount.</p>
+<h4 id="cross_correlation_at_lag">Sample cross-correlation at lag k — <code>cross_correlation_at_lag</code></h4>
+<p>The sample cross-correlation r_xy(k) = corr(x_{t+k}, y_t) of two equally long series (y leads x by k).</p>
+<div class="math">\[r_{xy}(k) = \frac{\frac1n\sum_{t=1}^{n-k}(x_{t+k}-\bar x)(y_t-\bar y)}{s_x s_y}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the first series</td><td>—</td></tr><tr><td><code>y</code></td><td>in</td><td>the second series (same length)</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the lag k &gt;= 0</td><td>—</td></tr><tr><td><code>ccf</code></td><td>out</td><td>the cross-correlation r_xy(k)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; 0 &lt;= k &lt;= n - 1; denominator n, standard deviations with divisor n.</p>
+<pre><code class="shell">$ time-series solve cross_correlation_at_lag &quot;x=[1, 3, 2, 5, 4, 6]&quot; &quot;y=[2, 1, 4, 3, 6, 5]&quot; k=1
+ccf = 0.6428571429
+  by: Sample cross-correlation at lag k  (r_xy(k) = (1/n) sum_t (x_{t+k} - xbar)(y_t - ybar) / (s_x s_y))
+  assumes: equal lengths; 0 &lt;= k &lt;= n - 1; denominator n, standard deviations with divisor n</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the sample cross-correlation between two time series, x and y, at a specific lag k. The result, 0.642857, indicates how strongly values in series x relate to values in series y when y leads x by 1 periods. A value close to one suggests a strong positive linear relationship at that delay, while a value near zero implies little to no linear association.</p>
+<h3>Exponential smoothing (8)</h3>
+<h4 id="ses_best_alpha">Best smoothing constant among candidates — <code>ses_best_alpha</code></h4>
+<p>Among candidate smoothing constants, the one whose simple exponential smoothing (l_0 = x_1) gives the smallest sum of squared one-step errors, with that SSE and its forecast.</p>
+<div class="math">\[\alpha^* = \arg\min_{\alpha\in A}\sum_t (x_t - \ell_{t-1}(\alpha))^2\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>alphas</code></td><td>in</td><td>candidate smoothing constants, each in (0, 1]</td><td>—</td></tr><tr><td><code>alpha</code></td><td>out</td><td>the best smoothing constant</td><td>—</td></tr><tr><td><code>sse</code></td><td>out</td><td>its sum of squared one-step errors</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>its forecast of the next period</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> l_0 = x_1; ties: the first candidate listed.</p>
+<pre><code class="shell">$ time-series solve ses_best_alpha &quot;alphas=[0.1, 0.3, 0.5]&quot; &quot;x=[20, 22, 21, 24, 23, 26]&quot;
+alpha = 0.5
+sse = 23.8125
+forecast = 24.375
+  by: Best smoothing constant among candidates  (simple exponential smoothing for each candidate; the smallest SSE)
+  assumes: l_0 = x_1; ties: the first candidate listed</code></pre>
+<p><strong>What the worked example means:</strong> Simple exponential smoothing was applied to the series [20, 22, 21, 24, 23, 26] for each candidate smoothing constant in [0.1, 0.3, 0.5]. The method calculated the one-step ahead forecasts starting with an initial level equal to the first observation. The result shows that 0.5 produced the smallest sum of squared errors, specifically 23.8125. Using this optimal constant, the forecast for the next time period is 24.375. This selection minimizes the historical prediction error among the provided options.</p>
+<h4 id="holt_damped_trend">Damped-trend Holt method — <code>holt_damped_trend</code></h4>
+<p>Holt&#x27;s method with a damped trend (damping parameter phi): the h-step forecast is l_n + (phi + phi^2 + ... + phi^h) b_n. Initial states l_0 = x_1, b_0 = x_2 - x_1 unless stated.</p>
+<div class="math">\[\hat x_{n+h} = \ell_n + (\phi+\phi^2+\dots+\phi^h)\,b_n\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>alpha</code></td><td>in</td><td>level smoothing constant, 0 &lt; alpha &lt;= 1</td><td>—</td></tr><tr><td><code>beta</code></td><td>in</td><td>trend smoothing constant, 0 &lt; beta &lt;= 1 (b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1})</td><td>—</td></tr><tr><td><code>phi</code></td><td>in</td><td>damping parameter, 0 &lt; phi &lt;= 1</td><td>—</td></tr><tr><td><code>l0</code></td><td>in</td><td>initial level l_0 (default x_1) (optional)</td><td>—</td></tr><tr><td><code>b0</code></td><td>in</td><td>initial trend b_0 (default x_2 - x_1) (optional)</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon in periods (default 1) (optional)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the h-step-ahead forecast</td><td>—</td></tr><tr><td><code>level</code></td><td>out</td><td>the final level l_n</td><td>—</td></tr><tr><td><code>trend</code></td><td>out</td><td>the final trend b_n</td><td>—</td></tr><tr><td><code>sse</code></td><td>out</td><td>sum of squared one-step errors</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 0 &lt; alpha, beta, phi &lt;= 1; l_0 = x_1, b_0 = x_2 - x_1 unless stated.</p>
+<pre><code class="shell">$ time-series solve holt_damped_trend &quot;x=[10, 12, 15, 16, 19, 21]&quot; alpha=0.5 beta=0.3 phi=0.9
+forecast = 21.66485143
+level = 20.19273161
+trend = 1.635688691
+sse = 13.01694759
+  by: Damped-trend Holt method  (l_t = alpha x_t + (1-alpha)(l_{t-1} + phi b_{t-1}); b_t = beta (l_t - l_{t-1}) + (1-beta) phi b_{t-1})
+  alpha = 0.5
+  beta = 0.3
+  phi = 0.9
+  assumes: 0 &lt; alpha, beta, phi &lt;= 1; l_0 = x_1, b_0 = x_2 - x_1 unless stated</code></pre>
+<p><strong>What the worked example means:</strong> This calculation applies Holt&#x27;s method with a damping factor to project the series forward. The model updates the level using the smoothing constant alpha and the trend using beta, while phi dampens the trend effect over time. The resulting h-step-ahead forecast is 21.6649, derived from the final estimated level of 20.1927 and trend of 1.63569. This approach assumes that any current trend will gradually weaken rather than persist indefinitely, making it suitable for series where growth or decline is expected to stabilize.</p>
+<h4 id="exponential_smoothing_update">Exponential smoothing forecast update — <code>exponential_smoothing_update</code></h4>
+<p>The next forecast by simple exponential smoothing from the previous forecast, the actual value and the smoothing constant: F_new = F + alpha (A - F).</p>
+<div class="math">\[F_{t+1} = F_t + \alpha\,(A_t - F_t)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>F</code></td><td>in</td><td>the previous forecast</td><td>—</td></tr><tr><td><code>A</code></td><td>in</td><td>the actual value of that period</td><td>—</td></tr><tr><td><code>alpha</code></td><td>in</td><td>smoothing constant, 0 &lt; alpha &lt;= 1</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the new forecast</td><td>—</td></tr><tr><td><code>error</code></td><td>out</td><td>the forecast error A - F</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 0 &lt; alpha &lt;= 1.</p>
+<pre><code class="shell">$ time-series solve exponential_smoothing_update F=100 A=110 alpha=0.2
+forecast = 102
+error = 10
+  by: Exponential smoothing forecast update  (F_new = F + alpha (A - F) = alpha A + (1 - alpha) F)
+  F = 100
+  A = 110
+  alpha = 0.2
+  assumes: 0 &lt; alpha &lt;= 1</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the next period&#x27;s forecast using simple exponential smoothing. It starts with the previous forecast of 100 and adjusts it by adding a portion of the forecast error, which is the difference between the actual value 110 and the previous forecast. The adjustment size depends on the smoothing constant 0.2. The resulting new forecast is 102, while the raw forecast error was 10. This method allows the model to react quickly to recent changes in data levels without requiring extensive historical storage.</p>
+<h4 id="holt_linear_trend">Holt&#x27;s linear trend method — <code>holt_linear_trend</code></h4>
+<p>Holt&#x27;s linear (double) exponential smoothing: level and trend updated each period, h-step forecast l_n + h b_n. Initial states l_0 = x_1 and b_0 = x_2 - x_1 (before the first observation) unless stated.</p>
+<div class="math">\[\ell_t=\alpha x_t+(1-\alpha)(\ell_{t-1}+b_{t-1}),\ b_t=\beta(\ell_t-\ell_{t-1})+(1-\beta)b_{t-1},\ \hat x_{n+h}=\ell_n+h\,b_n\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>alpha</code></td><td>in</td><td>level smoothing constant, 0 &lt; alpha &lt;= 1</td><td>—</td></tr><tr><td><code>beta</code></td><td>in</td><td>trend smoothing constant, 0 &lt; beta &lt;= 1 (b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1})</td><td>—</td></tr><tr><td><code>l0</code></td><td>in</td><td>initial level l_0 (default x_1) (optional)</td><td>—</td></tr><tr><td><code>b0</code></td><td>in</td><td>initial trend b_0 (default x_2 - x_1) (optional)</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon in periods (default 1) (optional)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the h-step-ahead forecast</td><td>—</td></tr><tr><td><code>level</code></td><td>out</td><td>the final level l_n</td><td>—</td></tr><tr><td><code>trend</code></td><td>out</td><td>the final trend b_n</td><td>—</td></tr><tr><td><code>sse</code></td><td>out</td><td>sum of squared one-step errors</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 0 &lt; alpha, beta &lt;= 1; l_0 = x_1, b_0 = x_2 - x_1 unless stated; trend form: beta multiplies (l_t - l_{t-1}) (the error-correction beta* of many texts).</p>
+<pre><code class="shell">$ time-series solve holt_linear_trend &quot;x=[10, 12, 15, 16, 19, 21]&quot; alpha=0.5 beta=0.3
+forecast = 22.65328591
+level = 20.65533969
+trend = 1.997946219
+sse = 7.492761855
+  by: Holt&#x27;s linear trend method  (l_t = alpha x_t + (1-alpha)(l_{t-1}+b_{t-1}); b_t = beta (l_t - l_{t-1}) + (1-beta) b_{t-1})
+  alpha = 0.5
+  beta = 0.3
+  assumes: 0 &lt; alpha, beta &lt;= 1; l_0 = x_1, b_0 = x_2 - x_1 unless stated; trend form: beta multiplies (l_t - l_{t-1}) (the error-correction beta* of many texts)</code></pre>
+<p><strong>What the worked example means:</strong> Holt&#x27;s linear trend method computes a future value by combining the current level with the estimated slope. Using the input series, smoothing constants, and initial states, the algorithm updates these components recursively. The resulting forecast of 22.6533 reflects the expected trajectory after projecting the final level of 20.6553 forward by the specified horizon using the trend of 1.99795.</p>
+<h4 id="holt_winters_additive">Holt-Winters additive method — <code>holt_winters_additive</code></h4>
+<p>Holt-Winters exponential smoothing with additive trend and additive seasonality: the h-step forecast, final level and trend, and the sum of squared one-step errors. initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations.</p>
+<div class="math">\[\hat x_{n+h} = \ell_n + h b_n + s_{n+h-m(\lfloor (h-1)/m\rfloor+1)}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least two full seasons)</td><td>—</td></tr><tr><td><code>m</code></td><td>in</td><td>season length</td><td>—</td></tr><tr><td><code>alpha</code></td><td>in</td><td>level smoothing constant</td><td>—</td></tr><tr><td><code>beta</code></td><td>in</td><td>trend smoothing constant</td><td>—</td></tr><tr><td><code>gamma</code></td><td>in</td><td>seasonal smoothing constant</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon in periods (default 1) (optional)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the h-step-ahead forecast</td><td>—</td></tr><tr><td><code>level</code></td><td>out</td><td>final level l_n</td><td>—</td></tr><tr><td><code>trend</code></td><td>out</td><td>final trend b_n</td><td>—</td></tr><tr><td><code>sse</code></td><td>out</td><td>sum of squared one-step errors</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 2m; 0 &lt; alpha, beta, gamma &lt;= 1; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations.</p>
+<pre><code class="shell">$ time-series solve holt_winters_additive &quot;x=[30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]&quot; m=4 alpha=0.5 beta=0.3 gamma=0.2
+forecast = 56.15883046
+level = 49.59834899
+trend = 2.048382087
+sse = 146.5534279
+  by: Holt-Winters additive method  (l_t = alpha (x_t - s_{t-m}) + (1-alpha)(l_{t-1}+b_{t-1}); s_t = gamma (x_t - l_{t-1} - b_{t-1}) + (1-gamma) s_{t-m}; b_t = beta (l_t - l_{t-1}) + (1-beta) b_{t-1})
+  alpha = 0.5
+  beta = 0.3
+  gamma = 0.2
+  assumes: n &gt;= 2m; 0 &lt; alpha, beta, gamma &lt;= 1; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations</code></pre>
+<p><strong>What the worked example means:</strong> Holt-Winters additive smoothing computes the forecast using the last estimated level, trend, and seasonal component. The result 56.1588 combines these elements for the next period. The final level 49.5983 represents the deseasonalized baseline, while the trend 2.04838 indicates the average change per period. The sum of squared errors 146.553 measures how well the model fit past data.</p>
+<h4 id="holt_winters_multiplicative">Holt-Winters multiplicative method — <code>holt_winters_multiplicative</code></h4>
+<p>Holt-Winters exponential smoothing with additive trend and multiplicative seasonality: the h-step forecast, final level and trend, and the sum of squared one-step errors. initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations.</p>
+<div class="math">\[\hat x_{n+h} = (\ell_n + h b_n)\, s_{n+h-m(\lfloor (h-1)/m\rfloor+1)}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (at least two full seasons)</td><td>—</td></tr><tr><td><code>m</code></td><td>in</td><td>season length</td><td>—</td></tr><tr><td><code>alpha</code></td><td>in</td><td>level smoothing constant</td><td>—</td></tr><tr><td><code>beta</code></td><td>in</td><td>trend smoothing constant</td><td>—</td></tr><tr><td><code>gamma</code></td><td>in</td><td>seasonal smoothing constant</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon in periods (default 1) (optional)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the h-step-ahead forecast</td><td>—</td></tr><tr><td><code>level</code></td><td>out</td><td>final level l_n</td><td>—</td></tr><tr><td><code>trend</code></td><td>out</td><td>final trend b_n</td><td>—</td></tr><tr><td><code>sse</code></td><td>out</td><td>sum of squared one-step errors</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 2m; 0 &lt; alpha, beta, gamma &lt;= 1; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations; positive data.</p>
+<pre><code class="shell">$ time-series solve holt_winters_multiplicative &quot;x=[30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]&quot; m=4 alpha=0.5 beta=0.3 gamma=0.2
+forecast = 58.65652262
+level = 49.64619786
+trend = 1.850979687
+sse = 219.2701175
+  by: Holt-Winters multiplicative method  (l_t = alpha x_t/s_{t-m} + (1-alpha)(l_{t-1}+b_{t-1}); s_t = gamma x_t/(l_{t-1}+b_{t-1}) + (1-gamma) s_{t-m}; b_t = beta (l_t - l_{t-1}) + (1-beta) b_{t-1})
+  alpha = 0.5
+  beta = 0.3
+  gamma = 0.2
+  assumes: n &gt;= 2m; 0 &lt; alpha, beta, gamma &lt;= 1; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations; positive data</code></pre>
+<p><strong>What the worked example means:</strong> This calculation applies Holt-Winters exponential smoothing with multiplicative seasonality to determine future values. Using a series length of at least two full seasons, the method updates the level, trend, and seasonal components recursively. The resulting h-step-ahead forecast of 58.6565 reflects the current level of 49.6462 adjusted by the trend of 1.85098 and the appropriate seasonal factor. The sum of squared one-step errors is 219.27, indicating how well the model fits historical data.</p>
+<h4 id="holt_update">One update of Holt&#x27;s method — <code>holt_update</code></h4>
+<p>Update Holt&#x27;s level and trend with one new observation and forecast h periods ahead.</p>
+<div class="math">\[\ell_t=\alpha y_t+(1-\alpha)(\ell_{t-1}+b_{t-1}),\ b_t=\beta(\ell_t-\ell_{t-1})+(1-\beta)b_{t-1}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>l</code></td><td>in</td><td>previous level</td><td>—</td></tr><tr><td><code>b</code></td><td>in</td><td>previous trend</td><td>—</td></tr><tr><td><code>y</code></td><td>in</td><td>the new observation</td><td>—</td></tr><tr><td><code>alpha</code></td><td>in</td><td>level smoothing constant</td><td>—</td></tr><tr><td><code>beta</code></td><td>in</td><td>trend smoothing constant</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>forecast horizon (default 1) (optional)</td><td>—</td></tr><tr><td><code>level</code></td><td>out</td><td>new level</td><td>—</td></tr><tr><td><code>trend</code></td><td>out</td><td>new trend</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>level + h trend</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 0 &lt; alpha, beta &lt;= 1; b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}.</p>
+<pre><code class="shell">$ time-series solve holt_update l=50 b=2 y=55 alpha=0.3 beta=0.1
+level = 52.9
+trend = 2.09
+forecast = 54.99
+  by: One update of Holt&#x27;s method  (l = alpha y + (1 - alpha)(l + b); b = beta (l_new - l) + (1 - beta) b)
+  l = 50
+  b = 2
+  y = 55
+  alpha = 0.3
+  beta = 0.1
+  assumes: 0 &lt; alpha, beta &lt;= 1; b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}</code></pre>
+<p><strong>What the worked example means:</strong> Holt&#x27;s method updates the series by calculating a new level and a new trend using the previous estimates and the latest observation. The new level, shown as 52.9, blends the current observation with the prior forecast for this period. The new trend, shown as 2.09, adjusts the previous slope based on the change in level. These updated values produce a forecast of 54.99 for the next time step.</p>
+<h4 id="simple_exponential_smoothing">Simple exponential smoothing — <code>simple_exponential_smoothing</code></h4>
+<p>Simple exponential smoothing with smoothing constant alpha: the forecast of the next period and the sum of squared one-step errors. The initial level l_0 is the first observation unless stated.</p>
+<div class="math">\[\ell_t = \alpha x_t + (1-\alpha)\,\ell_{t-1},\qquad \hat x_{n+1} = \ell_n\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>alpha</code></td><td>in</td><td>the smoothing constant, 0 &lt; alpha &lt;= 1</td><td>—</td></tr><tr><td><code>l0</code></td><td>in</td><td>the initial level l_0 before the first observation (default: x_1) (optional)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the forecast of the next period (the final level l_n)</td><td>—</td></tr><tr><td><code>sse</code></td><td>out</td><td>sum of squared one-step errors, e_t = x_t - l_{t-1}</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 0 &lt; alpha &lt;= 1; l_0 = x_1 unless an initial level is stated.</p>
+<pre><code class="shell">$ time-series solve simple_exponential_smoothing &quot;x=[20, 22, 21, 24, 23]&quot; alpha=0.3
+forecast = 22.0928
+sse = 16.598016
+  by: Simple exponential smoothing  (l_t = l_{t-1} + alpha (x_t - l_{t-1}); forecast = l_n)
+  alpha = 0.3
+  assumes: 0 &lt; alpha &lt;= 1; l_0 = x_1 unless an initial level is stated</code></pre>
+<p><strong>What the worked example means:</strong> Simple exponential smoothing computes a forecast by updating a single level estimate using recent observations weighted by the smoothing constant alpha. Starting from an initial level, each new data point adjusts the previous level to produce the final forecast value of 22.0928. The method also calculates the sum of squared one-step prediction errors, which equals 16.598, providing a measure of how well the model tracked the historical series.</p>
+<h3>Forecast accuracy (7)</h3>
+<h4 id="mean_absolute_error">Mean absolute error — <code>mean_absolute_error</code></h4>
+<p>The mean absolute error of forecasts against actual values.</p>
+<div class="math">\[\mathrm{MAE} = \frac1n\sum_{t=1}^{n}|y_t - f_t|\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>y</code></td><td>in</td><td>the actual values</td><td>—</td></tr><tr><td><code>f</code></td><td>in</td><td>the forecasts (same length)</td><td>—</td></tr><tr><td><code>mae</code></td><td>out</td><td>Mean absolute error</td><td>—</td></tr><tr><td><code>n</code></td><td>out</td><td>number of forecasts</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; errors e_t = actual - forecast.</p>
+<pre><code class="shell">$ time-series solve mean_absolute_error &quot;y=[10, 12, 14, 13]&quot; &quot;f=[11, 12, 13, 15]&quot;
+mae = 1
+n = 4
+  by: Mean absolute error  (mean of |actual - forecast|)
+  assumes: equal lengths; errors e_t = actual - forecast</code></pre>
+<p><strong>What the worked example means:</strong> The mean absolute error measures the average magnitude of errors between actual values and forecasts, ignoring their direction. It is computed by taking the absolute difference for each time step, summing these differences, and dividing by the total number of observations, which here is 4. The resulting value, 1, represents the typical size of a forecast error in the same units as the original data.</p>
+<h4 id="mean_absolute_percentage_error">Mean absolute percentage error — <code>mean_absolute_percentage_error</code></h4>
+<p>The mean absolute percentage error (in percent) of forecasts against actual values.</p>
+<div class="math">\[\mathrm{MAPE} = \frac{100}{n}\sum_{t=1}^{n}\left|\frac{y_t - f_t}{y_t}\right|\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>y</code></td><td>in</td><td>the actual values</td><td>—</td></tr><tr><td><code>f</code></td><td>in</td><td>the forecasts (same length)</td><td>—</td></tr><tr><td><code>mape</code></td><td>out</td><td>Mean absolute percentage error</td><td>—</td></tr><tr><td><code>n</code></td><td>out</td><td>number of forecasts</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; errors e_t = actual - forecast; no actual value is 0; the result is in percent.</p>
+<pre><code class="shell">$ time-series solve mean_absolute_percentage_error &quot;y=[10, 12, 14, 13]&quot; &quot;f=[11, 12, 13, 15]&quot;
+mape = 8.131868132
+n = 4
+  by: Mean absolute percentage error  (100 x mean of |actual - forecast| / |actual|)
+  assumes: equal lengths; errors e_t = actual - forecast; no actual value is 0; the result is in percent</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the mean absolute percentage error by averaging the absolute differences between actual values and forecasts, divided by the actual values, then multiplying by one hundred. The result, expressed as 8.13187, represents the average magnitude of forecast errors in relative terms across the 4 data points provided in the input series.</p>
+<h4 id="mean_absolute_scaled_error">Mean absolute scaled error — <code>mean_absolute_scaled_error</code></h4>
+<p>MASE: the forecasts&#x27; mean absolute error divided by the in-sample mean absolute error of the (seasonal) naive forecast on the training data.</p>
+<div class="math">\[\mathrm{MASE} = \frac{\frac1h\sum|y_t - f_t|}{\frac{1}{T-m}\sum_{t=m+1}^{T}|y_t - y_{t-m}|}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>y_train</code></td><td>in</td><td>the training (in-sample) data</td><td>—</td></tr><tr><td><code>y</code></td><td>in</td><td>the actual values</td><td>—</td></tr><tr><td><code>f</code></td><td>in</td><td>the forecasts (same length as y)</td><td>—</td></tr><tr><td><code>sp</code></td><td>in</td><td>seasonal period of the naive benchmark (default 1) (optional)</td><td>—</td></tr><tr><td><code>mase</code></td><td>out</td><td>the mean absolute scaled error</td><td>—</td></tr><tr><td><code>mae</code></td><td>out</td><td>the forecasts&#x27; MAE</td><td>—</td></tr><tr><td><code>scale</code></td><td>out</td><td>in-sample MAE of the lag-sp naive forecast</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> the training data are longer than sp and not constant at lag sp.</p>
+<pre><code class="shell">$ time-series solve mean_absolute_scaled_error &quot;y_train=[10, 12, 11, 14, 13]&quot; &quot;y=[15, 14, 16]&quot; &quot;f=[14, 15, 15]&quot;
+mase = 0.5714285714
+mae = 1
+scale = 1.75
+  by: Mean absolute scaled error  (MAE(actual, forecast) / mean |y_train_t - y_train_{t-sp}|)
+  assumes: the training data are longer than sp and not constant at lag sp</code></pre>
+<p><strong>What the worked example means:</strong> This metric compares the accuracy of your forecasts against a simple naive benchmark. It takes the mean absolute error of the predictions, which is 1, and divides it by the mean absolute error of the seasonal naive forecast on the training data, which is 1.75. The resulting value, 0.571429, indicates relative performance; a value less than one suggests the model outperforms the naive baseline, while a value greater than one indicates it performs worse.</p>
+<h4 id="mean_forecast_error">Mean forecast error (bias) — <code>mean_forecast_error</code></h4>
+<p>The mean forecast error (bias): positive when the forecasts are too low on average.</p>
+<div class="math">\[\mathrm{ME} = \frac1n\sum_{t=1}^{n}(y_t - f_t)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>y</code></td><td>in</td><td>the actual values</td><td>—</td></tr><tr><td><code>f</code></td><td>in</td><td>the forecasts (same length)</td><td>—</td></tr><tr><td><code>mean_error</code></td><td>out</td><td>Mean forecast error (bias)</td><td>—</td></tr><tr><td><code>n</code></td><td>out</td><td>number of forecasts</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; errors e_t = actual - forecast.</p>
+<pre><code class="shell">$ time-series solve mean_forecast_error &quot;y=[10, 12, 14, 13]&quot; &quot;f=[11, 12, 13, 15]&quot;
+mean_error = -0.5
+n = 4
+  by: Mean forecast error (bias)  (mean of actual - forecast (computed by the reference as mean(actual) - mean(forecast)))
+  assumes: equal lengths; errors e_t = actual - forecast</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the bias of the forecasting model by computing the average of the differences between the actual observed values and the predicted forecasts. The result, -0.5, represents the mean forecast error over 4 periods. A positive value suggests that the model tends to under-forecast, meaning the actual values were higher than predicted on average, while a negative value indicates over-forecasting. This metric relies on the assumption that the error term is defined as the actual value minus the forecast value.</p>
+<h4 id="mean_squared_error">Mean squared error — <code>mean_squared_error</code></h4>
+<p>The mean squared error of forecasts against actual values.</p>
+<div class="math">\[\mathrm{MSE} = \frac1n\sum_{t=1}^{n}(y_t - f_t)^2\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>y</code></td><td>in</td><td>the actual values</td><td>—</td></tr><tr><td><code>f</code></td><td>in</td><td>the forecasts (same length)</td><td>—</td></tr><tr><td><code>mse</code></td><td>out</td><td>Mean squared error</td><td>—</td></tr><tr><td><code>n</code></td><td>out</td><td>number of forecasts</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; errors e_t = actual - forecast.</p>
+<pre><code class="shell">$ time-series solve mean_squared_error &quot;y=[10, 12, 14, 13]&quot; &quot;f=[11, 12, 13, 15]&quot;
+mse = 1.5
+n = 4
+  by: Mean squared error  (mean of (actual - forecast)^2)
+  assumes: equal lengths; errors e_t = actual - forecast</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the average of the squared differences between the actual values and the forecasts. It uses [10, 12, 14, 13] for the observed data and [11, 12, 13, 15] for the predicted values, resulting in a mean squared error of 1.5. This metric penalizes larger errors more severely than smaller ones, providing a measure of how far off the predictions are on average across the 4 time steps analyzed.</p>
+<h4 id="root_mean_squared_error">Root mean squared error — <code>root_mean_squared_error</code></h4>
+<p>The root mean squared error of forecasts against actual values.</p>
+<div class="math">\[\mathrm{RMSE} = \sqrt{\frac1n\sum_{t=1}^{n}(y_t - f_t)^2}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>y</code></td><td>in</td><td>the actual values</td><td>—</td></tr><tr><td><code>f</code></td><td>in</td><td>the forecasts (same length)</td><td>—</td></tr><tr><td><code>rmse</code></td><td>out</td><td>Root mean squared error</td><td>—</td></tr><tr><td><code>n</code></td><td>out</td><td>number of forecasts</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; errors e_t = actual - forecast.</p>
+<pre><code class="shell">$ time-series solve root_mean_squared_error &quot;y=[10, 12, 14, 13]&quot; &quot;f=[11, 12, 13, 15]&quot;
+rmse = 1.224744871
+n = 4
+  by: Root mean squared error  (square root of the mean squared error)
+  assumes: equal lengths; errors e_t = actual - forecast</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the typical magnitude of forecast errors by taking the square root of the average squared differences between actual values and forecasts. The result, 1.22474, represents the standard deviation-like measure of these deviations in the original units of the data. It was derived using 4 observations where each error was computed as the actual value minus the forecast value. A lower 1.22474 indicates that forecasts are generally closer to the actual outcomes, providing a single summary statistic for overall accuracy.</p>
+<h4 id="symmetric_mape">Symmetric mean absolute percentage error — <code>symmetric_mape</code></h4>
+<p>The symmetric MAPE in percent: 100/n sum 2|y - f| / (|y| + |f|).</p>
+<div class="math">\[\mathrm{sMAPE} = \frac{100}{n}\sum_{t=1}^{n}\frac{2|y_t - f_t|}{|y_t| + |f_t|}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>y</code></td><td>in</td><td>the actual values</td><td>—</td></tr><tr><td><code>f</code></td><td>in</td><td>the forecasts (same length)</td><td>—</td></tr><tr><td><code>smape</code></td><td>out</td><td>Symmetric mean absolute percentage error</td><td>—</td></tr><tr><td><code>n</code></td><td>out</td><td>number of forecasts</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> equal lengths; errors e_t = actual - forecast; no pair with actual and forecast both 0; the result is in percent (range 0 to 200).</p>
+<pre><code class="shell">$ time-series solve symmetric_mape &quot;y=[10, 12, 14, 13]&quot; &quot;f=[11, 12, 13, 15]&quot;
+smape = 7.804232804
+n = 4
+  by: Symmetric mean absolute percentage error  (100 x mean of 2|actual - forecast| / (|actual| + |forecast|))
+  assumes: equal lengths; errors e_t = actual - forecast; no pair with actual and forecast both 0; the result is in percent (range 0 to 200)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the symmetric mean absolute percentage error, which serves as a measure of forecast accuracy. It is computed by taking the average of the absolute difference between each actual value and its corresponding forecast, scaled by the sum of their absolute magnitudes, and then multiplied by one hundred to express the result as a percentage. The final score of 7.80423 indicates how well the forecasts matched the observed data across 4 time points, with lower values representing better predictive performance.</p>
+<h3>Interpolation of missing values (2)</h3>
+<h4 id="exponential_interpolation">Exponential (log-linear) interpolation — <code>exponential_interpolation</code></h4>
+<p>Fill a missing value at time t0 assuming constant growth between the neighbouring observations (linear interpolation of the logarithms).</p>
+<div class="math">\[\hat y(t_0) = y_i\left(\frac{y_{i+1}}{y_i}\right)^{\frac{t_0-t_i}{t_{i+1}-t_i}}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>t</code></td><td>in</td><td>the times (strictly increasing)</td><td>—</td></tr><tr><td><code>y</code></td><td>in</td><td>the values at those times</td><td>—</td></tr><tr><td><code>t0</code></td><td>in</td><td>the time of the missing value</td><td>—</td></tr><tr><td><code>value</code></td><td>out</td><td>the interpolated value at t0</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> positive values; times strictly increasing; t0 within the observed times.</p>
+<pre><code class="shell">$ time-series solve exponential_interpolation &quot;t=[1, 2, 3, 4]&quot; &quot;y=[100, 120, 150, 170]&quot; t0=2.5
+value = 134.1640786
+  by: Exponential (log-linear) interpolation  (y_i (y_{i+1}/y_i)^((t0 - t_i)/(t_{i+1} - t_i)))
+  t0 = 2.5
+  assumes: positive values; times strictly increasing; t0 within the observed times</code></pre>
+<p><strong>What the worked example means:</strong> Exponential interpolation estimates the missing value at time 2.5 by assuming a constant growth rate between the nearest known points. Using the observed values and times, the calculation yields 134.164. This result represents the likely magnitude of the series at that specific moment, reflecting multiplicative rather than additive changes.</p>
+<h4 id="linear_interpolation">Linear interpolation of a missing value — <code>linear_interpolation</code></h4>
+<p>Fill a missing value at time t0 by the straight line between the neighbouring observations.</p>
+<div class="math">\[\hat y(t_0) = y_i + \frac{t_0 - t_i}{t_{i+1}-t_i}(y_{i+1}-y_i)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>t</code></td><td>in</td><td>the times (strictly increasing)</td><td>—</td></tr><tr><td><code>y</code></td><td>in</td><td>the values at those times</td><td>—</td></tr><tr><td><code>t0</code></td><td>in</td><td>the time of the missing value</td><td>—</td></tr><tr><td><code>value</code></td><td>out</td><td>the interpolated value at t0</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> times strictly increasing; t0 within the observed times (no extrapolation).</p>
+<pre><code class="shell">$ time-series solve linear_interpolation &quot;t=[1, 2, 3, 4]&quot; &quot;y=[10, 14, 13, 18]&quot; t0=2.5
+value = 13.5
+  by: Linear interpolation of a missing value  (y_i + (t0 - t_i)(y_{i+1} - y_i)/(t_{i+1} - t_i) with t_i &lt;= t0 &lt;= t_{i+1})
+  t0 = 2.5
+  assumes: times strictly increasing; t0 within the observed times (no extrapolation)</code></pre>
+<p><strong>What the worked example means:</strong> Linear interpolation estimates the missing data point by calculating a weighted average of the two nearest known observations. The result, 13.5, represents the position on the straight line connecting these neighbors at the specific time 2.5. This method assumes the trend between the points is linear and provides a continuous estimate within the observed range.</p>
+<h3>Kalman filtering (7)</h3>
+<h4 id="kalman_filter_constant_velocity">Kalman filter for a constant-velocity model — <code>kalman_filter_constant_velocity</code></h4>
+<p>Track position and velocity from noisy position measurements with the constant-velocity Kalman filter (discrete white-noise acceleration with variance q, time step dt): final state and covariance.</p>
+<div class="math">\[F=\begin{pmatrix}1&amp;\Delta t\\0&amp;1\end{pmatrix},\ Q = q\begin{pmatrix}\Delta t^4/4&amp;\Delta t^3/2\\ \Delta t^3/2&amp;\Delta t^2\end{pmatrix}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the measured positions, oldest first</td><td>—</td></tr><tr><td><code>dt</code></td><td>in</td><td>time step</td><td>—</td></tr><tr><td><code>q</code></td><td>in</td><td>acceleration (process) noise variance</td><td>—</td></tr><tr><td><code>r</code></td><td>in</td><td>position measurement noise variance</td><td>—</td></tr><tr><td><code>p0</code></td><td>in</td><td>initial position estimate</td><td>—</td></tr><tr><td><code>v0</code></td><td>in</td><td>initial velocity estimate</td><td>—</td></tr><tr><td><code>var0</code></td><td>in</td><td>initial variance of position and of velocity (uncorrelated)</td><td>—</td></tr><tr><td><code>position</code></td><td>out</td><td>final position estimate</td><td>—</td></tr><tr><td><code>velocity</code></td><td>out</td><td>final velocity estimate</td><td>—</td></tr><tr><td><code>p11</code></td><td>out</td><td>final position variance</td><td>—</td></tr><tr><td><code>p12</code></td><td>out</td><td>final position-velocity covariance</td><td>—</td></tr><tr><td><code>p22</code></td><td>out</td><td>final velocity variance</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> F = [[1, dt], [0, 1]], H = [1, 0]; Q = q [[dt^4/4, dt^3/2], [dt^3/2, dt^2]]; predict then update at every measurement.</p>
+<pre><code class="shell">$ time-series solve kalman_filter_constant_velocity &quot;x=[1.1, 1.9, 3.2, 4, 4.8]&quot; dt=1 q=0.1 r=1 p0=0 v0=1 var0=10
+position = 4.896949573
+velocity = 0.9385623391
+p11 = 0.6153900119
+p12 = 0.2443095291
+p22 = 0.224491015
+  by: Kalman filter for a constant-velocity model  (2-state Kalman filter recursion)
+  dt = 1
+  q = 0.1
+  r = 1
+  p0 = 0
+  v0 = 1
+  var0 = 10
+  assumes: F = [[1, dt], [0, 1]], H = [1, 0]; Q = q [[dt^4/4, dt^3/2], [dt^3/2, dt^2]]; predict then update at every measurement</code></pre>
+<p><strong>What the worked example means:</strong> This algorithm tracks the state of an object moving with constant velocity by processing noisy measurements. Starting from initial estimates of position 0 and velocity 1, it iteratively predicts the next state and updates it with each measurement. The process accounts for random acceleration noise with variance 0.1 and measurement noise with variance 1 over time steps of 1. The result is a refined estimate of the current position at 4.89695 and velocity at 0.938562, along with their associated uncertainties.</p>
+<h4 id="kalman_filter_local_level">Kalman filter for a random-walk (local level) model — <code>kalman_filter_local_level</code></h4>
+<p>Filter a sequence of measurements with the scalar Kalman filter for x_t = x_{t-1} + w_t, z_t = x_t + v_t (predict, then update, at every step): the final estimate, variance, gain, all filtered estimates and the Gaussian log-likelihood of the one-step prediction errors.</p>
+<div class="math">\[P_t^- = P_{t-1}+q,\ K_t = \frac{P_t^-}{P_t^-+r},\ \hat x_t = \hat x_{t-1} + K_t(z_t - \hat x_{t-1})\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the measurements, oldest first</td><td>—</td></tr><tr><td><code>q</code></td><td>in</td><td>process noise variance</td><td>—</td></tr><tr><td><code>r</code></td><td>in</td><td>measurement noise variance</td><td>—</td></tr><tr><td><code>m0</code></td><td>in</td><td>initial state estimate</td><td>—</td></tr><tr><td><code>p0</code></td><td>in</td><td>initial variance</td><td>—</td></tr><tr><td><code>estimate</code></td><td>out</td><td>final filtered estimate</td><td>—</td></tr><tr><td><code>variance</code></td><td>out</td><td>final variance</td><td>—</td></tr><tr><td><code>gain</code></td><td>out</td><td>final gain</td><td>—</td></tr><tr><td><code>estimates</code></td><td>out</td><td>filtered estimates for every measurement</td><td>—</td></tr><tr><td><code>log_likelihood</code></td><td>out</td><td>sum of log N(v_t; 0, S_t)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> q &gt;= 0, r &gt; 0, p0 &gt;= 0; the initial estimate is the state before the first measurement.</p>
+<pre><code class="shell">$ time-series solve kalman_filter_local_level &quot;x=[10.4, 11.1, 10.7, 11.9, 12.3]&quot; q=0.5 r=2 m0=10 p0=5
+estimate = 11.62410315
+variance = 0.7906396594
+gain = 0.3953198297
+estimates = [10.293333333333333,10.693277310924369,10.696149217809866,11.182224215246636,11.624103148133084]
+log_likelihood = -8.617118062
+  by: Kalman filter for a random-walk (local level) model  (P- = P + q; S = P- + r; K = P-/S; x = x + K(z - x); P = (1 - K) P-)
+  q = 0.5
+  r = 2
+  m0 = 10
+  p0 = 5
+  assumes: q &gt;= 0, r &gt; 0, p0 &gt;= 0; the initial estimate is the state before the first measurement</code></pre>
+<p><strong>What the worked example means:</strong> This algorithm computes the state of a random walk by recursively updating an estimate and its uncertainty. Starting from initial guess 10 and variance 5, it processes measurements to produce a final estimate of 11.6241. The result reflects a balance between process noise 0.5 and measurement noise 2, yielding a final gain of 0.39532 that determines how much weight new data carries relative to prior belief.</p>
+<h4 id="kalman_update">Kalman measurement update (scalar) — <code>kalman_update</code></h4>
+<p>Combine a prior estimate (mean, variance) with a measurement (value, noise variance): the posterior mean and variance and the Kalman gain.</p>
+<div class="math">\[K = \frac{P}{P+R},\ \hat x^+ = \hat x + K(z - \hat x),\ P^+ = (1-K)P\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>m</code></td><td>in</td><td>prior mean</td><td>—</td></tr><tr><td><code>p</code></td><td>in</td><td>prior variance (&gt; 0)</td><td>—</td></tr><tr><td><code>z</code></td><td>in</td><td>the measurement</td><td>—</td></tr><tr><td><code>r</code></td><td>in</td><td>measurement noise variance (&gt; 0)</td><td>—</td></tr><tr><td><code>mean</code></td><td>out</td><td>posterior mean</td><td>—</td></tr><tr><td><code>variance</code></td><td>out</td><td>posterior variance</td><td>—</td></tr><tr><td><code>gain</code></td><td>out</td><td>Kalman gain p/(p+r)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> p &gt; 0, r &gt; 0; the measurement observes the state directly (H = 1).</p>
+<pre><code class="shell">$ time-series solve kalman_update m=10 p=4 z=12 r=1
+mean = 11.6
+variance = 0.8
+gain = 0.8
+  by: Kalman measurement update (scalar)  (K = p/(p+r); m&#x27; = m + K(z - m); p&#x27; = (1 - K) p)
+  m = 10
+  p = 4
+  z = 12
+  r = 1
+  assumes: p &gt; 0, r &gt; 0; the measurement observes the state directly (H = 1)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation updates the state estimate by blending the prior mean 10 with the new measurement 12. The weight given to the measurement, known as the Kalman gain, is computed as 0.8 based on the relative uncertainties of the prior variance 4 and the measurement noise variance 1. The resulting posterior mean 11.6 represents the refined belief about the state, while the posterior variance 0.8 indicates the reduced uncertainty after incorporating this new data point.</p>
+<h4 id="kalman_step">One Kalman filter step (random-walk model) — <code>kalman_step</code></h4>
+<p>One predict-and-update step of the scalar Kalman filter for a random-walk state x_t = x_{t-1} + w_t observed as z_t = x_t + v_t.</p>
+<div class="math">\[P^- = P + Q,\ K = \frac{P^-}{P^-+R},\ \hat x = \hat x^- + K(z - \hat x^-),\ P = (1-K)P^-\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>m</code></td><td>in</td><td>previous estimate</td><td>—</td></tr><tr><td><code>p</code></td><td>in</td><td>previous estimate variance</td><td>—</td></tr><tr><td><code>z</code></td><td>in</td><td>the new measurement</td><td>—</td></tr><tr><td><code>q</code></td><td>in</td><td>process noise variance</td><td>—</td></tr><tr><td><code>r</code></td><td>in</td><td>measurement noise variance</td><td>—</td></tr><tr><td><code>mean</code></td><td>out</td><td>updated estimate</td><td>—</td></tr><tr><td><code>variance</code></td><td>out</td><td>updated variance</td><td>—</td></tr><tr><td><code>gain</code></td><td>out</td><td>Kalman gain</td><td>—</td></tr><tr><td><code>prior_variance</code></td><td>out</td><td>predicted variance p + q</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> p, q &gt;= 0, r &gt; 0; F = H = 1.</p>
+<pre><code class="shell">$ time-series solve kalman_step m=10 p=4 z=12 q=1 r=2
+mean = 11.42857143
+variance = 1.428571429
+gain = 0.7142857143
+prior_variance = 5
+  by: One Kalman filter step (random-walk model)  (predict P- = P + Q; K = P-/(P- + R); x = x + K(z - x); P = (1 - K) P-)
+  m = 10
+  p = 4
+  z = 12
+  q = 1
+  r = 2
+  assumes: p, q &gt;= 0, r &gt; 0; F = H = 1</code></pre>
+<p><strong>What the worked example means:</strong> This calculation performs one step of the scalar Kalman filter for a random-walk model. It starts with the previous estimate 10 and its variance 4, then predicts forward by adding process noise variance 1 to get a prior variance of 5. Upon receiving measurement 12 with noise variance 2, it computes the Kalman gain 0.714286 to weigh the new information against the prediction. The final result is an updated state estimate of 11.4286 and a reduced uncertainty variance of 1.42857.</p>
+<h4 id="rts_smoother_local_level">Rauch-Tung-Striebel smoother (random-walk model) — <code>rts_smoother_local_level</code></h4>
+<p>Smoothed state estimates of the random-walk (local level) model: the Kalman filter forward, then the Rauch-Tung-Striebel recursion backward.</p>
+<div class="math">\[\hat x_{t|n} = \hat x_{t} + C_t(\hat x_{t+1|n} - \hat x_t),\ C_t = \frac{P_t}{P_t+q}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the measurements, oldest first</td><td>—</td></tr><tr><td><code>q</code></td><td>in</td><td>process noise variance</td><td>—</td></tr><tr><td><code>r</code></td><td>in</td><td>measurement noise variance</td><td>—</td></tr><tr><td><code>m0</code></td><td>in</td><td>initial state estimate</td><td>—</td></tr><tr><td><code>p0</code></td><td>in</td><td>initial variance</td><td>—</td></tr><tr><td><code>smoothed</code></td><td>out</td><td>smoothed estimates for every time</td><td>—</td></tr><tr><td><code>first</code></td><td>out</td><td>smoothed estimate at time 1</td><td>—</td></tr><tr><td><code>first_variance</code></td><td>out</td><td>its variance</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> q &gt; 0, r &gt; 0, p0 &gt;= 0.</p>
+<pre><code class="shell">$ time-series solve rts_smoother_local_level &quot;x=[10.4, 11.1, 10.7, 11.9, 12.3]&quot; q=0.5 r=2 m0=10 p0=5
+smoothed = [10.83039127959001,11.013479215813877,11.174936955991214,11.455128935166355,11.624103148133084]
+first = 10.83039128
+first_variance = 0.6949754603
+  by: Rauch-Tung-Striebel smoother (random-walk model)  (C_t = P_t/(P_t + q); xs_t = x_t + C_t (xs_{t+1} - x_t); Ps_t = P_t + C_t^2 (Ps_{t+1} - P_t - q))
+  q = 0.5
+  r = 2
+  m0 = 10
+  p0 = 5
+  assumes: q &gt; 0, r &gt; 0, p0 &gt;= 0</code></pre>
+<p><strong>What the worked example means:</strong> This calculation produces smoothed state estimates for a random walk model by combining forward filtering with backward smoothing. The result shows that the refined estimate for the initial state is 10.8304, accompanied by an uncertainty measure of 0.694975. This value incorporates information from all subsequent observations to provide a more accurate trajectory than the filter alone.</p>
+<h4 id="kalman_steady_state_gain">Steady-state Kalman gain (random-walk model) — <code>kalman_steady_state_gain</code></h4>
+<p>The limiting Kalman gain and variances of the random-walk (local level) model with process variance q and measurement variance r (the solution of the scalar Riccati equation).</p>
+<div class="math">\[P^- = \frac{q + \sqrt{q^2 + 4qr}}{2},\quad K = \frac{P^-}{P^- + r}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>q</code></td><td>in</td><td>process noise variance (&gt; 0)</td><td>—</td></tr><tr><td><code>r</code></td><td>in</td><td>measurement noise variance (&gt; 0)</td><td>—</td></tr><tr><td><code>gain</code></td><td>out</td><td>steady-state gain</td><td>—</td></tr><tr><td><code>prior_variance</code></td><td>out</td><td>steady-state predicted variance P-</td><td>—</td></tr><tr><td><code>posterior_variance</code></td><td>out</td><td>steady-state filtered variance</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> q &gt; 0, r &gt; 0.</p>
+<pre><code class="shell">$ time-series solve kalman_steady_state_gain q=1 r=4
+gain = 0.3903882032
+prior_variance = 2.561552813
+posterior_variance = 1.561552813
+  by: Steady-state Kalman gain (random-walk model)  (P- = (q + sqrt(q^2 + 4 q r))/2, K = P-/(P- + r))
+  q = 1
+  r = 4
+  assumes: q &gt; 0, r &gt; 0</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the long-term behavior of a random-walk model by finding the constant values the filter approaches. Using a process noise variance of 1 and a measurement noise variance of 4, the algorithm computes the steady-state prior variance as 2.56155. This leads to a final gain of 0.390388, which dictates how much weight future measurements receive compared to predictions, resulting in a posterior variance of 1.56155.</p>
+<h4 id="kalman_steady_state_constant_velocity">Steady-state Kalman gains of a constant-velocity model — <code>kalman_steady_state_constant_velocity</code></h4>
+<p>The limiting position and velocity gains (and predicted position variance) of the constant-velocity Kalman filter with discrete white-noise acceleration q, time step dt and measurement variance r.</p>
+<div class="math">\[P = F\big(P - PH^\top(HPH^\top+R)^{-1}HP\big)F^\top + Q\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>dt</code></td><td>in</td><td>time step</td><td>—</td></tr><tr><td><code>q</code></td><td>in</td><td>acceleration noise variance (&gt; 0)</td><td>—</td></tr><tr><td><code>r</code></td><td>in</td><td>measurement noise variance (&gt; 0)</td><td>—</td></tr><tr><td><code>k_position</code></td><td>out</td><td>steady-state position gain</td><td>—</td></tr><tr><td><code>k_velocity</code></td><td>out</td><td>steady-state velocity gain</td><td>—</td></tr><tr><td><code>prior_p11</code></td><td>out</td><td>steady-state predicted position variance</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> dt, q, r &gt; 0; Q = q [[dt^4/4, dt^3/2], [dt^3/2, dt^2]].</p>
+<pre><code class="shell">$ time-series solve kalman_steady_state_constant_velocity dt=1 q=0.1 r=1
+k_position = 0.5462107896
+k_velocity = 0.2130232875
+prior_p11 = 1.203666322
+  by: Steady-state Kalman gains of a constant-velocity model  (iterate the Riccati recursion to its fixed point)
+  dt = 1
+  q = 0.1
+  r = 1
+  assumes: dt, q, r &gt; 0; Q = q [[dt^4/4, dt^3/2], [dt^3/2, dt^2]]</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the long-term stable weights for a constant-velocity Kalman filter. Given a time step of 1, acceleration noise variance of 0.1, and measurement noise variance of 1, the algorithm iterates the Riccati equation to find the fixed point. The resulting position gain of 0.546211 shows the fraction of measurement error applied to the position estimate, while the velocity gain of 0.213023 applies that correction to velocity. The predicted position variance settles at 1.20367, reflecting the uncertainty before incorporating the next observation.</p>
+<h3>Moving averages (4)</h3>
+<h4 id="centred_moving_average">Centred moving average — <code>centred_moving_average</code></h4>
+<p>The centred moving average of length k: a symmetric k-term mean for odd k, the 2 x k moving average (half weights at both ends) for even k, as used in classical decomposition.</p>
+<div class="math">\[\mathrm{CMA}_t = \frac{1}{k}\Big(\tfrac12 x_{t-h} + \sum_{i=-h+1}^{h-1} x_{t+i} + \tfrac12 x_{t+h}\Big)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the length of the moving average</td><td>—</td></tr><tr><td><code>cma</code></td><td>out</td><td>the centred moving averages, from time first_index on</td><td>—</td></tr><tr><td><code>first_index</code></td><td>out</td><td>the time t (1-based) of the first centred value (k//2 + 1)</td><td>—</td></tr><tr><td><code>first</code></td><td>out</td><td>the first centred moving average</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> k &gt;= 2; odd k: k &lt;= n; even k: k + 1 &lt;= n.</p>
+<pre><code class="shell">$ time-series solve centred_moving_average &quot;x=[12, 15, 14, 18, 20, 19, 23, 25]&quot; k=4
+cma = [15.75,17.25,18.875,20.875]
+first_index = 3
+first = 15.75
+  by: Centred moving average  (odd k: mean of x_{t-h}..x_{t+h}; even k: (x_{t-h}/2 + x_{t-h+1} + ... + x_{t+h-1} + x_{t+h}/2)/k, h = k//2)
+  assumes: k &gt;= 2; odd k: k &lt;= n; even k: k + 1 &lt;= n</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the trend-cycle component by applying a symmetric moving average of length 4 to the series. For odd lengths, it takes the simple mean of the surrounding points; for even lengths, it applies half-weights to the endpoints to ensure integer alignment with the original data indices. The resulting value 15.75 represents the smoothed level at time 3, effectively removing short-term fluctuations while preserving the central timing of the window.</p>
+<h4 id="exponential_moving_average">Exponential moving average — <code>exponential_moving_average</code></h4>
+<p>The exponential moving average with span k (alpha = 2/(k+1)), started at the first value.</p>
+<div class="math">\[\mathrm{EMA}_t = \alpha x_t + (1-\alpha)\,\mathrm{EMA}_{t-1},\quad \alpha = \frac{2}{k+1}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the span (number of periods)</td><td>—</td></tr><tr><td><code>ema</code></td><td>out</td><td>the exponential moving average at every time (EMA_1 = x_1)</td><td>—</td></tr><tr><td><code>last</code></td><td>out</td><td>the latest exponential moving average</td><td>—</td></tr><tr><td><code>alpha</code></td><td>out</td><td>the weight 2/(k+1)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> k &gt;= 1; EMA_1 = x_1 (no averaging of a start-up window).</p>
+<pre><code class="shell">$ time-series solve exponential_moving_average &quot;x=[10, 12, 14, 13, 15]&quot; k=3
+ema = [10.0,11.0,12.5,12.75,13.875]
+last = 13.875
+alpha = 0.5
+  by: Exponential moving average  (EMA_t = alpha x_t + (1 - alpha) EMA_{t-1}, alpha = 2/(k+1))
+  assumes: k &gt;= 1; EMA_1 = x_1 (no averaging of a start-up window)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation produces an exponential moving average series starting from the first value. The latest estimate is 13.875, derived using a smoothing factor of 0.5. This method gives more weight to recent observations while retaining some influence from earlier data points, resulting in a smoother trend line than raw data.</p>
+<h4 id="linearly_weighted_moving_average">Linearly weighted moving average — <code>linearly_weighted_moving_average</code></h4>
+<p>The k-period linearly weighted moving average: weights 1, 2, ..., k from the oldest to the newest value of each window.</p>
+<div class="math">\[\mathrm{WMA}_t = \frac{\sum_{i=0}^{k-1} (k-i)\,x_{t-i}}{k(k+1)/2}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the window length</td><td>—</td></tr><tr><td><code>lwma</code></td><td>out</td><td>the weighted moving averages, one per complete window</td><td>—</td></tr><tr><td><code>last</code></td><td>out</td><td>the latest weighted moving average (forecast of the next period)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 1 &lt;= k &lt;= n; the newest value of a window has weight k, the oldest weight 1.</p>
+<pre><code class="shell">$ time-series solve linearly_weighted_moving_average &quot;x=[10, 12, 14, 13, 15]&quot; k=3
+lwma = [12.666666666666666,13.166666666666666,14.166666666666666]
+last = 14.16666667
+  by: Linearly weighted moving average  (weighted mean of each window with weights 1..k divided by k(k+1)/2)
+  assumes: 1 &lt;= k &lt;= n; the newest value of a window has weight k, the oldest weight 1</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the linearly weighted moving average, denoted as [12.6667, 13.1667, 14.1667], using a window length of 3 applied to the series [10, 12, 14, 13, 15]. The method assigns increasing weights from oldest to newest data points, ensuring recent observations influence the result more strongly. The final computed value, 14.1667, represents the most current smoothed estimate and serves as the forecast for the next period.</p>
+<h4 id="simple_moving_average">Simple moving average — <code>simple_moving_average</code></h4>
+<p>The k-period simple (trailing) moving average of a series; its last value is the moving-average forecast of the next period.</p>
+<div class="math">\[\mathrm{SMA}_t = \frac{1}{k}\sum_{i=0}^{k-1} x_{t-i}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>k</code></td><td>in</td><td>the window length (number of periods)</td><td>—</td></tr><tr><td><code>sma</code></td><td>out</td><td>the moving averages, one per complete window (the first covers x_1..x_k)</td><td>—</td></tr><tr><td><code>last</code></td><td>out</td><td>the latest moving average (forecast of the next period)</td><td>—</td></tr><tr><td><code>count</code></td><td>out</td><td>number of moving averages (n - k + 1)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 1 &lt;= k &lt;= n.</p>
+<pre><code class="shell">$ time-series solve simple_moving_average &quot;x=[10, 12, 14, 13, 15]&quot; k=3
+sma = [12.0,13.0,14.0]
+last = 14
+count = 3
+  by: Simple moving average  (mean of each window of k consecutive values)
+  assumes: 1 &lt;= k &lt;= n</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the arithmetic mean of the most recent 3 observations from the series. The resulting sequence contains 3 values, where each entry smooths short-term fluctuations to reveal underlying trends. The final computed average, 14, serves as the baseline prediction for the subsequent time step, assuming that recent history is the best indicator of near-future behavior.</p>
+<h3>Stationarity tests (3)</h3>
+<h4 id="augmented_dickey_fuller_test">Augmented Dickey-Fuller statistic — <code>augmented_dickey_fuller_test</code></h4>
+<p>The augmented Dickey-Fuller tau statistic with p lagged differences: the t-ratio of gamma in Delta x_t = gamma x_{t-1} + sum_j delta_j Delta x_{t-j} (+ constant, + trend) + e_t. The statistic only.</p>
+<div class="math">\[\Delta x_t = \alpha + \gamma x_{t-1} + \sum_{j=1}^{p}\delta_j\Delta x_{t-j} + e_t\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>p</code></td><td>in</td><td>number of lagged differences</td><td>—</td></tr><tr><td><code>regression</code></td><td>in</td><td>deterministic terms: c = constant (default), ct = constant and trend, n = none (optional)</td><td>—</td></tr><tr><td><code>tau</code></td><td>out</td><td>the ADF statistic</td><td>—</td></tr><tr><td><code>gamma</code></td><td>out</td><td>the coefficient of x_{t-1}</td><td>—</td></tr><tr><td><code>se</code></td><td>out</td><td>its standard error</td><td>—</td></tr><tr><td><code>nobs</code></td><td>out</td><td>observations in the regression (n - 1 - p)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> p &lt;= n/2 - (deterministic terms) - 1; default deterministic terms: a constant; the lag length is given, not selected.</p>
+<pre><code class="shell">$ time-series solve augmented_dickey_fuller_test &quot;x=[10.2, 10.8, 10.5, 11.3, 11, 11.9, 11.6, 12.4, 12, 12.9, 12.5, 13.4]&quot; p=2 regression=c
+tau = -1.186531751
+gamma = -0.03905259823
+se = 0.0329132349
+nobs = 9
+  by: Augmented Dickey-Fuller statistic  (least squares on t = p+2..n of Delta x_t on x_{t-1}, Delta x_{t-1..t-p} (and constant / trend))
+  regression = c
+  assumes: p &lt;= n/2 - (deterministic terms) - 1; default deterministic terms: a constant; the lag length is given, not selected</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the Augmented Dickey-Fuller tau statistic for the time series [10.2, 10.8, 10.5, 11.3, 11, 11.9, 11.6, 12.4, 12, 12.9, 12.5, 13.4]. It performs a least squares regression on the differenced series using 2 lagged differences and the specified deterministic terms in c. The resulting statistic, -1.18653, represents the t-ratio of the coefficient gamma associated with the first lag of the original series. This value tests the null hypothesis that the series contains a unit root against the alternative of stationarity, incorporating the estimated standard error 0.0329132 over 9 observations.</p>
+<h4 id="dickey_fuller_test">Dickey-Fuller unit-root statistic — <code>dickey_fuller_test</code></h4>
+<p>The Dickey-Fuller tau statistic: the t-ratio of gamma in the regression Delta x_t = gamma x_{t-1} (+ constant, + trend) + e_t. The statistic only: compare it with Dickey-Fuller critical values.</p>
+<div class="math">\[\Delta x_t = \alpha + \gamma x_{t-1} + e_t,\quad \tau = \hat\gamma/\mathrm{se}(\hat\gamma)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>regression</code></td><td>in</td><td>deterministic terms: c = constant (default), ct = constant and trend, n = none (optional)</td><td>—</td></tr><tr><td><code>tau</code></td><td>out</td><td>the Dickey-Fuller statistic gamma/se</td><td>—</td></tr><tr><td><code>gamma</code></td><td>out</td><td>the coefficient of x_{t-1}</td><td>—</td></tr><tr><td><code>se</code></td><td>out</td><td>its standard error</td><td>—</td></tr><tr><td><code>nobs</code></td><td>out</td><td>observations in the regression (n - 1)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> the series is not constant; default deterministic terms: a constant; no lagged differences (see augmented_dickey_fuller_test).</p>
+<pre><code class="shell">$ time-series solve dickey_fuller_test &quot;x=[10.2, 10.8, 10.5, 11.3, 11, 11.9, 11.6, 12.4, 12, 12.9]&quot; regression=c
+tau = -0.9278578506
+gamma = -0.2695852535
+se = 0.290545856
+nobs = 9
+  by: Dickey-Fuller unit-root statistic  (least squares of Delta x_t on x_{t-1} (and constant / trend t = 1..n-1))
+  regression = c
+  assumes: the series is not constant; default deterministic terms: a constant; no lagged differences (see augmented_dickey_fuller_test)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the Dickey-Fuller unit-root statistic for the input series. It involves regressing the first difference of the series on its lagged value, optionally including a constant or trend term as specified by the regression setting. The resulting statistic, -0.927858, is the ratio of the estimated coefficient -0.269585 to its standard error 0.290546. A more negative value suggests stronger evidence against the presence of a unit root, implying that the series may be stationary.</p>
+<h4 id="kpss_test">KPSS stationarity statistic — <code>kpss_test</code></h4>
+<p>The KPSS statistic for level (c) or trend (ct) stationarity with a Bartlett-kernel long-run variance using a given number of lags. The statistic only: compare it with KPSS critical values.</p>
+<div class="math">\[\mathrm{KPSS} = \frac{n^{-2}\sum_{t=1}^{n} S_t^2}{\hat\sigma^2_{LR}},\ \hat\sigma^2_{LR} = \frac1n\Big(\sum e_t^2 + 2\sum_{i=1}^{L}\big(1-\tfrac{i}{L+1}\big)\sum_t e_te_{t-i}\Big)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>nlags</code></td><td>in</td><td>Bartlett lags in the long-run variance</td><td>—</td></tr><tr><td><code>regression</code></td><td>in</td><td>c = level stationarity (default), ct = trend stationarity (optional)</td><td>—</td></tr><tr><td><code>kpss</code></td><td>out</td><td>the KPSS statistic</td><td>—</td></tr><tr><td><code>long_run_variance</code></td><td>out</td><td>Bartlett long-run variance of the residuals</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> 0 &lt;= lags &lt; n; residuals from the mean (c) or a linear trend t = 1..n (ct).</p>
+<pre><code class="shell">$ time-series solve kpss_test &quot;x=[10.2, 10.8, 10.5, 11.3, 11, 11.9, 11.6, 12.4]&quot; nlags=2 regression=c
+kpss = 0.4012750353
+long_run_variance = 0.8113541667
+  by: KPSS stationarity statistic  (eta = sum S_t^2 / n^2 over partial sums S_t of the residuals, divided by the Bartlett long-run variance)
+  regression = c
+  assumes: 0 &lt;= lags &lt; n; residuals from the mean (c) or a linear trend t = 1..n (ct)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the KPSS statistic for testing level or trend stationarity. It computes partial sums of residuals from the series [10.2, 10.8, 10.5, 11.3, 11, 11.9, 11.6, 12.4] and divides their squared sum by the Bartlett long-run variance, which depends on the number of lags 2. The resulting statistic 0.401275 should be compared against critical values; a high value suggests non-stationarity, while a low value supports the null hypothesis of stationarity. The long-run variance estimate 0.811354 reflects the autocorrelation structure within the chosen bandwidth.</p>
+<h3>Transformations and growth (2)</h3>
+<h4 id="compound_average_growth_rate">Compound average growth rate of a series — <code>compound_average_growth_rate</code></h4>
+<p>The compound (geometric) average growth rate per period of a positive series (CAGR when the periods are years), and the total growth from the first to the last value.</p>
+<div class="math">\[g = \left(\frac{x_n}{x_1}\right)^{1/(n-1)} - 1\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (positive values)</td><td>—</td></tr><tr><td><code>rate</code></td><td>out</td><td>compound average growth rate per period, as a fraction</td><td>—</td></tr><tr><td><code>rate_percent</code></td><td>out</td><td>the same rate in percent</td><td>—</td></tr><tr><td><code>total_growth</code></td><td>out</td><td>total growth x_n/x_1 - 1, as a fraction</td><td>—</td></tr><tr><td><code>periods</code></td><td>out</td><td>number of periods n - 1</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> all values positive; equally spaced periods.</p>
+<pre><code class="shell">$ time-series solve compound_average_growth_rate &quot;x=[100, 110, 125, 133, 150]&quot;
+rate = 0.1066819197
+rate_percent = 10.66819197
+total_growth = 0.5
+periods = 4
+  by: Compound average growth rate of a series  ((x_n / x_1)^(1/(n-1)) - 1)
+  assumes: all values positive; equally spaced periods</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the geometric mean growth rate for each time interval in the series. By comparing the final value to the initial value over the total number of periods, it derives a single percentage figure that describes the consistent exponential trend required to produce the observed change. The resulting rate of 10.6682 indicates how much the quantity grew on average per step, while the total accumulated growth over the entire span is 0.5.</p>
+<h4 id="differencing">Regular and seasonal differencing — <code>differencing</code></h4>
+<p>Difference a series d times (and seasonally D times at lag s): the series that an ARIMA(p, d, q) or seasonal ARIMA model works on.</p>
+<div class="math">\[\nabla^d \nabla_s^D x_t = (1-L)^d (1-L^s)^D x_t\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>d</code></td><td>in</td><td>number of regular (lag-1) differences, 0..3 (default 1) (optional)</td><td>—</td></tr><tr><td><code>D</code></td><td>in</td><td>number of seasonal differences, 0..2 (default 0) (optional)</td><td>—</td></tr><tr><td><code>s</code></td><td>in</td><td>seasonal lag (needed when D &gt; 0) (optional)</td><td>—</td></tr><tr><td><code>differenced</code></td><td>out</td><td>the differenced series</td><td>—</td></tr><tr><td><code>last</code></td><td>out</td><td>its latest value</td><td>—</td></tr><tr><td><code>length</code></td><td>out</td><td>its length n - d - D s</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> d + D &gt;= 1; the series is longer than d + D s.</p>
+<pre><code class="shell">$ time-series solve differencing &quot;x=[3, 5, 9, 15, 23, 33]&quot; d=2
+differenced = [2.0,2.0,2.0,2.0]
+last = 2
+length = 4
+  by: Regular and seasonal differencing  (seasonal differences y_t = x_t - x_{t-s} (D times), then regular differences y_t - y_{t-1} (d times))
+  assumes: d + D &gt;= 1; the series is longer than d + D s</code></pre>
+<p>In the worked example, x = [3, 5, 9, 15, 23, 33], d = 2 go through the equation above and give differenced = [2, 2, 2, 2], last = 2, length = 4. It applies only when d + D &gt;= 1; the series is longer than d + D s: outside that it says what is wrong instead of returning a number.</p>
+<h3>Trend fitting (7)</h3>
+<h4 id="exponential_trend_forecast">Exponential trend fit and forecast — <code>exponential_trend_forecast</code></h4>
+<p>Fit x_t = a e^(b t) (t = 1..n) by least squares on ln x_t, the growth rate per period e^b - 1, and the forecast of period n + h.</p>
+<div class="math">\[\ln x_t = \ln a + b\,t,\quad \hat x_{n+h} = a\,e^{b(n+h)}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first (positive)</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>periods ahead (default 1) (optional)</td><td>—</td></tr><tr><td><code>a</code></td><td>out</td><td>the scale a</td><td>—</td></tr><tr><td><code>b</code></td><td>out</td><td>the exponent rate b</td><td>—</td></tr><tr><td><code>growth_rate</code></td><td>out</td><td>e^b - 1 per period</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>a e^(b (n + h))</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> positive values; least squares on the logarithms (not on the values).</p>
+<pre><code class="shell">$ time-series solve exponential_trend_forecast &quot;x=[100, 112, 124, 140, 155]&quot; h=1
+a = 89.64949872
+b = 0.1099653413
+growth_rate = 0.1162393824
+forecast = 173.4170967
+  by: Exponential trend fit and forecast  (ordinary least squares of ln x_t on (1, t))
+  assumes: positive values; least squares on the logarithms (not on the values)</code></pre>
+<p><strong>What the worked example means:</strong> This calculation fits an exponential trend to the series by applying ordinary least squares to the natural logarithm of each value against its time index. The process transforms the curved relationship into a straight line, making it possible to estimate the base scale 89.6495 and the continuous growth parameter 0.109965. These parameters give the percentage increase per period, which is 0.116239, and project the next value as 173.417. This method assumes that the relative change remains constant over time.</p>
+<h4 id="linear_trend_forecast">Linear trend fit and forecast — <code>linear_trend_forecast</code></h4>
+<p>Fit the least-squares trend line x_t = a + b t (t = 1..n) and forecast period n + h.</p>
+<div class="math">\[\hat x_t = a + b\,t,\quad \hat x_{n+h} = a + b(n+h)\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>periods ahead to forecast (default 1) (optional)</td><td>—</td></tr><tr><td><code>slope</code></td><td>out</td><td>trend per period b</td><td>—</td></tr><tr><td><code>intercept</code></td><td>out</td><td>a (the trend value at t = 0)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>a + b (n + h)</td><td>—</td></tr><tr><td><code>r_squared</code></td><td>out</td><td>coefficient of determination</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> t = 1..n; the series is not constant.</p>
+<pre><code class="shell">$ time-series solve linear_trend_forecast &quot;x=[12, 15, 17, 20, 22, 25]&quot; h=2
+slope = 2.542857143
+intercept = 9.6
+forecast = 29.94285714
+r_squared = 0.9969792322
+  by: Linear trend fit and forecast  (ordinary least squares of x_t on (1, t))
+  assumes: t = 1..n; the series is not constant</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the best-fit straight line for the time series data using ordinary least squares. The resulting slope, 2.54286, represents the average change in the series value per period, while the intercept, 9.6, indicates the theoretical starting value at time zero. Based on these parameters, the model forecasts the value for the next periods ahead as 29.9429, with the fit quality measured by the coefficient of determination, 0.996979.</p>
+<h4 id="trend_seasonal_regression">Linear trend with seasonal dummy variables — <code>trend_seasonal_regression</code></h4>
+<p>Fit x_t = a + b t + (effect of t&#x27;s season) by least squares with seasonal dummies (the first season is the baseline, effect 0; the series starts in season 1) and forecast period n + h.</p>
+<div class="math">\[x_t = a + b\,t + \sum_{j=2}^{m}\gamma_j D_{j,t} + e_t\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first, starting in season 1</td><td>—</td></tr><tr><td><code>m</code></td><td>in</td><td>season length</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>periods ahead (default 1) (optional)</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the fitted value at t = n + h</td><td>—</td></tr><tr><td><code>intercept</code></td><td>out</td><td>a</td><td>—</td></tr><tr><td><code>slope</code></td><td>out</td><td>b per period</td><td>—</td></tr><tr><td><code>season_effects</code></td><td>out</td><td>the m seasonal effects (season 1 = 0)</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= m + 3; x_1 is in season 1; season 1 is the baseline.</p>
+<pre><code class="shell">$ time-series solve trend_seasonal_regression &quot;x=[30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51]&quot; h=1 m=4
+forecast = 59.25
+intercept = 27.96875
+slope = 2.40625
+season_effects = [0.0,-12.406249999999996,-6.145833333333334,-6.21875]
+  by: Linear trend with seasonal dummy variables  (ordinary least squares on (1, t, D_2, ..., D_m))
+  assumes: n &gt;= m + 3; x_1 is in season 1; season 1 is the baseline</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the predicted value at time n plus h using ordinary least squares on a model containing a linear time trend and seasonal dummy variables. The intercept 27.9688 represents the expected value in the baseline season when time is zero, while the slope 2.40625 indicates the average change per period. Seasonal effects are estimated relative to the first season, which serves as the reference with an effect of zero. The final forecast combines these components to project future values based on the observed historical pattern.</p>
+<h4 id="mann_kendall_test">Mann-Kendall trend test — <code>mann_kendall_test</code></h4>
+<p>The Mann-Kendall statistic S, its variance (with the tie correction), the continuity-corrected normal score z and the two-sided p-value for a monotonic trend.</p>
+<div class="math">\[S=\sum_{i&lt;j}\operatorname{sgn}(x_j-x_i),\ \operatorname{Var}S=\frac{n(n-1)(2n+5)-\sum t(t-1)(2t+5)}{18}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>s</code></td><td>out</td><td>S = sum_{i&lt;j} sign(x_j - x_i)</td><td>—</td></tr><tr><td><code>var_s</code></td><td>out</td><td>variance of S with tie correction</td><td>—</td></tr><tr><td><code>z</code></td><td>out</td><td>(S - sign S) / sqrt(var S)</td><td>—</td></tr><tr><td><code>p_value</code></td><td>out</td><td>two-sided normal p-value</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 4; ties corrected in the variance; continuity correction of 1 in z.</p>
+<pre><code class="shell">$ time-series solve mann_kendall_test &quot;x=[12, 14, 13, 17, 16, 19, 25, 21, 24]&quot;
+s = 28
+var_s = 92
+z = 2.81494459
+p_value = 0.004878564475
+  by: Mann-Kendall trend test  (count concordant minus discordant pairs; normal approximation)
+  assumes: n &gt;= 4; ties corrected in the variance; continuity correction of 1 in z</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines if there is a statistically significant monotonic trend in the time series data. It computes the Kendall score by counting concordant minus discordant pairs among all observations, resulting in 28. The variance of this score, adjusted for tied values, is calculated as 92. Using these values, a continuity-corrected normal score z is derived as 2.81494, which produces a two-sided p-value of 0.00487856. A small p-value suggests that the observed trend is unlikely to have occurred by random chance alone.</p>
+<h4 id="quadratic_trend_forecast">Quadratic trend fit and forecast — <code>quadratic_trend_forecast</code></h4>
+<p>Fit x_t = b0 + b1 t + b2 t^2 (t = 1..n) by least squares and forecast period n + h.</p>
+<div class="math">\[\hat x_t = b_0 + b_1 t + b_2 t^2\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>periods ahead (default 1) (optional)</td><td>—</td></tr><tr><td><code>b0</code></td><td>out</td><td>constant</td><td>—</td></tr><tr><td><code>b1</code></td><td>out</td><td>coefficient of t</td><td>—</td></tr><tr><td><code>b2</code></td><td>out</td><td>coefficient of t^2</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>the trend value at t = n + h</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> t = 1..n; n &gt;= 4.</p>
+<pre><code class="shell">$ time-series solve quadratic_trend_forecast &quot;x=[3, 5, 9, 15, 22, 32]&quot; h=1
+b0 = 2.8
+b1 = -0.7285714286
+b2 = 0.9285714286
+forecast = 43.2
+  by: Quadratic trend fit and forecast  (least squares (QR) on (1, t, t^2))
+  assumes: t = 1..n; n &gt;= 4</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the best-fit parabolic curve for the time series data using least squares regression. By fitting the model to the historical values, it derives three key parameters: the constant term 2.8, the linear coefficient -0.728571, and the quadratic coefficient 0.928571. These coefficients define the shape of the trend line, allowing for the prediction of future values based on the observed curvature in the data.</p>
+<h4 id="drift_forecast">Random-walk-with-drift (drift method) forecast — <code>drift_forecast</code></h4>
+<p>The drift method: the average change per period (x_n - x_1)/(n - 1) and the forecast x_n + h x drift.</p>
+<div class="math">\[\hat x_{n+h} = x_n + h\,\frac{x_n - x_1}{n-1}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>h</code></td><td>in</td><td>periods ahead (default 1) (optional)</td><td>—</td></tr><tr><td><code>drift</code></td><td>out</td><td>average change per period</td><td>—</td></tr><tr><td><code>forecast</code></td><td>out</td><td>x_n + h drift</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> n &gt;= 2.</p>
+<pre><code class="shell">$ time-series solve drift_forecast &quot;x=[100, 104, 103, 109, 112]&quot; h=3
+drift = 3
+forecast = 121
+  by: Random-walk-with-drift (drift method) forecast  (drift = (x_n - x_1)/(n - 1))
+  assumes: n &gt;= 2</code></pre>
+<p><strong>What the worked example means:</strong> This method calculates the average change per period, known as the drift, using the first and last values of the series. The result shows that the estimated drift is 3. Adding this drift multiplied by the horizon 3 to the final observed value gives a forecast of 121. This assumes the series will continue its historical trend linearly.</p>
+<h4 id="sens_slope">Sen&#x27;s slope (Theil-Sen trend) — <code>sens_slope</code></h4>
+<p>Sen&#x27;s robust trend slope (median of all pairwise slopes, t = 1..n) and the intercept median(x) - slope median(t).</p>
+<div class="math">\[\hat\beta = \operatorname{median}_{i&lt;j}\frac{x_j - x_i}{j - i}\]</div>
+<table><thead><tr><th>symbol</th><th></th><th>meaning</th><th>SI unit</th></tr></thead><tbody><tr><td><code>x</code></td><td>in</td><td>the series, oldest first</td><td>—</td></tr><tr><td><code>slope</code></td><td>out</td><td>median of (x_j - x_i)/(j - i), i &lt; j</td><td>—</td></tr><tr><td><code>intercept</code></td><td>out</td><td>median(x) - slope (n+1)/2</td><td>—</td></tr></tbody></table>
+<p><strong>Applies when:</strong> t = 1..n.</p>
+<pre><code class="shell">$ time-series solve sens_slope &quot;x=[12, 14, 13, 17, 16, 19, 25]&quot;
+slope = 1.666666667
+intercept = 9.333333333
+  by: Sen&#x27;s slope (Theil-Sen trend)  (median of the n(n-1)/2 pairwise slopes)
+  assumes: t = 1..n</code></pre>
+<p><strong>What the worked example means:</strong> This calculation determines the Sen&#x27;s slope, which is the median of all pairwise slopes between points in the series. By using the median instead of the mean, it provides a resistant estimate of the trend direction and magnitude against outliers. The resulting slope of 1.66667 indicates how much the value changes on average for each step forward in time. The intercept of 9.33333 represents the estimated value at the center of the time sequence, calculated by adjusting the median of the data by the trend.</p>
+<p>Questions and reports: support@ai999x.com. AI999X — The Future Is Self-Improving.</p></body></html>
