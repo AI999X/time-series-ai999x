@@ -151,7 +151,7 @@ Call `solve("<id>", **inputs)` with plain numbers; the result's `values` holds e
 
 <a id="simple_moving_average"></a>
 
-### Simple moving average — `simple_moving_average`
+### Simple moving average: `simple_moving_average`
 
 The k-period simple (trailing) moving average of a series; its last value is the moving-average forecast of the next period.
 
@@ -205,7 +205,7 @@ time_series_ai999x.solve('simple_moving_average', x='2.5, 3.5', k=1)
 
 <a id="linearly_weighted_moving_average"></a>
 
-### Linearly weighted moving average — `linearly_weighted_moving_average`
+### Linearly weighted moving average: `linearly_weighted_moving_average`
 
 The k-period linearly weighted moving average: weights 1, 2, ..., k from the oldest to the newest value of each window.
 
@@ -251,7 +251,7 @@ time_series_ai999x.solve('linearly_weighted_moving_average', x=[20, 22, 21, 25],
 
 <a id="exponential_moving_average"></a>
 
-### Exponential moving average — `exponential_moving_average`
+### Exponential moving average: `exponential_moving_average`
 
 The exponential moving average with span k (alpha = 2/(k+1)), started at the first value.
 
@@ -298,7 +298,7 @@ time_series_ai999x.solve('exponential_moving_average', x=[100, 102, 101, 105, 10
 
 <a id="centred_moving_average"></a>
 
-### Centred moving average — `centred_moving_average`
+### Centred moving average: `centred_moving_average`
 
 The centred moving average of length k: a symmetric k-term mean for odd k, the 2 x k moving average (half weights at both ends) for even k, as used in classical decomposition.
 
@@ -346,7 +346,7 @@ time_series_ai999x.solve('centred_moving_average', x=[5, 8, 6, 9, 7], k=3)
 
 <a id="simple_exponential_smoothing"></a>
 
-### Simple exponential smoothing — `simple_exponential_smoothing`
+### Simple exponential smoothing: `simple_exponential_smoothing`
 
 Simple exponential smoothing with smoothing constant alpha: the forecast of the next period and the sum of squared one-step errors. The initial level l_0 is the first observation unless stated.
 
@@ -394,7 +394,7 @@ time_series_ai999x.solve('simple_exponential_smoothing', x=[50, 52, 49, 55, 53, 
 
 <a id="holt_linear_trend"></a>
 
-### Holt's linear trend method — `holt_linear_trend`
+### Holt's linear trend method: `holt_linear_trend`
 
 Holt's linear (double) exponential smoothing: level and trend updated each period, h-step forecast l_n + h b_n. Initial states $l_0 = x_1$ and $b_0 = x_2 - x_1$ (before the first observation) unless stated.
 
@@ -452,7 +452,7 @@ time_series_ai999x.solve('holt_linear_trend', x='30, 33, 35, 39', alpha=0.6, bet
 
 <a id="holt_damped_trend"></a>
 
-### Damped-trend Holt method — `holt_damped_trend`
+### Damped-trend Holt method: `holt_damped_trend`
 
 Holt's method with a damped trend (damping parameter phi): the h-step forecast is $l_n + (\phi + \phi^{2} + ... + \phi^{h})$ b_n. Initial states $l_0 = x_1$, $b_0 = x_2 - x_1$ unless stated.
 
@@ -505,7 +505,7 @@ time_series_ai999x.solve('holt_damped_trend', x=[100, 104, 109, 111, 118, 121, 1
 
 <a id="holt_winters_additive"></a>
 
-### Holt-Winters additive method — `holt_winters_additive`
+### Holt-Winters additive method: `holt_winters_additive`
 
 Holt-Winters exponential smoothing with additive trend and additive seasonality: the h-step forecast, final level and trend, and the sum of squared one-step errors. initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, $s_j = x_j - l_0$ (additive) or $x_j / l_0$ (multiplicative) for the first m observations.
 
@@ -562,7 +562,7 @@ time_series_ai999x.solve('holt_winters_additive', x=[12, 18, 25, 15, 14, 20, 28,
 
 <a id="holt_winters_multiplicative"></a>
 
-### Holt-Winters multiplicative method — `holt_winters_multiplicative`
+### Holt-Winters multiplicative method: `holt_winters_multiplicative`
 
 Holt-Winters exponential smoothing with additive trend and multiplicative seasonality: the h-step forecast, final level and trend, and the sum of squared one-step errors. initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, $s_j = x_j - l_0$ (additive) or $x_j / l_0$ (multiplicative) for the first m observations.
 
@@ -615,7 +615,7 @@ time_series_ai999x.solve('holt_winters_multiplicative', x=[12, 18, 25, 15, 14, 2
 
 <a id="seasonal_indices_additive"></a>
 
-### Seasonal indices (additive decomposition) — `seasonal_indices_additive`
+### Seasonal indices (additive decomposition): `seasonal_indices_additive`
 
 Seasonal indices of classical additive decomposition: detrend by the centred moving average, average each season, normalise the indices to sum to 0.
 
@@ -662,7 +662,7 @@ time_series_ai999x.solve('seasonal_indices_additive', x=[10, 14, 9, 11, 15, 10, 
 
 <a id="seasonally_adjusted_additive"></a>
 
-### Seasonally adjusted series (additive) — `seasonally_adjusted_additive`
+### Seasonally adjusted series (additive): `seasonally_adjusted_additive`
 
 The seasonally adjusted series of classical additive decomposition: each value minus its seasonal index.
 
@@ -702,7 +702,7 @@ time_series_ai999x.solve('seasonally_adjusted_additive', x='30, 21, 29, 31, 40, 
 
 <a id="seasonal_indices_multiplicative"></a>
 
-### Seasonal indices (multiplicative decomposition) — `seasonal_indices_multiplicative`
+### Seasonal indices (multiplicative decomposition), `seasonal_indices_multiplicative`
 
 Seasonal indices of classical multiplicative decomposition: detrend by the centred moving average, average each season, normalise the indices to average 1.
 
@@ -749,7 +749,7 @@ time_series_ai999x.solve('seasonal_indices_multiplicative', x=[10, 14, 9, 11, 15
 
 <a id="seasonally_adjusted_multiplicative"></a>
 
-### Seasonally adjusted series (multiplicative) — `seasonally_adjusted_multiplicative`
+### Seasonally adjusted series (multiplicative), `seasonally_adjusted_multiplicative`
 
 The seasonally adjusted series of classical multiplicative decomposition: each value divided by its seasonal index.
 
@@ -789,7 +789,7 @@ time_series_ai999x.solve('seasonally_adjusted_multiplicative', x='30, 21, 29, 31
 
 <a id="differencing"></a>
 
-### Regular and seasonal differencing — `differencing`
+### Regular and seasonal differencing: `differencing`
 
 Difference a series d times (and seasonally D times at lag s): the series that an ARIMA(p, d, q) or seasonal ARIMA model works on.
 
@@ -850,7 +850,7 @@ time_series_ai999x.solve('differencing', x=[10, 14, 9, 12, 11, 16, 10, 13, 12, 1
 
 <a id="compound_average_growth_rate"></a>
 
-### Compound average growth rate of a series — `compound_average_growth_rate`
+### Compound average growth rate of a series: `compound_average_growth_rate`
 
 The compound (geometric) average growth rate per period of a positive series (CAGR when the periods are years), and the total growth from the first to the last value.
 
@@ -897,7 +897,7 @@ time_series_ai999x.solve('compound_average_growth_rate', x=[2000, 2300, 2100, 26
 
 <a id="sample_autocorrelation"></a>
 
-### Sample autocorrelation at lag k — `sample_autocorrelation`
+### Sample autocorrelation at lag k: `sample_autocorrelation`
 
 The sample autocorrelation r_k of a series (and r_1..r_k), with autocovariances divided by n and taken about the sample mean.
 
@@ -948,7 +948,7 @@ time_series_ai999x.solve('sample_autocorrelation', x=[12, 15, 11, 18, 14, 19, 13
 
 <a id="sample_autocovariance"></a>
 
-### Sample autocovariance at lag k — `sample_autocovariance`
+### Sample autocovariance at lag k: `sample_autocovariance`
 
 The sample autocovariance c_k of a series, divided by n and taken about the sample mean.
 
@@ -994,7 +994,7 @@ time_series_ai999x.solve('sample_autocovariance', x=[1.5, 2.5, 2.0, 3.5, 3.0], k
 
 <a id="sample_partial_autocorrelation"></a>
 
-### Sample partial autocorrelation at lag k — `sample_partial_autocorrelation`
+### Sample partial autocorrelation at lag k: `sample_partial_autocorrelation`
 
 The sample partial autocorrelation phi_kk of a series (and phi_11..phi_kk) by the Durbin-Levinson recursion on the sample autocorrelations (denominator n).
 
@@ -1040,7 +1040,7 @@ time_series_ai999x.solve('sample_partial_autocorrelation', x=[3.1, 2.4, 3.9, 3.3
 
 <a id="bartlett_standard_error"></a>
 
-### Bartlett standard error of a sample autocorrelation — `bartlett_standard_error`
+### Bartlett standard error of a sample autocorrelation, `bartlett_standard_error`
 
 Bartlett's standard error of r_k under the hypothesis that the autocorrelations beyond lag $k - 1$ are zero, and the 95 % band half-width used in correlograms.
 
@@ -1086,7 +1086,7 @@ time_series_ai999x.solve('bartlett_standard_error', x=[12, 15, 11, 18, 14, 19, 1
 
 <a id="ljung_box_test"></a>
 
-### Ljung-Box test — `ljung_box_test`
+### Ljung-Box test: `ljung_box_test`
 
 The Ljung-Box test portmanteau statistic for no autocorrelation up to lag h and its chi-square p-value (h - model_df degrees of freedom; autocorrelations with denominator n).
 
@@ -1140,7 +1140,7 @@ time_series_ai999x.solve('ljung_box_test', x=[0.5, -0.3, 0.8, -0.1, 0.2, -0.6, 0
 
 <a id="box_pierce_test"></a>
 
-### Box-Pierce test — `box_pierce_test`
+### Box-Pierce test: `box_pierce_test`
 
 The Box-Pierce test portmanteau statistic for no autocorrelation up to lag h and its chi-square p-value (h - model_df degrees of freedom; autocorrelations with denominator n).
 
@@ -1194,7 +1194,7 @@ time_series_ai999x.solve('box_pierce_test', x=[0.5, -0.3, 0.8, -0.1, 0.2, -0.6, 
 
 <a id="ar_yule_walker"></a>
 
-### AR(p) estimation by Yule-Walker — `ar_yule_walker`
+### AR(p) estimation by Yule-Walker: `ar_yule_walker`
 
 Estimate the coefficients phi_1..phi_p and the innovation variance of an AR(p) model from data by the Yule-Walker equations (sample autocovariances divided by n, mean removed).
 
@@ -1241,7 +1241,7 @@ time_series_ai999x.solve('ar_yule_walker', x=[1.2, 0.8, 1.5, 1.1, 1.9, 1.4, 2.0,
 
 <a id="ar_least_squares"></a>
 
-### AR(p) estimation by conditional least squares — `ar_least_squares`
+### AR(p) estimation by conditional least squares, `ar_least_squares`
 
 Fit $x_t = c + phi_1$ x_{$t-1$} + ... + phi_p x_{t-p} + e_t by ordinary least squares on $t = p+1..n$; the innovation variance is the residual sum of squares divided by n - p.
 
@@ -1289,7 +1289,7 @@ time_series_ai999x.solve('ar_least_squares', x=[3.1, 2.4, 3.9, 3.3, 4.6, 3.8, 5.
 
 <a id="yule_walker_from_autocorrelations"></a>
 
-### Yule-Walker equations from autocorrelations — `yule_walker_from_autocorrelations`
+### Yule-Walker equations from autocorrelations, `yule_walker_from_autocorrelations`
 
 Solve the Yule-Walker equations for the AR(p) coefficients given the autocorrelations rho_1..rho_p, and the ratio of the innovation variance to the process variance.
 
@@ -1313,7 +1313,7 @@ $$
 
 ![The Yule–Walker equations turn the stated autocorrelations ρ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/yule-walker-from-autocorrelations-acf)
 
-*The Yule–Walker equations turn the stated autocorrelations ρ = 0.6, 0.2 into AR(2) coefficients φ₁ = 0.75, φ₂ = -0.25 (innovation variance ratio 0.6); the stems are the theoretical autocorrelations of that AR(2), lags 1 … 8, from the package — they pass through the given values and continue the pattern.*
+*The Yule–Walker equations turn the stated autocorrelations ρ = 0.6, 0.2 into AR(2) coefficients φ₁ = 0.75, φ₂ = -0.25 (innovation variance ratio 0.6); the stems are the theoretical autocorrelations of that AR(2), lags 1 … 8, from the package, they pass through the given values and continue the pattern.*
 
 ```python
 time_series_ai999x.solve('yule_walker_from_autocorrelations', rho='0.6, 0.2')
@@ -1341,7 +1341,7 @@ time_series_ai999x.solve('yule_walker_from_autocorrelations', rho='0.5')
 
 <a id="partial_autocorrelations_from_autocorrelations"></a>
 
-### Partial autocorrelations from autocorrelations — `partial_autocorrelations_from_autocorrelations`
+### Partial autocorrelations from autocorrelations, `partial_autocorrelations_from_autocorrelations`
 
 The partial autocorrelations phi_11..phi_pp implied by autocorrelations rho_1..rho_p (Durbin-Levinson).
 
@@ -1386,7 +1386,7 @@ time_series_ai999x.solve('partial_autocorrelations_from_autocorrelations', rho=[
 
 <a id="ar_forecast"></a>
 
-### Forecasts of an AR(p) model — `ar_forecast`
+### Forecasts of an AR(p) model: `ar_forecast`
 
 h-step forecasts of $x_t = c + phi_1$ x_{$t-1$} + ... + phi_p x_{t-p} + e_t from the last p observations (future shocks set to 0).
 
@@ -1434,7 +1434,7 @@ time_series_ai999x.solve('ar_forecast', x=[4.0, 5.5], phi=[0.8], h=2)
 
 <a id="arima_p10_forecast"></a>
 
-### Forecasts of an ARIMA(p,1,0) model — `arima_p10_forecast`
+### Forecasts of an ARIMA(p,1,0) model: `arima_p10_forecast`
 
 h-step forecasts of an ARIMA(p,1,0) model without constant: the differences follow a stationary AR(p); forecast differences are accumulated onto the last observation.
 
@@ -1481,7 +1481,7 @@ time_series_ai999x.solve('arima_p10_forecast', x=[50, 51, 53, 52, 55, 57], phi=[
 
 <a id="ma_theoretical_acf"></a>
 
-### Theoretical autocorrelations of an MA(q) process — `ma_theoretical_acf`
+### Theoretical autocorrelations of an MA(q) process, `ma_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of $x_t = e_t + theta_1$ e_{$t-1$} + ... + theta_q e_{t-q}; they vanish beyond lag q.
 
@@ -1533,7 +1533,7 @@ time_series_ai999x.solve('ma_theoretical_acf', theta='-0.4, 0.2, 0.6', K=4)
 
 <a id="arma11_theoretical_acf"></a>
 
-### Theoretical autocorrelations of an ARMA(1,1) process — `arma11_theoretical_acf`
+### Theoretical autocorrelations of an ARMA(1,1) process, `arma11_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of $x_t = \phi$ x_{$t-1$} + e_t + theta e_{$t-1$}.
 
@@ -1584,7 +1584,7 @@ time_series_ai999x.solve('arma11_theoretical_acf', phi=-0.5, theta=0.8, K=3)
 
 <a id="arma_theoretical_acf"></a>
 
-### Theoretical autocorrelations of an ARMA(p,q) process — `arma_theoretical_acf`
+### Theoretical autocorrelations of an ARMA(p,q) process, `arma_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of a stationary ARMA(p,q) process x_t = sum phi_i x_{t-i} + e_t + sum theta_j e_{t-j}.
 
@@ -1631,7 +1631,7 @@ time_series_ai999x.solve('arma_theoretical_acf', phi=[0.7], theta=[0.2, -0.3], K
 
 <a id="arma_variance"></a>
 
-### Variance and lag-1 autocovariance of an ARMA(p,q) process — `arma_variance`
+### Variance and lag-1 autocovariance of an ARMA(p,q) process, `arma_variance`
 
 The process variance gamma_0 and lag-1 autocovariance gamma_1 of a stationary ARMA(p,q) process with innovation variance $\sigma^{2.}$
 
@@ -1678,7 +1678,7 @@ time_series_ai999x.solve('arma_variance', phi=[0.6, -0.2], theta=[0.3], sigma2=1
 
 <a id="psi_weights"></a>
 
-### Psi weights (MA-infinity representation) of an ARMA process — `psi_weights`
+### Psi weights (MA-infinity representation) of an ARMA process, `psi_weights`
 
 The weights psi_1..psi_K of x_t = sum_{$j \geq 0$} psi_j e_{t-j} $(psi_0 = 1)$ for a stationary ARMA(p,q); they are also the impulse response.
 
@@ -1724,7 +1724,7 @@ time_series_ai999x.solve('psi_weights', phi=[0.6, -0.2], theta=[0.4, 0.1], K=6)
 
 <a id="pi_weights"></a>
 
-### Pi weights (AR-infinity representation) of an ARMA process — `pi_weights`
+### Pi weights (AR-infinity representation) of an ARMA process, `pi_weights`
 
 The weights pi_1..pi_K of x_t = sum_{$j \geq 1$} pi_j x_{t-j} + e_t for an invertible ARMA(p,q).
 
@@ -1771,7 +1771,7 @@ time_series_ai999x.solve('pi_weights', phi=[0], theta=[0.6], K=4)
 
 <a id="forecast_error_variance"></a>
 
-### h-step forecast error variance of an ARMA model — `forecast_error_variance`
+### h-step forecast error variance of an ARMA model, `forecast_error_variance`
 
 The variance (and standard deviation) of the h-step-ahead forecast error of a stationary ARMA(p,q) with known parameters: $\sigma^{2}$ (psi_0^2 + ... + psi_{$h-1$}^2).
 
@@ -1818,7 +1818,7 @@ time_series_ai999x.solve('forecast_error_variance', phi=[0.8], theta=[0], sigma2
 
 <a id="ar1_properties"></a>
 
-### Mean, variance and autocorrelation of an AR(1) process — `ar1_properties`
+### Mean, variance and autocorrelation of an AR(1) process, `ar1_properties`
 
 For a stationary AR(1) $x_t = c + \phi$ x_{$t-1$} + e_t: the mean $c/(1 - \phi)$, the variance $\sigma^{2}/(1 - \phi^{2})$, and the lag-k autocorrelation $\phi^{k}$ and autocovariance.
 
@@ -1869,7 +1869,7 @@ time_series_ai999x.solve('ar1_properties', phi=-0.5, sigma2=1, k=3)
 
 <a id="ar2_stationarity"></a>
 
-### Stationarity of an AR(2) process — `ar2_stationarity`
+### Stationarity of an AR(2) process: `ar2_stationarity`
 
 Whether $x_t = phi1$ x_{$t-1$} + phi2 x_{$t-2$} + e_t is stationary: the largest modulus of the inverse characteristic roots (roots of $z^{2} - phi1$ z - phi2) must be below 1.
 
@@ -1892,9 +1892,9 @@ $$
 - **Assumes:** a modulus of exactly 1 (unit root) counts as not stationary
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
-![Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane — stationary with real roots (120 points), stationary with complex roots, i](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/ar2-stationarity-region.svg)
+![Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane, stationary with real roots (120 points), stationary with complex roots, i](https://huggingface.co/AI999X/time-series-ai999x/resolve/main/figures/ar2-stationarity-region.svg)
 
-*Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane — stationary with real roots (120 points), stationary with complex roots, i.e. damped oscillation (223), or not stationary (682); together they trace the stationarity triangle. Marked: φ₁ = 0.5, φ₂ = 0.3, real roots, largest modulus 0.85208.*
+*Which AR(2) models x_t = φ₁x_(t−1) + φ₂x_(t−2) + e_t are stationary: the package's verdict at 1025 points of the (φ₁, φ₂) plane, stationary with real roots (120 points), stationary with complex roots, i.e. damped oscillation (223), or not stationary (682); together they trace the stationarity triangle. Marked: φ₁ = 0.5, φ₂ = 0.3, real roots, largest modulus 0.85208.*
 
 ![The largest root modulus the package returns for AR(2) models as φ₁ runs from −2 to 2 (step 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar2-stationarity-modulus)
 
@@ -1926,7 +1926,7 @@ time_series_ai999x.solve('ar2_stationarity', phi1=0.6, phi2=0.5)
 
 <a id="ma2_invertibility"></a>
 
-### Invertibility of an MA(2) process — `ma2_invertibility`
+### Invertibility of an MA(2) process: `ma2_invertibility`
 
 Whether $x_t = e_t + theta1$ e_{$t-1$} + theta2 e_{$t-2$} is invertible: the largest modulus of the inverse roots (roots of $z^{2} + theta1$ z + theta2) must be below 1.
 
@@ -1949,9 +1949,9 @@ $$
 - **Assumes:** plus-sign MA convention; a modulus of exactly 1 counts as not invertible
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
-![Which MA(2) models are invertible: the package's verdict at 4717 points of the (θ1, θ2) plane — invertible with real roots (577 points), with complex roots (1104), or not (3036); together they trace a triangle](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma2-invertibility-region)
+![Which MA(2) models are invertible: the package's verdict at 4717 points of the (θ1, θ2) plane, invertible with real roots (577 points), with complex roots (1104), or not (3036); together they trace a triangle](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma2-invertibility-region)
 
-*Which MA(2) models are invertible: the package's verdict at 4717 points of the (θ1, θ2) plane — invertible with real roots (577 points), with complex roots (1104), or not (3036); together they trace a triangle. Marked: the worked example θ1 = 0.5, θ2 = 0.3: yes, complex roots, largest root modulus 0.547723.*
+*Which MA(2) models are invertible: the package's verdict at 4717 points of the (θ1, θ2) plane, invertible with real roots (577 points), with complex roots (1104), or not (3036); together they trace a triangle. Marked: the worked example θ1 = 0.5, θ2 = 0.3: yes, complex roots, largest root modulus 0.547723.*
 
 ![The largest root modulus the package returns for MA(2) models as θ₁ runs from −2 to 2, for three values of θ₂; the model is invertible where the curve is below 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/ma2-invertibility-modulus)
 
@@ -1977,7 +1977,7 @@ time_series_ai999x.solve('ma2_invertibility', theta1=-1.5, theta2=0.9)
 
 <a id="cross_correlation_at_lag"></a>
 
-### Sample cross-correlation at lag k — `cross_correlation_at_lag`
+### Sample cross-correlation at lag k: `cross_correlation_at_lag`
 
 The sample cross-correlation r_xy(k) = corr(x_{t+k}, y_t) of two equally long series (y leads x by k).
 
@@ -2023,7 +2023,7 @@ time_series_ai999x.solve('cross_correlation_at_lag', x=[10, 12, 11, 15, 14, 18, 
 
 <a id="cross_correlation_best_lag"></a>
 
-### Lag of the strongest cross-correlation — `cross_correlation_best_lag`
+### Lag of the strongest cross-correlation: `cross_correlation_best_lag`
 
 The lag k in -K..K with the largest |r_xy(k)|, r_xy(k) = corr(x_{t+k}, y_t): a positive k means y leads x by k periods.
 
@@ -2048,7 +2048,7 @@ $$
 
 ![Two series x = 1, 3, 2, 5, 4, 6, 5, 8 and y = 3, 2, 5, 4, 6, 5, 8, 7 (top) and their cross-correlations at lags −3 … 3 (bottom; non-negative lags run directly, negative ones with x and y swapped): the package returns the best lag 1 with correlation 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/cross-correlation-best-lag-series-ccf)
 
-*Two series x = 1, 3, 2, 5, 4, 6, 5, 8 and y = 3, 2, 5, 4, 6, 5, 8, 7 (top) and their cross-correlations at lags −3 … 3 (bottom; non-negative lags run directly, negative ones with x and y swapped): the package returns the best lag 1 with correlation 0.713657 — y follows x by 1 period(s).*
+*Two series x = 1, 3, 2, 5, 4, 6, 5, 8 and y = 3, 2, 5, 4, 6, 5, 8, 7 (top) and their cross-correlations at lags −3 … 3 (bottom; non-negative lags run directly, negative ones with x and y swapped): the package returns the best lag 1 with correlation 0.713657, y follows x by 1 period(s).*
 
 ```python
 time_series_ai999x.solve('cross_correlation_best_lag', x='1, 3, 2, 5, 4, 6, 5, 8', y='3, 2, 5, 4, 6, 5, 8, 7', K=3)
@@ -2069,7 +2069,7 @@ time_series_ai999x.solve('cross_correlation_best_lag', x=[10, 12, 11, 15, 14, 18
 
 <a id="mean_absolute_error"></a>
 
-### Mean absolute error — `mean_absolute_error`
+### Mean absolute error: `mean_absolute_error`
 
 The mean absolute error of forecasts against actual values.
 
@@ -2120,7 +2120,7 @@ time_series_ai999x.solve('mean_absolute_error', y=[102.5, 98.0, 110.2, 105.7, 99
 
 <a id="mean_squared_error"></a>
 
-### Mean squared error — `mean_squared_error`
+### Mean squared error: `mean_squared_error`
 
 The mean squared error of forecasts against actual values.
 
@@ -2171,7 +2171,7 @@ time_series_ai999x.solve('mean_squared_error', y=[102.5, 98.0, 110.2, 105.7, 99.
 
 <a id="root_mean_squared_error"></a>
 
-### Root mean squared error — `root_mean_squared_error`
+### Root mean squared error: `root_mean_squared_error`
 
 The root mean squared error of forecasts against actual values.
 
@@ -2222,7 +2222,7 @@ time_series_ai999x.solve('root_mean_squared_error', y=[102.5, 98.0, 110.2, 105.7
 
 <a id="mean_absolute_percentage_error"></a>
 
-### Mean absolute percentage error — `mean_absolute_percentage_error`
+### Mean absolute percentage error: `mean_absolute_percentage_error`
 
 The mean absolute percentage error (in percent) of forecasts against actual values.
 
@@ -2273,7 +2273,7 @@ time_series_ai999x.solve('mean_absolute_percentage_error', y=[102.5, 98.0, 110.2
 
 <a id="mean_forecast_error"></a>
 
-### Mean forecast error (bias) — `mean_forecast_error`
+### Mean forecast error (bias): `mean_forecast_error`
 
 The mean forecast error (bias): positive when the forecasts are too low on average.
 
@@ -2324,7 +2324,7 @@ time_series_ai999x.solve('mean_forecast_error', y=[102.5, 98.0, 110.2, 105.7, 99
 
 <a id="symmetric_mape"></a>
 
-### Symmetric mean absolute percentage error — `symmetric_mape`
+### Symmetric mean absolute percentage error: `symmetric_mape`
 
 The symmetric MAPE in percent: $100/n$ sum 2|y - f| / (|y| + |f|).
 
@@ -2375,7 +2375,7 @@ time_series_ai999x.solve('symmetric_mape', y=[102.5, 98.0, 110.2, 105.7, 99.9], 
 
 <a id="mean_absolute_scaled_error"></a>
 
-### Mean absolute scaled error — `mean_absolute_scaled_error`
+### Mean absolute scaled error: `mean_absolute_scaled_error`
 
 MASE: the forecasts' mean absolute error divided by the in-sample mean absolute error of the (seasonal) naive forecast on the training data.
 
@@ -2424,7 +2424,7 @@ time_series_ai999x.solve('mean_absolute_scaled_error', y_train=[20, 30, 25, 22, 
 
 <a id="linear_trend_forecast"></a>
 
-### Linear trend fit and forecast — `linear_trend_forecast`
+### Linear trend fit and forecast: `linear_trend_forecast`
 
 Fit the least-squares trend line $x_t = a + b$ t $(t = 1..n)$ and forecast period n + h.
 
@@ -2472,7 +2472,7 @@ time_series_ai999x.solve('linear_trend_forecast', x=[5.2, 5.0, 5.9, 6.3, 6.1, 7.
 
 <a id="quadratic_trend_forecast"></a>
 
-### Quadratic trend fit and forecast — `quadratic_trend_forecast`
+### Quadratic trend fit and forecast: `quadratic_trend_forecast`
 
 Fit $x_t = b_{0} + b_{1}$ $t + b_{2}$ $t^{2}$ $(t = 1..n)$ by least squares and forecast period n + h.
 
@@ -2519,7 +2519,7 @@ time_series_ai999x.solve('quadratic_trend_forecast', x=[100, 98, 99, 103, 110, 1
 
 <a id="exponential_trend_forecast"></a>
 
-### Exponential trend fit and forecast — `exponential_trend_forecast`
+### Exponential trend fit and forecast: `exponential_trend_forecast`
 
 Fit $x_t = a$ e^(b t) $(t = 1..n)$ by least squares on ln x_t, the growth rate per period $e^{b} - 1$, and the forecast of period n + h.
 
@@ -2567,7 +2567,7 @@ time_series_ai999x.solve('exponential_trend_forecast', x=[2.0, 2.3, 2.9, 3.1, 3.
 
 <a id="sens_slope"></a>
 
-### Sen's slope (Theil-Sen trend) — `sens_slope`
+### Sen's slope (Theil-Sen trend): `sens_slope`
 
 Sen's robust trend slope (median of all pairwise slopes, t = 1..n) and the intercept median(x) - slope median(t).
 
@@ -2588,9 +2588,9 @@ $$
 - **Assumes:** $t = 1..n$
 - **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
 
-![Sen's slope of x = 12, 14, 13, 17, 16, 19, 25 — the median of all pairwise slopes, robust to the outlying last value — is 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/sens-slope-trend)
+![Sen's slope of x = 12, 14, 13, 17, 16, 19, 25 (the median of all pairwise slopes, robust to the outlying last value), is 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/sens-slope-trend)
 
-*Sen's slope of x = 12, 14, 13, 17, 16, 19, 25 — the median of all pairwise slopes, robust to the outlying last value — is 1.66667 per period with intercept 9.33333; for comparison the least-squares trend (the package's linear trend fit) has slope 1.85714. Both lines drawn from the returned values (t = 1 … n).*
+*Sen's slope of x = 12, 14, 13, 17, 16, 19, 25 (the median of all pairwise slopes, robust to the outlying last value), is 1.66667 per period with intercept 9.33333; for comparison the least-squares trend (the package's linear trend fit) has slope 1.85714. Both lines drawn from the returned values (t = 1 … n).*
 
 ```python
 time_series_ai999x.solve('sens_slope', x='12, 14, 13, 17, 16, 19, 25')
@@ -2611,7 +2611,7 @@ time_series_ai999x.solve('sens_slope', x=[3.2, 3.0, 3.9, 4.1, 3.8, 4.6])
 
 <a id="mann_kendall_test"></a>
 
-### Mann-Kendall trend test — `mann_kendall_test`
+### Mann-Kendall trend test: `mann_kendall_test`
 
 The Mann-Kendall statistic S, its variance (with the tie correction), the continuity-corrected normal score z and the two-sided p-value for a monotonic trend.
 
@@ -2636,7 +2636,7 @@ $$
 
 ![The Mann–Kendall trend test on x = 12, 14, 13, 17, 16, 19, 25, 21, 24: the package returns S = 28 (concordant minus discordant pairs), variance 92, z = 2](https://www.ai999x.com/?ax_fig=time-series-ai999x/mann-kendall-test-trend)
 
-*The Mann–Kendall trend test on x = 12, 14, 13, 17, 16, 19, 25, 21, 24: the package returns S = 28 (concordant minus discordant pairs), variance 92, z = 2.81494 and p-value 0.00487856 — a significant upward trend; the dashed line is the package's Sen slope 1.5 with intercept 9.5.*
+*The Mann–Kendall trend test on x = 12, 14, 13, 17, 16, 19, 25, 21, 24: the package returns S = 28 (concordant minus discordant pairs), variance 92, z = 2.81494 and p-value 0.00487856, a significant upward trend; the dashed line is the package's Sen slope 1.5 with intercept 9.5.*
 
 ```python
 time_series_ai999x.solve('mann_kendall_test', x='12, 14, 13, 17, 16, 19, 25, 21, 24')
@@ -2658,7 +2658,7 @@ time_series_ai999x.solve('mann_kendall_test', x=[5, 3, 5, 6, 4, 7, 7, 8, 6, 9])
 
 <a id="linear_interpolation"></a>
 
-### Linear interpolation of a missing value — `linear_interpolation`
+### Linear interpolation of a missing value: `linear_interpolation`
 
 Fill a missing value at time t0 by the straight line between the neighbouring observations.
 
@@ -2704,7 +2704,7 @@ time_series_ai999x.solve('linear_interpolation', t=[0, 5, 10], y=[3.2, 4.7, 4.1]
 
 <a id="exponential_interpolation"></a>
 
-### Exponential (log-linear) interpolation — `exponential_interpolation`
+### Exponential (log-linear) interpolation: `exponential_interpolation`
 
 Fill a missing value at time t0 assuming constant growth between the neighbouring observations (linear interpolation of the logarithms).
 
@@ -2750,7 +2750,7 @@ time_series_ai999x.solve('exponential_interpolation', t=[2000, 2010], y=[6.1, 6.
 
 <a id="change_point_mean_shift"></a>
 
-### Single change point in the mean (least squares) — `change_point_mean_shift`
+### Single change point in the mean (least squares), `change_point_mean_shift`
 
 The single change point that minimises the total within-segment sum of squares (a shift in the mean), with the means before and after.
 
@@ -2799,7 +2799,7 @@ time_series_ai999x.solve('change_point_mean_shift', x=[1.2, 0.8, 1.1, 3.9, 4.2, 
 
 <a id="two_change_points"></a>
 
-### Two change points in the mean (optimal segmentation) — `two_change_points`
+### Two change points in the mean (optimal segmentation), `two_change_points`
 
 The two change points that minimise the total within-segment sum of squares (three mean levels), found by exhaustive dynamic search.
 
@@ -2850,7 +2850,7 @@ time_series_ai999x.solve('two_change_points', x=[1.0, 1.2, 0.9, 4.1, 3.8, 4.3, 4
 
 <a id="penalised_change_points"></a>
 
-### Multiple change points with a penalty (PELT) — `penalised_change_points`
+### Multiple change points with a penalty (PELT), `penalised_change_points`
 
 The segmentation minimising the within-segment sum of squares plus a penalty per change point (optimal partitioning, as found by PELT): the number and positions of the changes in the mean.
 
@@ -2897,7 +2897,7 @@ time_series_ai999x.solve('penalised_change_points', x=[1.0, 1.2, 0.9, 1.1, 1.3, 
 
 <a id="cusum_change_point"></a>
 
-### CUSUM estimate of a change point — `cusum_change_point`
+### CUSUM estimate of a change point: `cusum_change_point`
 
 The change point estimated by the cumulative sum of deviations from the overall mean, S_k = sum_{$t \leq k$}(x_t - xbar): the k with the largest |S_k|.
 
@@ -2943,7 +2943,7 @@ time_series_ai999x.solve('cusum_change_point', x=[20.1, 19.8, 20.3, 17.2, 16.9, 
 
 <a id="tabular_cusum"></a>
 
-### Tabular CUSUM control chart — `tabular_cusum`
+### Tabular CUSUM control chart: `tabular_cusum`
 
 The upper and lower tabular CUSUM statistics for a target mean mu0 with allowance k, and the first time either exceeds the decision interval h.
 
@@ -2993,7 +2993,7 @@ time_series_ai999x.solve('tabular_cusum', x=[50, 49, 48, 47.5, 47, 46.8], mu0=50
 
 <a id="kalman_update"></a>
 
-### Kalman measurement update (scalar) — `kalman_update`
+### Kalman measurement update (scalar): `kalman_update`
 
 Combine a prior estimate (mean, variance) with a measurement (value, noise variance): the posterior mean and variance and the Kalman gain.
 
@@ -3042,7 +3042,7 @@ time_series_ai999x.solve('kalman_update', m=-3.5, p=0.5, z=-2.0, r=2.5)
 
 <a id="kalman_step"></a>
 
-### One Kalman filter step (random-walk model) — `kalman_step`
+### One Kalman filter step (random-walk model), `kalman_step`
 
 One predict-and-update step of the scalar Kalman filter for a random-walk state $x_t = x_${$t-1$} + w_t observed as $z_t = x_t + v_t.$
 
@@ -3093,7 +3093,7 @@ time_series_ai999x.solve('kalman_step', m=0.5, p=0.2, z=1.4, q=0.05, r=0.3)
 
 <a id="kalman_filter_local_level"></a>
 
-### Kalman filter for a random-walk (local level) model — `kalman_filter_local_level`
+### Kalman filter for a random-walk (local level) model, `kalman_filter_local_level`
 
 Filter a sequence of measurements with the scalar Kalman filter for $x_t = x_${$t-1$} + w_t, $z_t = x_t + v_t$ (predict, then update, at every step): the final estimate, variance, gain, all filtered estimates and the Gaussian log-likelihood of the one-step prediction errors.
 
@@ -3149,7 +3149,7 @@ time_series_ai999x.solve('kalman_filter_local_level', x=[0.2, -0.1, 0.4, 0.3], q
 
 <a id="rts_smoother_local_level"></a>
 
-### Rauch-Tung-Striebel smoother (random-walk model) — `rts_smoother_local_level`
+### Rauch-Tung-Striebel smoother (random-walk model), `rts_smoother_local_level`
 
 Smoothed state estimates of the random-walk (local level) model: the Kalman filter forward, then the Rauch-Tung-Striebel recursion backward.
 
@@ -3198,7 +3198,7 @@ time_series_ai999x.solve('rts_smoother_local_level', x=[0.2, -0.1, 0.4, 0.3], q=
 
 <a id="kalman_steady_state_gain"></a>
 
-### Steady-state Kalman gain (random-walk model) — `kalman_steady_state_gain`
+### Steady-state Kalman gain (random-walk model), `kalman_steady_state_gain`
 
 The limiting Kalman gain and variances of the random-walk (local level) model with process variance q and measurement variance r (the solution of the scalar Riccati equation).
 
@@ -3249,7 +3249,7 @@ time_series_ai999x.solve('kalman_steady_state_gain', q=0.05, r=2.5)
 
 <a id="kalman_filter_constant_velocity"></a>
 
-### Kalman filter for a constant-velocity model — `kalman_filter_constant_velocity`
+### Kalman filter for a constant-velocity model, `kalman_filter_constant_velocity`
 
 Track position and velocity from noisy position measurements with the constant-velocity Kalman filter (discrete white-noise acceleration with variance q, time step dt): final state and covariance.
 
@@ -3302,7 +3302,7 @@ time_series_ai999x.solve('kalman_filter_constant_velocity', x=[0.0, 0.6, 0.9, 1.
 
 <a id="kalman_steady_state_constant_velocity"></a>
 
-### Steady-state Kalman gains of a constant-velocity model — `kalman_steady_state_constant_velocity`
+### Steady-state Kalman gains of a constant-velocity model, `kalman_steady_state_constant_velocity`
 
 The limiting position and velocity gains (and predicted position variance) of the constant-velocity Kalman filter with discrete white-noise acceleration q, time step dt and measurement variance r.
 
@@ -3349,7 +3349,7 @@ time_series_ai999x.solve('kalman_steady_state_constant_velocity', dt=0.5, q=2, r
 
 <a id="dickey_fuller_test"></a>
 
-### Dickey-Fuller unit-root statistic — `dickey_fuller_test`
+### Dickey-Fuller unit-root statistic: `dickey_fuller_test`
 
 The Dickey-Fuller tau statistic: the t-ratio of gamma in the regression Delta $x_t = \gamma$ x_{$t-1$} (+ constant, + trend) + e_t. The statistic only: compare it with Dickey-Fuller critical values.
 
@@ -3403,7 +3403,7 @@ time_series_ai999x.solve('dickey_fuller_test', x=[1.2, -0.5, 0.8, -1.1, 0.3, 0.9
 
 <a id="augmented_dickey_fuller_test"></a>
 
-### Augmented Dickey-Fuller statistic — `augmented_dickey_fuller_test`
+### Augmented Dickey-Fuller statistic: `augmented_dickey_fuller_test`
 
 The augmented Dickey-Fuller tau statistic with p lagged differences: the t-ratio of gamma in Delta $x_t = \gamma$ x_{$t-1$} + sum_j delta_j Delta x_{t-j} (+ constant, + trend) + e_t. The statistic only.
 
@@ -3452,7 +3452,7 @@ time_series_ai999x.solve('augmented_dickey_fuller_test', x=[5.0, 4.1, 4.6, 3.8, 
 
 <a id="kpss_test"></a>
 
-### KPSS stationarity statistic — `kpss_test`
+### KPSS stationarity statistic: `kpss_test`
 
 The KPSS statistic for level (c) or trend (ct) stationarity with a Bartlett-kernel long-run variance using a given number of lags. The statistic only: compare it with KPSS critical values.
 
@@ -3499,7 +3499,7 @@ time_series_ai999x.solve('kpss_test', x=[5.0, 4.1, 4.6, 3.8, 4.4, 4.0, 4.7, 4.2,
 
 <a id="exponential_smoothing_update"></a>
 
-### Exponential smoothing forecast update — `exponential_smoothing_update`
+### Exponential smoothing forecast update: `exponential_smoothing_update`
 
 The next forecast by simple exponential smoothing from the previous forecast, the actual value and the smoothing constant: F_new = F + alpha (A - F).
 
@@ -3546,7 +3546,7 @@ time_series_ai999x.solve('exponential_smoothing_update', F=48.5, A=45, alpha=0.6
 
 <a id="holt_update"></a>
 
-### One update of Holt's method — `holt_update`
+### One update of Holt's method: `holt_update`
 
 Update Holt's level and trend with one new observation and forecast h periods ahead.
 
@@ -3597,7 +3597,7 @@ time_series_ai999x.solve('holt_update', l=120.5, b=-1.5, y=116, alpha=0.5, beta=
 
 <a id="drift_forecast"></a>
 
-### Random-walk-with-drift (drift method) forecast — `drift_forecast`
+### Random-walk-with-drift (drift method) forecast, `drift_forecast`
 
 The drift method: the average change per period $(x_n - x_1)/(n - 1)$ and the forecast x_n + h x drift.
 
@@ -3643,7 +3643,7 @@ time_series_ai999x.solve('drift_forecast', x=[52.0, 50.5, 49.8, 47.1])
 
 <a id="ar1_forecast"></a>
 
-### AR(1) forecast towards the mean — `ar1_forecast`
+### AR(1) forecast towards the mean: `ar1_forecast`
 
 The h-step forecast $mu + \phi^{h}$ (x_n - mu) of a stationary AR(1) with mean mu, and (when the innovation variance is given) its forecast error variance and 95 % prediction interval.
 
@@ -3698,7 +3698,7 @@ time_series_ai999x.solve('ar1_forecast', x=2.5, phi=-0.4, mu=1, h=2, sigma2=4)
 
 <a id="ses_best_alpha"></a>
 
-### Best smoothing constant among candidates — `ses_best_alpha`
+### Best smoothing constant among candidates: `ses_best_alpha`
 
 Among candidate smoothing constants, the one whose simple exponential smoothing $(l_0 = x_1)$ gives the smallest sum of squared one-step errors, with that SSE and its forecast.
 
@@ -3744,7 +3744,7 @@ time_series_ai999x.solve('ses_best_alpha', x=[5, 9, 4, 8, 6, 7, 5], alphas=[0.2,
 
 <a id="trend_seasonal_regression"></a>
 
-### Linear trend with seasonal dummy variables — `trend_seasonal_regression`
+### Linear trend with seasonal dummy variables, `trend_seasonal_regression`
 
 Fit $x_t = a + b$ t + (effect of t's season) by least squares with seasonal dummies (the first season is the baseline, effect 0; the series starts in season 1) and forecast period n + h.
 
@@ -3793,7 +3793,7 @@ time_series_ai999x.solve('trend_seasonal_regression', x=[12, 18, 15, 14, 20, 17,
 
 <a id="ar2_theoretical_acf"></a>
 
-### Theoretical autocorrelations of an AR(2) process — `ar2_theoretical_acf`
+### Theoretical autocorrelations of an AR(2) process, `ar2_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of a stationary AR(2) process from the Yule-Walker recursion $rho_1 = phi1/(1 - phi2)$, $rho_k = phi1$ rho_{$k-1$} + phi2 rho_{$k-2$}.
 
@@ -3840,7 +3840,7 @@ time_series_ai999x.solve('ar2_theoretical_acf', phi1=1.0, phi2=-0.5, K=4)
 
 <a id="ma1_theoretical_pacf"></a>
 
-### Theoretical partial autocorrelations of an MA(1) process — `ma1_theoretical_pacf`
+### Theoretical partial autocorrelations of an MA(1) process, `ma1_theoretical_pacf`
 
 The partial autocorrelations phi_11..phi_KK of $x_t = e_t + \theta$ e_{$t-1$} (they decay, never cut off).
 
@@ -3890,7 +3890,7 @@ time_series_ai999x.solve('ma1_theoretical_pacf', theta=-0.8, K=3)
 
 <a id="arma_theoretical_pacf"></a>
 
-### Theoretical partial autocorrelations of an ARMA(p,q) process — `arma_theoretical_pacf`
+### Theoretical partial autocorrelations of an ARMA(p,q) process, `arma_theoretical_pacf`
 
 The partial autocorrelations phi_11..phi_KK of a stationary ARMA(p,q) process (Durbin-Levinson on its exact autocorrelations).
 

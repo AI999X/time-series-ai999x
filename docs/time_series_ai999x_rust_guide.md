@@ -1,4 +1,4 @@
-# time-series: the Time Series program — user guide
+# time-series: the Time Series program, user guide
 
 **time-series-ai999x 1.1.0**, Rust build: command line, desktop app and browser. **Creator / engineer:** Ibnul Jaif Farabi · **Company:** AI999X · support@ai999x.com
 
@@ -17,63 +17,63 @@ Time Series covers moving averages, exponential smoothing, autocorrelation, ARIM
 
 ## 1. Get it
 
-Version 1.4.0 of the AI999X desktop app and of the command-line bundle. Checksums for every file: https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS; the newest version is always under https://downloads.ai999x.com/desktop/latest/. Full instructions: https://www.ai999x.com/desktop-cli/
+Version 1.5.0 of the AI999X desktop app and of the command-line bundle. Checksums for every file: https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS; the newest version is always under https://downloads.ai999x.com/desktop/latest/. Full instructions: https://www.ai999x.com/desktop-cli/
 
 | what | system | download |
 |---|---|---|
-| Desktop app: Time Series | Windows x86-64 | https://downloads.ai999x.com/desktop/1.4.0/ai999x-time-series-1.4.0-windows-x86_64.zip |
-| Desktop app: Time Series | Linux x86-64 | https://downloads.ai999x.com/desktop/1.4.0/ai999x-time-series-1.4.0-linux-x86_64.tar.gz |
-| Desktop app: all models | Windows x86-64 | https://downloads.ai999x.com/desktop/1.4.0/ai999x-1.4.0-windows-x86_64.zip |
-| Desktop app: all models | Linux x86-64 | https://downloads.ai999x.com/desktop/1.4.0/ai999x-1.4.0-linux-x86_64.tar.gz |
-| Command line | Windows x86-64 | https://downloads.ai999x.com/desktop/1.4.0/ai999x-cli-1.4.0-windows-x86_64.zip |
-| Command line | Linux x86-64 | https://downloads.ai999x.com/desktop/1.4.0/ai999x-cli-1.4.0-linux-x86_64.tar.gz |
+| Desktop app: Time Series | Windows x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-time-series-1.5.0-windows-x86_64.zip |
+| Desktop app: Time Series | Linux x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-time-series-1.5.0-linux-x86_64.tar.gz |
+| Desktop app: all models | Windows x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-1.5.0-windows-x86_64.zip |
+| Desktop app: all models | Linux x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-1.5.0-linux-x86_64.tar.gz |
+| Command line | Windows x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-cli-1.5.0-windows-x86_64.zip |
+| Command line | Linux x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-cli-1.5.0-linux-x86_64.tar.gz |
 
 ### Desktop app
 
-Time Series in its own app: search, questions in words, input forms, live figures and explanations. Windows: Download ai999x-time-series-1.4.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x-time-series.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
+Time Series in its own app: search, questions in words, input forms, live figures and explanations. Windows: Download ai999x-time-series-1.5.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x-time-series.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
 
 ```shell
-curl -LO https://downloads.ai999x.com/desktop/1.4.0/ai999x-time-series-1.4.0-linux-x86_64.tar.gz
-curl -LO https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS
+curl -LO https://downloads.ai999x.com/desktop/1.5.0/ai999x-time-series-1.5.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS
 sha256sum -c --ignore-missing SHA256SUMS
-tar xzf ai999x-time-series-1.4.0-linux-x86_64.tar.gz
-./ai999x-time-series-1.4.0-linux-x86_64/ai999x-time-series
+tar xzf ai999x-time-series-1.5.0-linux-x86_64.tar.gz
+./ai999x-time-series-1.5.0-linux-x86_64/ai999x-time-series
 ```
 
-It opens on this model: type a question or pick a capability, fill in the form and press Compute. The AI999X desktop app with every model works the same way (choose the model first). Windows: Download ai999x-1.4.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
+It opens on this model: type a question or pick a capability, fill in the form and press Compute. The AI999X desktop app with every model works the same way (choose the model first). Windows: Download ai999x-1.5.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
 
 ```shell
-curl -LO https://downloads.ai999x.com/desktop/1.4.0/ai999x-1.4.0-linux-x86_64.tar.gz
-curl -LO https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS
+curl -LO https://downloads.ai999x.com/desktop/1.5.0/ai999x-1.5.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS
 sha256sum -c --ignore-missing SHA256SUMS
-tar xzf ai999x-1.4.0-linux-x86_64.tar.gz
-./ai999x-1.4.0-linux-x86_64/ai999x
+tar xzf ai999x-1.5.0-linux-x86_64.tar.gz
+./ai999x-1.5.0-linux-x86_64/ai999x
 ```
 
-### Command line — Linux
+### Command line: Linux
 
 The bundle holds one program per model; `time-series` is this one. The checksum line should print OK.
 
 ```shell
-curl -LO https://downloads.ai999x.com/desktop/1.4.0/ai999x-cli-1.4.0-linux-x86_64.tar.gz
-curl -LO https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS
+curl -LO https://downloads.ai999x.com/desktop/1.5.0/ai999x-cli-1.5.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS
 sha256sum -c --ignore-missing SHA256SUMS
-mkdir -p ~/.local/share && tar xzf ai999x-cli-1.4.0-linux-x86_64.tar.gz -C ~/.local/share
-echo 'export PATH="$HOME/.local/share/ai999x-cli-1.4.0-linux-x86_64:$PATH"' >> ~/.bashrc && source ~/.bashrc
+mkdir -p ~/.local/share && tar xzf ai999x-cli-1.5.0-linux-x86_64.tar.gz -C ~/.local/share
+echo 'export PATH="$HOME/.local/share/ai999x-cli-1.5.0-linux-x86_64:$PATH"' >> ~/.bashrc && source ~/.bashrc
 time-series --version
 ```
 
-### Command line — Windows (PowerShell)
+### Command line: Windows (PowerShell)
 
 The fourth line should print True.
 
 ```powershell
-$F = "ai999x-cli-1.4.0-windows-x86_64.zip"
-Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.4.0/$F" -OutFile $F
-Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.4.0/SHA256SUMS" -OutFile SHA256SUMS
+$F = "ai999x-cli-1.5.0-windows-x86_64.zip"
+Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.5.0/$F" -OutFile $F
+Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS" -OutFile SHA256SUMS
 (Get-FileHash $F -Algorithm SHA256).Hash.ToLower() -eq ((Select-String -SimpleMatch $F SHA256SUMS).Line -split ' ')[0]
 Expand-Archive $F -DestinationPath "$env:LOCALAPPDATA\AI999X" -Force
-$D = "$env:LOCALAPPDATA\AI999X\ai999x-cli-1.4.0-windows-x86_64"; $env:Path += ";$D"
+$D = "$env:LOCALAPPDATA\AI999X\ai999x-cli-1.5.0-windows-x86_64"; $env:Path += ";$D"
 [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$D", "User")
 time-series --version
 ```
@@ -96,7 +96,7 @@ Prints the model, its version and that this is the Rust build.
 
 ```shell
 $ time-series --version
-time-series-ai999x 1.0.3 (Rust build, ax-engine 0.1.0)
+time-series-ai999x 1.5.0 (Rust build, ax-engine 1.5.0)
 ```
 
 ### 2.2 Ask in words
@@ -193,41 +193,7 @@ $ time-series solve simple_moving_average "x=[10, 12, 14, 13, 15]"
 NEEDS_INPUT: simple_moving_average needs k (the window length (number of periods)). Example: solve('simple_moving_average', x='10, 12, 14, 13, 15', k=3).
 ```
 
-### 2.9 Draw the figures
-
-The live figures for your own inputs, written as SVG files into the folder given with --out (here the current folder); open them in any browser. Without --out the SVG text comes back as JSON.
-
-```shell
-$ time-series figures simple_moving_average "x=[10, 12, 14, 13, 15]" k=3 --out .
-[
-  {
-    "slug": "simple-moving-average-smooth",
-    "title": "Simple moving average trailing the data",
-    "caption": "The series x = 10, 12, 14, 13, 15 with its simple moving average over k = 3 periods (each value placed at the end of its window: 12, 13, 14) and, for comparison, the exponential moving average with the same span (dashed), returned by the model. Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-smooth.svg"
-  },
-  {
-    "slug": "simple-moving-average-live-1",
-    "title": "The latest moving average (forecast of the ne... as the window length (number of periods) varies",
-    "caption": "The latest moving average (forecast of the ne... as k runs from 1 to 5, every other input as you entered it (5 solutions). Marked: your k = 3 gives last = 14. Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-live-1.svg"
-  },
-  {
-    "slug": "simple-moving-average-live-2",
-    "title": "The moving averages, one per complete window..., as computed",
-    "caption": "Every entry of sma as computed for your inputs (3 entries: 12, 13, 14). Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-live-2.svg"
-  },
-  {
-    "slug": "simple-moving-average-live-3",
-    "title": "The latest moving average (forecast of the ne... as the series, oldest first, entry 5 varies",
-    "caption": "The latest moving average (forecast of the ne... as x[5] runs from 3.75 to 26.25, every other input as you entered it (29 solutions). Marked: your x[5] = 15 gives last = 14. Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-live-3.svg"
-  }
-]
-```
-
-### 2.10 Many questions at once
+### 2.9 Many questions at once
 
 One JSON request per line in, one JSON answer per line out, in order: for scripts, notebooks and agents (the program starts once). In PowerShell: Get-Content cases.jsonl | time-series batch
 
@@ -300,36 +266,6 @@ answers = [json.loads(line) for line in out.splitlines()]
 
 `time-series figures <capability> name=value ... --out DIR` draws the live figures for those inputs and writes each as an SVG file into DIR (an existing folder); without `--out` the SVG text comes back as JSON. The desktop app and the model page draw the same figures as soon as you press Compute.
 
-```shell
-$ time-series figures simple_moving_average "x=[10, 12, 14, 13, 15]" k=3 --out .
-[
-  {
-    "slug": "simple-moving-average-smooth",
-    "title": "Simple moving average trailing the data",
-    "caption": "The series x = 10, 12, 14, 13, 15 with its simple moving average over k = 3 periods (each value placed at the end of its window: 12, 13, 14) and, for comparison, the exponential moving average with the same span (dashed), returned by the model. Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-smooth.svg"
-  },
-  {
-    "slug": "simple-moving-average-live-1",
-    "title": "The latest moving average (forecast of the ne... as the window length (number of periods) varies",
-    "caption": "The latest moving average (forecast of the ne... as k runs from 1 to 5, every other input as you entered it (5 solutions). Marked: your k = 3 gives last = 14. Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-live-1.svg"
-  },
-  {
-    "slug": "simple-moving-average-live-2",
-    "title": "The moving averages, one per complete window..., as computed",
-    "caption": "Every entry of sma as computed for your inputs (3 entries: 12, 13, 14). Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-live-2.svg"
-  },
-  {
-    "slug": "simple-moving-average-live-3",
-    "title": "The latest moving average (forecast of the ne... as the series, oldest first, entry 5 varies",
-    "caption": "The latest moving average (forecast of the ne... as x[5] runs from 3.75 to 26.25, every other input as you entered it (29 solutions). Marked: your x[5] = 15 gives last = 14. Your inputs: x = (list), k = 3.",
-    "file": ".\\simple-moving-average-live-3.svg"
-  }
-]
-```
-
 ## 7. In a web page or Node.js: WebAssembly
 
 The same model is a WebAssembly module, `time_series_ai999x.wasm` (https://www.ai999x.com/compute/rust/time_series_ai999x.wasm), with a small loader, `ax-wasm.js` (https://www.ai999x.com/compute/rust/ax-wasm.js). It runs in a browser, a Web Worker or Node.js, with no server.
@@ -353,7 +289,7 @@ By topic. For each: what it does, what it needs and gives, when it applies, and 
 
 <a id="ar1_forecast"></a>
 
-#### AR(1) forecast towards the mean — `ar1_forecast`
+#### AR(1) forecast towards the mean: `ar1_forecast`
 
 The h-step forecast mu + phi^h (x_n - mu) of a stationary AR(1) with mean mu, and (when the innovation variance is given) its forecast error variance and 95 % prediction interval.
 
@@ -363,15 +299,15 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the last observed value x_n | — |
-| `phi` | in | AR coefficient, \|phi\| < 1 | — |
-| `mu` | in | the process mean | — |
-| `h` | in | forecast horizon (default 1) (optional) | — |
-| `sigma2` | in | innovation variance (optional, for the interval) (optional) | — |
-| `forecast` | out | mu + phi^h (x_n - mu) | — |
-| `variance` | out | sigma^2 (1 - phi^(2h)) / (1 - phi^2) | — |
-| `lower` | out | lower 95 % limit | — |
-| `upper` | out | upper 95 % limit | — |
+| `x` | in | the last observed value x_n | - |
+| `phi` | in | AR coefficient, \|phi\| < 1 | - |
+| `mu` | in | the process mean | - |
+| `h` | in | forecast horizon (default 1) (optional) | - |
+| `sigma2` | in | innovation variance (optional, for the interval) (optional) | - |
+| `forecast` | out | mu + phi^h (x_n - mu) | - |
+| `variance` | out | sigma^2 (1 - phi^(2h)) / (1 - phi^2) | - |
+| `lower` | out | lower 95 % limit | - |
+| `upper` | out | upper 95 % limit | - |
 
 **Applies when:** |phi| < 1; known parameters; normal innovations for the interval.
 
@@ -389,7 +325,7 @@ In the worked example, x = 58, phi = 0.7, mu = 50, h = 3 go through the equation
 
 <a id="ar_least_squares"></a>
 
-#### AR(p) estimation by conditional least squares — `ar_least_squares`
+#### AR(p) estimation by conditional least squares, `ar_least_squares`
 
 Fit x_t = c + phi_1 x_{t-1} + ... + phi_p x_{t-p} + e_t by ordinary least squares on t = p+1..n; the innovation variance is the residual sum of squares divided by n - p.
 
@@ -399,12 +335,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `p` | in | the AR order p | — |
-| `const` | out | the constant c | — |
-| `phi` | out | the coefficients phi_1..phi_p | — |
-| `phi1` | out | phi_1 | — |
-| `sigma2` | out | residual sum of squares / (n - p) | — |
+| `x` | in | the series, oldest first | - |
+| `p` | in | the AR order p | - |
+| `const` | out | the constant c | - |
+| `phi` | out | the coefficients phi_1..phi_p | - |
+| `phi1` | out | phi_1 | - |
+| `sigma2` | out | residual sum of squares / (n - p) | - |
 
 **Applies when:** n - p > p + 2; regressors not collinear; the first p values are conditioned on.
 
@@ -422,7 +358,7 @@ sigma2 = 2.515046296
 
 <a id="ar_yule_walker"></a>
 
-#### AR(p) estimation by Yule-Walker — `ar_yule_walker`
+#### AR(p) estimation by Yule-Walker: `ar_yule_walker`
 
 Estimate the coefficients phi_1..phi_p and the innovation variance of an AR(p) model from data by the Yule-Walker equations (sample autocovariances divided by n, mean removed).
 
@@ -432,11 +368,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `p` | in | the AR order p | — |
-| `phi` | out | the coefficients phi_1..phi_p | — |
-| `phi1` | out | phi_1 | — |
-| `sigma2` | out | the innovation variance c_0 (1 - sum phi_j r_j) | — |
+| `x` | in | the series, oldest first | - |
+| `p` | in | the AR order p | - |
+| `phi` | out | the coefficients phi_1..phi_p | - |
+| `phi1` | out | phi_1 | - |
+| `sigma2` | out | the innovation variance c_0 (1 - sum phi_j r_j) | - |
 
 **Applies when:** the series is not constant; 1 <= p < n - 1; denominator n.
 
@@ -453,7 +389,7 @@ sigma2 = 3.767657229
 
 <a id="ar_forecast"></a>
 
-#### Forecasts of an AR(p) model — `ar_forecast`
+#### Forecasts of an AR(p) model: `ar_forecast`
 
 h-step forecasts of x_t = c + phi_1 x_{t-1} + ... + phi_p x_{t-p} + e_t from the last p observations (future shocks set to 0).
 
@@ -463,12 +399,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least p values) | — |
-| `phi` | in | the coefficients phi_1..phi_p | — |
-| `c` | in | the constant c (default 0) (optional) | — |
-| `h` | in | forecast horizon (default 1) (optional) | — |
-| `forecasts` | out | the forecasts for steps 1..h | — |
-| `forecast` | out | the h-step forecast | — |
+| `x` | in | the series, oldest first (at least p values) | - |
+| `phi` | in | the coefficients phi_1..phi_p | - |
+| `c` | in | the constant c (default 0) (optional) | - |
+| `h` | in | forecast horizon (default 1) (optional) | - |
+| `forecasts` | out | the forecasts for steps 1..h | - |
+| `forecast` | out | the h-step forecast | - |
 
 **Applies when:** phi_1 multiplies the latest observation.
 
@@ -485,7 +421,7 @@ forecast = 6.84
 
 <a id="arima_p10_forecast"></a>
 
-#### Forecasts of an ARIMA(p,1,0) model — `arima_p10_forecast`
+#### Forecasts of an ARIMA(p,1,0) model: `arima_p10_forecast`
 
 h-step forecasts of an ARIMA(p,1,0) model without constant: the differences follow a stationary AR(p); forecast differences are accumulated onto the last observation.
 
@@ -495,11 +431,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least p + 2 values) | — |
-| `phi` | in | AR coefficients of the differences | — |
-| `h` | in | forecast horizon (default 1) (optional) | — |
-| `forecasts` | out | the forecasts for steps 1..h | — |
-| `forecast` | out | the h-step forecast | — |
+| `x` | in | the series, oldest first (at least p + 2 values) | - |
+| `phi` | in | AR coefficients of the differences | - |
+| `h` | in | forecast horizon (default 1) (optional) | - |
+| `forecasts` | out | the forecasts for steps 1..h | - |
+| `forecast` | out | the h-step forecast | - |
 
 **Applies when:** stationary AR part; no constant (no drift); n >= p + 2.
 
@@ -515,7 +451,7 @@ forecast = 110.496
 
 <a id="partial_autocorrelations_from_autocorrelations"></a>
 
-#### Partial autocorrelations from autocorrelations — `partial_autocorrelations_from_autocorrelations`
+#### Partial autocorrelations from autocorrelations, `partial_autocorrelations_from_autocorrelations`
 
 The partial autocorrelations phi_11..phi_pp implied by autocorrelations rho_1..rho_p (Durbin-Levinson).
 
@@ -525,9 +461,9 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `rho` | in | the autocorrelations rho_1..rho_p | — |
-| `pacf` | out | partial autocorrelations at lags 1..p | — |
-| `last` | out | phi_pp | — |
+| `rho` | in | the autocorrelations rho_1..rho_p | - |
+| `pacf` | out | partial autocorrelations at lags 1..p | - |
+| `last` | out | phi_pp | - |
 
 **Applies when:** the autocorrelations form a positive definite sequence.
 
@@ -543,7 +479,7 @@ last = -0.06403940887
 
 <a id="yule_walker_from_autocorrelations"></a>
 
-#### Yule-Walker equations from autocorrelations — `yule_walker_from_autocorrelations`
+#### Yule-Walker equations from autocorrelations, `yule_walker_from_autocorrelations`
 
 Solve the Yule-Walker equations for the AR(p) coefficients given the autocorrelations rho_1..rho_p, and the ratio of the innovation variance to the process variance.
 
@@ -553,10 +489,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `rho` | in | the autocorrelations rho_1..rho_p | — |
-| `phi` | out | the AR coefficients phi_1..phi_p | — |
-| `phi1` | out | phi_1 | — |
-| `variance_ratio` | out | sigma^2 / gamma_0 = 1 - sum phi_j rho_j | — |
+| `rho` | in | the autocorrelations rho_1..rho_p | - |
+| `phi` | out | the AR coefficients phi_1..phi_p | - |
+| `phi1` | out | phi_1 | - |
+| `variance_ratio` | out | sigma^2 / gamma_0 = 1 - sum phi_j rho_j | - |
 
 **Applies when:** the autocorrelations form a positive definite sequence.
 
@@ -575,7 +511,7 @@ variance_ratio = 0.6
 
 <a id="forecast_error_variance"></a>
 
-#### h-step forecast error variance of an ARMA model — `forecast_error_variance`
+#### h-step forecast error variance of an ARMA model, `forecast_error_variance`
 
 The variance (and standard deviation) of the h-step-ahead forecast error of a stationary ARMA(p,q) with known parameters: sigma^2 (psi_0^2 + ... + psi_{h-1}^2).
 
@@ -585,12 +521,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficients ([0] for none) | — |
-| `theta` | in | MA coefficients ([0] for none) | — |
-| `sigma2` | in | innovation variance sigma^2 | — |
-| `h` | in | forecast horizon | — |
-| `variance` | out | forecast error variance | — |
-| `sd` | out | forecast error standard deviation | — |
+| `phi` | in | AR coefficients ([0] for none) | - |
+| `theta` | in | MA coefficients ([0] for none) | - |
+| `sigma2` | in | innovation variance sigma^2 | - |
+| `h` | in | forecast horizon | - |
+| `variance` | out | forecast error variance | - |
+| `sd` | out | forecast error standard deviation | - |
 
 **Applies when:** stationary AR part; known parameters (no estimation error).
 
@@ -607,7 +543,7 @@ sd = 1.897366596
 
 <a id="ma2_invertibility"></a>
 
-#### Invertibility of an MA(2) process — `ma2_invertibility`
+#### Invertibility of an MA(2) process: `ma2_invertibility`
 
 Whether x_t = e_t + theta1 e_{t-1} + theta2 e_{t-2} is invertible: the largest modulus of the inverse roots (roots of z^2 + theta1 z + theta2) must be below 1.
 
@@ -617,11 +553,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `theta1` | in | theta_1 | — |
-| `theta2` | in | theta_2 | — |
-| `invertible` | out | yes or no | — |
-| `max_modulus` | out | largest modulus of the inverse roots | — |
-| `roots` | out | real or complex | — |
+| `theta1` | in | theta_1 | - |
+| `theta2` | in | theta_2 | - |
+| `invertible` | out | yes or no | - |
+| `max_modulus` | out | largest modulus of the inverse roots | - |
+| `roots` | out | real or complex | - |
 
 **Applies when:** plus-sign MA convention; a modulus of exactly 1 counts as not invertible.
 
@@ -640,7 +576,7 @@ roots = complex
 
 <a id="ar1_properties"></a>
 
-#### Mean, variance and autocorrelation of an AR(1) process — `ar1_properties`
+#### Mean, variance and autocorrelation of an AR(1) process, `ar1_properties`
 
 For a stationary AR(1) x_t = c + phi x_{t-1} + e_t: the mean c/(1 - phi), the variance sigma^2/(1 - phi^2), and the lag-k autocorrelation phi^k and autocovariance.
 
@@ -650,14 +586,14 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficient, \|phi\| < 1 | — |
-| `sigma2` | in | innovation variance sigma^2 | — |
-| `k` | in | the lag k (default 1) (optional) | — |
-| `c` | in | the constant c (default 0) (optional) | — |
-| `mean` | out | c / (1 - phi) | — |
-| `variance` | out | sigma^2 / (1 - phi^2) | — |
-| `acf_k` | out | phi^k | — |
-| `acov_k` | out | variance x phi^k | — |
+| `phi` | in | AR coefficient, \|phi\| < 1 | - |
+| `sigma2` | in | innovation variance sigma^2 | - |
+| `k` | in | the lag k (default 1) (optional) | - |
+| `c` | in | the constant c (default 0) (optional) | - |
+| `mean` | out | c / (1 - phi) | - |
+| `variance` | out | sigma^2 / (1 - phi^2) | - |
+| `acf_k` | out | phi^k | - |
+| `acov_k` | out | variance x phi^k | - |
 
 **Applies when:** |phi| < 1; sigma^2 > 0.
 
@@ -678,7 +614,7 @@ In the worked example, phi = 0.6, sigma2 = 4, c = 2 go through the equation abov
 
 <a id="pi_weights"></a>
 
-#### Pi weights (AR-infinity representation) of an ARMA process — `pi_weights`
+#### Pi weights (AR-infinity representation) of an ARMA process, `pi_weights`
 
 The weights pi_1..pi_K of x_t = sum_{j>=1} pi_j x_{t-j} + e_t for an invertible ARMA(p,q).
 
@@ -688,11 +624,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficients ([0] for none) | — |
-| `theta` | in | MA coefficients ([0] for none), invertible | — |
-| `K` | in | number of weights (default 10) (optional) | — |
-| `pi` | out | pi_1..pi_K | — |
-| `pi1` | out | pi_1 = phi_1 + theta_1 | — |
+| `phi` | in | AR coefficients ([0] for none) | - |
+| `theta` | in | MA coefficients ([0] for none), invertible | - |
+| `K` | in | number of weights (default 10) (optional) | - |
+| `pi` | out | pi_1..pi_K | - |
+| `pi1` | out | pi_1 = phi_1 + theta_1 | - |
 
 **Applies when:** invertible MA part; stationary AR part; plus-sign MA convention.
 
@@ -708,7 +644,7 @@ pi1 = 0.8
 
 <a id="psi_weights"></a>
 
-#### Psi weights (MA-infinity representation) of an ARMA process — `psi_weights`
+#### Psi weights (MA-infinity representation) of an ARMA process, `psi_weights`
 
 The weights psi_1..psi_K of x_t = sum_{j>=0} psi_j e_{t-j} (psi_0 = 1) for a stationary ARMA(p,q); they are also the impulse response.
 
@@ -718,11 +654,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficients ([0] for none) | — |
-| `theta` | in | MA coefficients ([0] for none) | — |
-| `K` | in | number of weights (default 10) (optional) | — |
-| `psi` | out | psi_1..psi_K | — |
-| `psi1` | out | psi_1 = phi_1 + theta_1 | — |
+| `phi` | in | AR coefficients ([0] for none) | - |
+| `theta` | in | MA coefficients ([0] for none) | - |
+| `K` | in | number of weights (default 10) (optional) | - |
+| `psi` | out | psi_1..psi_K | - |
+| `psi1` | out | psi_1 = phi_1 + theta_1 | - |
 
 **Applies when:** stationary AR part; plus-sign MA convention.
 
@@ -738,7 +674,7 @@ psi1 = 0.8
 
 <a id="ar2_stationarity"></a>
 
-#### Stationarity of an AR(2) process — `ar2_stationarity`
+#### Stationarity of an AR(2) process: `ar2_stationarity`
 
 Whether x_t = phi1 x_{t-1} + phi2 x_{t-2} + e_t is stationary: the largest modulus of the inverse characteristic roots (roots of z^2 - phi1 z - phi2) must be below 1.
 
@@ -748,11 +684,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi1` | in | phi_1 | — |
-| `phi2` | in | phi_2 | — |
-| `stationary` | out | yes or no | — |
-| `max_modulus` | out | largest modulus of the inverse roots | — |
-| `roots` | out | real or complex | — |
+| `phi1` | in | phi_1 | - |
+| `phi2` | in | phi_2 | - |
+| `stationary` | out | yes or no | - |
+| `max_modulus` | out | largest modulus of the inverse roots | - |
+| `roots` | out | real or complex | - |
 
 **Applies when:** a modulus of exactly 1 (unit root) counts as not stationary.
 
@@ -771,7 +707,7 @@ roots = real
 
 <a id="ar2_theoretical_acf"></a>
 
-#### Theoretical autocorrelations of an AR(2) process — `ar2_theoretical_acf`
+#### Theoretical autocorrelations of an AR(2) process, `ar2_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of a stationary AR(2) process from the Yule-Walker recursion rho_1 = phi1/(1 - phi2), rho_k = phi1 rho_{k-1} + phi2 rho_{k-2}.
 
@@ -781,11 +717,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi1` | in | phi_1 | — |
-| `phi2` | in | phi_2 | — |
-| `K` | in | number of lags (default 5) (optional) | — |
-| `acf` | out | rho_1..rho_K | — |
-| `rho1` | out | rho_1 | — |
+| `phi1` | in | phi_1 | - |
+| `phi2` | in | phi_2 | - |
+| `K` | in | number of lags (default 5) (optional) | - |
+| `acf` | out | rho_1..rho_K | - |
+| `rho1` | out | rho_1 | - |
 
 **Applies when:** stationary AR(2).
 
@@ -803,7 +739,7 @@ rho1 = 0.7142857143
 
 <a id="arma11_theoretical_acf"></a>
 
-#### Theoretical autocorrelations of an ARMA(1,1) process — `arma11_theoretical_acf`
+#### Theoretical autocorrelations of an ARMA(1,1) process, `arma11_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of x_t = phi x_{t-1} + e_t + theta e_{t-1}.
 
@@ -813,11 +749,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficient, \|phi\| < 1 | — |
-| `theta` | in | MA coefficient (plus-sign convention) | — |
-| `K` | in | number of lags (default 5) (optional) | — |
-| `acf` | out | rho_1..rho_K | — |
-| `rho1` | out | rho_1 | — |
+| `phi` | in | AR coefficient, \|phi\| < 1 | - |
+| `theta` | in | MA coefficient (plus-sign convention) | - |
+| `K` | in | number of lags (default 5) (optional) | - |
+| `acf` | out | rho_1..rho_K | - |
+| `rho1` | out | rho_1 | - |
 
 **Applies when:** |phi| < 1; x_t = phi x_{t-1} + e_t + theta e_{t-1}.
 
@@ -835,7 +771,7 @@ rho1 = 0.7324137931
 
 <a id="arma_theoretical_acf"></a>
 
-#### Theoretical autocorrelations of an ARMA(p,q) process — `arma_theoretical_acf`
+#### Theoretical autocorrelations of an ARMA(p,q) process, `arma_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of a stationary ARMA(p,q) process x_t = sum phi_i x_{t-i} + e_t + sum theta_j e_{t-j}.
 
@@ -845,11 +781,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficients phi_1..phi_p (stationary; [0] for none) | — |
-| `theta` | in | MA coefficients theta_1..theta_q ([0] for none) | — |
-| `K` | in | number of lags (default 5) (optional) | — |
-| `acf` | out | rho_1..rho_K | — |
-| `rho1` | out | rho_1 | — |
+| `phi` | in | AR coefficients phi_1..phi_p (stationary; [0] for none) | - |
+| `theta` | in | MA coefficients theta_1..theta_q ([0] for none) | - |
+| `K` | in | number of lags (default 5) (optional) | - |
+| `acf` | out | rho_1..rho_K | - |
+| `rho1` | out | rho_1 | - |
 
 **Applies when:** stationary AR part; plus-sign MA convention.
 
@@ -865,7 +801,7 @@ rho1 = 0.8012048193
 
 <a id="ma_theoretical_acf"></a>
 
-#### Theoretical autocorrelations of an MA(q) process — `ma_theoretical_acf`
+#### Theoretical autocorrelations of an MA(q) process, `ma_theoretical_acf`
 
 The autocorrelations rho_1..rho_K of x_t = e_t + theta_1 e_{t-1} + ... + theta_q e_{t-q}; they vanish beyond lag q.
 
@@ -875,10 +811,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `theta` | in | the MA coefficients theta_1..theta_q (plus-sign convention) | — |
-| `K` | in | number of lags (default q + 1) (optional) | — |
-| `acf` | out | rho_1..rho_K | — |
-| `rho1` | out | rho_1 | — |
+| `theta` | in | the MA coefficients theta_1..theta_q (plus-sign convention) | - |
+| `K` | in | number of lags (default q + 1) (optional) | - |
+| `acf` | out | rho_1..rho_K | - |
+| `rho1` | out | rho_1 | - |
 
 **Applies when:** x_t = e_t + sum theta_j e_{t-j} (plus signs).
 
@@ -894,7 +830,7 @@ In the worked example, theta = [0.5, 0.3] go through the equation above and give
 
 <a id="arma_theoretical_pacf"></a>
 
-#### Theoretical partial autocorrelations of an ARMA(p,q) process — `arma_theoretical_pacf`
+#### Theoretical partial autocorrelations of an ARMA(p,q) process, `arma_theoretical_pacf`
 
 The partial autocorrelations phi_11..phi_KK of a stationary ARMA(p,q) process (Durbin-Levinson on its exact autocorrelations).
 
@@ -904,11 +840,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficients ([0] for none) | — |
-| `theta` | in | MA coefficients ([0] for none) | — |
-| `K` | in | number of lags (default 5) (optional) | — |
-| `pacf` | out | phi_11..phi_KK | — |
-| `pacf1` | out | phi_11 = rho_1 | — |
+| `phi` | in | AR coefficients ([0] for none) | - |
+| `theta` | in | MA coefficients ([0] for none) | - |
+| `K` | in | number of lags (default 5) (optional) | - |
+| `pacf` | out | phi_11..phi_KK | - |
+| `pacf1` | out | phi_11 = rho_1 | - |
 
 **Applies when:** stationary AR part; plus-sign MA convention.
 
@@ -924,7 +860,7 @@ pacf1 = 0.6923076923
 
 <a id="ma1_theoretical_pacf"></a>
 
-#### Theoretical partial autocorrelations of an MA(1) process — `ma1_theoretical_pacf`
+#### Theoretical partial autocorrelations of an MA(1) process, `ma1_theoretical_pacf`
 
 The partial autocorrelations phi_11..phi_KK of x_t = e_t + theta e_{t-1} (they decay, never cut off).
 
@@ -934,10 +870,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `theta` | in | MA coefficient, \|theta\| != 1 | — |
-| `K` | in | number of lags (default 5) (optional) | — |
-| `pacf` | out | phi_11..phi_KK | — |
-| `pacf1` | out | phi_11 = theta/(1 + theta^2) | — |
+| `theta` | in | MA coefficient, \|theta\| != 1 | - |
+| `K` | in | number of lags (default 5) (optional) | - |
+| `pacf` | out | phi_11..phi_KK | - |
+| `pacf1` | out | phi_11 = theta/(1 + theta^2) | - |
 
 **Applies when:** |theta| != 1; plus-sign MA convention.
 
@@ -954,7 +890,7 @@ pacf1 = 0.4411764706
 
 <a id="arma_variance"></a>
 
-#### Variance and lag-1 autocovariance of an ARMA(p,q) process — `arma_variance`
+#### Variance and lag-1 autocovariance of an ARMA(p,q) process, `arma_variance`
 
 The process variance gamma_0 and lag-1 autocovariance gamma_1 of a stationary ARMA(p,q) process with innovation variance sigma^2.
 
@@ -964,11 +900,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `phi` | in | AR coefficients ([0] for none) | — |
-| `theta` | in | MA coefficients ([0] for none) | — |
-| `sigma2` | in | innovation (white-noise) variance sigma^2 | — |
-| `gamma0` | out | the variance of the process | — |
-| `gamma1` | out | the lag-1 autocovariance | — |
+| `phi` | in | AR coefficients ([0] for none) | - |
+| `theta` | in | MA coefficients ([0] for none) | - |
+| `sigma2` | in | innovation (white-noise) variance sigma^2 | - |
+| `gamma0` | out | the variance of the process | - |
+| `gamma1` | out | the lag-1 autocovariance | - |
 
 **Applies when:** stationary AR part; sigma^2 > 0.
 
@@ -987,7 +923,7 @@ gamma1 = 2.88
 
 <a id="bartlett_standard_error"></a>
 
-#### Bartlett standard error of a sample autocorrelation — `bartlett_standard_error`
+#### Bartlett standard error of a sample autocorrelation, `bartlett_standard_error`
 
 Bartlett's standard error of r_k under the hypothesis that the autocorrelations beyond lag k - 1 are zero, and the 95 % band half-width used in correlograms.
 
@@ -997,11 +933,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the lag k | — |
-| `se` | out | Bartlett standard error of r_k | — |
-| `half_width_95` | out | 1.959964 x se | — |
-| `acf` | out | the sample autocorrelation r_k | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the lag k | - |
+| `se` | out | Bartlett standard error of r_k | - |
+| `half_width_95` | out | 1.959964 x se | - |
+| `acf` | out | the sample autocorrelation r_k | - |
 
 **Applies when:** 1 <= k <= n - 1; autocorrelations with denominator n.
 
@@ -1018,7 +954,7 @@ acf = -0.04108527132
 
 <a id="box_pierce_test"></a>
 
-#### Box-Pierce test — `box_pierce_test`
+#### Box-Pierce test: `box_pierce_test`
 
 The Box-Pierce test portmanteau statistic for no autocorrelation up to lag h and its chi-square p-value (h - model_df degrees of freedom; autocorrelations with denominator n).
 
@@ -1028,12 +964,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series (or residuals), oldest first | — |
-| `h` | in | the number of lags h | — |
-| `model_df` | in | parameters of a fitted ARMA model subtracted from the degrees of freedom (default 0) (optional) | — |
-| `q` | out | the test statistic | — |
-| `p_value` | out | upper-tail chi-square probability, df = h - model_df | — |
-| `df` | out | degrees of freedom h - model_df | — |
+| `x` | in | the series (or residuals), oldest first | - |
+| `h` | in | the number of lags h | - |
+| `model_df` | in | parameters of a fitted ARMA model subtracted from the degrees of freedom (default 0) (optional) | - |
+| `q` | out | the test statistic | - |
+| `p_value` | out | upper-tail chi-square probability, df = h - model_df | - |
+| `df` | out | degrees of freedom h - model_df | - |
 
 **Applies when:** 1 <= h <= n - 1; model_df < h (default 0: raw series).
 
@@ -1050,7 +986,7 @@ df = 3
 
 <a id="ljung_box_test"></a>
 
-#### Ljung-Box test — `ljung_box_test`
+#### Ljung-Box test: `ljung_box_test`
 
 The Ljung-Box test portmanteau statistic for no autocorrelation up to lag h and its chi-square p-value (h - model_df degrees of freedom; autocorrelations with denominator n).
 
@@ -1060,12 +996,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series (or residuals), oldest first | — |
-| `h` | in | the number of lags h | — |
-| `model_df` | in | parameters of a fitted ARMA model subtracted from the degrees of freedom (default 0) (optional) | — |
-| `q` | out | the test statistic | — |
-| `p_value` | out | upper-tail chi-square probability, df = h - model_df | — |
-| `df` | out | degrees of freedom h - model_df | — |
+| `x` | in | the series (or residuals), oldest first | - |
+| `h` | in | the number of lags h | - |
+| `model_df` | in | parameters of a fitted ARMA model subtracted from the degrees of freedom (default 0) (optional) | - |
+| `q` | out | the test statistic | - |
+| `p_value` | out | upper-tail chi-square probability, df = h - model_df | - |
+| `df` | out | degrees of freedom h - model_df | - |
 
 **Applies when:** 1 <= h <= n - 1; model_df < h (default 0: raw series).
 
@@ -1082,7 +1018,7 @@ df = 3
 
 <a id="sample_autocorrelation"></a>
 
-#### Sample autocorrelation at lag k — `sample_autocorrelation`
+#### Sample autocorrelation at lag k: `sample_autocorrelation`
 
 The sample autocorrelation r_k of a series (and r_1..r_k), with autocovariances divided by n and taken about the sample mean.
 
@@ -1092,10 +1028,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the lag k (1 <= k <= n - 1) | — |
-| `acf` | out | the sample autocorrelation r_k | — |
-| `acf_list` | out | r_1, ..., r_k | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the lag k (1 <= k <= n - 1) | - |
+| `acf` | out | the sample autocorrelation r_k | - |
+| `acf_list` | out | r_1, ..., r_k | - |
 
 **Applies when:** the series is not constant; 1 <= k <= n - 1; denominator n (not n - k).
 
@@ -1111,7 +1047,7 @@ acf_list = [0.2721861471861472]
 
 <a id="sample_autocovariance"></a>
 
-#### Sample autocovariance at lag k — `sample_autocovariance`
+#### Sample autocovariance at lag k: `sample_autocovariance`
 
 The sample autocovariance c_k of a series, divided by n and taken about the sample mean.
 
@@ -1121,10 +1057,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the lag k (0 <= k <= n - 1) | — |
-| `acov` | out | the sample autocovariance c_k | — |
-| `gamma0` | out | c_0, the variance divided by n | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the lag k (0 <= k <= n - 1) | - |
+| `acov` | out | the sample autocovariance c_k | - |
+| `gamma0` | out | c_0, the variance divided by n | - |
 
 **Applies when:** 0 <= k <= n - 1; denominator n (not n - k).
 
@@ -1140,7 +1076,7 @@ gamma0 = 3.609375
 
 <a id="sample_partial_autocorrelation"></a>
 
-#### Sample partial autocorrelation at lag k — `sample_partial_autocorrelation`
+#### Sample partial autocorrelation at lag k: `sample_partial_autocorrelation`
 
 The sample partial autocorrelation phi_kk of a series (and phi_11..phi_kk) by the Durbin-Levinson recursion on the sample autocorrelations (denominator n).
 
@@ -1150,10 +1086,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the lag k (1 <= k < n/2) | — |
-| `pacf` | out | the partial autocorrelation at lag k | — |
-| `pacf_list` | out | partial autocorrelations at lags 1..k | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the lag k (1 <= k < n/2) | - |
+| `pacf` | out | the partial autocorrelation at lag k | - |
+| `pacf_list` | out | partial autocorrelations at lags 1..k | - |
 
 **Applies when:** the series is not constant; 1 <= k < n/2; autocovariances divided by n.
 
@@ -1171,7 +1107,7 @@ pacf_list = [0.3596899224806201,0.40165819531144314]
 
 <a id="cusum_change_point"></a>
 
-#### CUSUM estimate of a change point — `cusum_change_point`
+#### CUSUM estimate of a change point: `cusum_change_point`
 
 The change point estimated by the cumulative sum of deviations from the overall mean, S_k = sum_{t<=k}(x_t - xbar): the k with the largest |S_k|.
 
@@ -1181,11 +1117,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `change_index` | out | k with the largest \|S_k\| (first segment x_1..x_k) | — |
-| `max_cusum` | out | max \|S_k\| | — |
-| `mean_before` | out | mean of x_1..x_k | — |
-| `mean_after` | out | mean of x_{k+1}..x_n | — |
+| `x` | in | the series, oldest first | - |
+| `change_index` | out | k with the largest \|S_k\| (first segment x_1..x_k) | - |
+| `max_cusum` | out | max \|S_k\| | - |
+| `mean_before` | out | mean of x_1..x_k | - |
+| `mean_after` | out | mean of x_{k+1}..x_n | - |
 
 **Applies when:** k = 1..n-1; ties: the smallest k.
 
@@ -1203,7 +1139,7 @@ mean_after = 12.75
 
 <a id="penalised_change_points"></a>
 
-#### Multiple change points with a penalty (PELT) — `penalised_change_points`
+#### Multiple change points with a penalty (PELT), `penalised_change_points`
 
 The segmentation minimising the within-segment sum of squares plus a penalty per change point (optimal partitioning, as found by PELT): the number and positions of the changes in the mean.
 
@@ -1213,11 +1149,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `penalty` | in | penalty per change point (> 0) | — |
-| `n_changes` | out | number of change points | — |
-| `change_indices` | out | ends of all segments but the last | — |
-| `cost` | out | within-segment sum of squares of the chosen segmentation | — |
+| `x` | in | the series, oldest first | - |
+| `penalty` | in | penalty per change point (> 0) | - |
+| `n_changes` | out | number of change points | - |
+| `change_indices` | out | ends of all segments but the last | - |
+| `cost` | out | within-segment sum of squares of the chosen segmentation | - |
 
 **Applies when:** penalty > 0; segments of any length >= 1; ties: the earlier last change.
 
@@ -1235,7 +1171,7 @@ cost = 3.333333333
 
 <a id="change_point_mean_shift"></a>
 
-#### Single change point in the mean (least squares) — `change_point_mean_shift`
+#### Single change point in the mean (least squares), `change_point_mean_shift`
 
 The single change point that minimises the total within-segment sum of squares (a shift in the mean), with the means before and after.
 
@@ -1245,13 +1181,13 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `min_size` | in | minimum segment length (default 2) (optional) | — |
-| `change_index` | out | k: the first segment is x_1..x_k | — |
-| `mean_before` | out | mean of x_1..x_k | — |
-| `mean_after` | out | mean of x_{k+1}..x_n | — |
-| `cost` | out | total within-segment sum of squares | — |
-| `reduction` | out | sum of squares removed by the split | — |
+| `x` | in | the series, oldest first | - |
+| `min_size` | in | minimum segment length (default 2) (optional) | - |
+| `change_index` | out | k: the first segment is x_1..x_k | - |
+| `mean_before` | out | mean of x_1..x_k | - |
+| `mean_after` | out | mean of x_{k+1}..x_n | - |
+| `cost` | out | total within-segment sum of squares | - |
+| `reduction` | out | sum of squares removed by the split | - |
 
 **Applies when:** each segment has at least min_size values; ties: the smallest k.
 
@@ -1270,7 +1206,7 @@ reduction = 107.3388889
 
 <a id="tabular_cusum"></a>
 
-#### Tabular CUSUM control chart — `tabular_cusum`
+#### Tabular CUSUM control chart: `tabular_cusum`
 
 The upper and lower tabular CUSUM statistics for a target mean mu0 with allowance k, and the first time either exceeds the decision interval h.
 
@@ -1280,14 +1216,14 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the observations, oldest first | — |
-| `mu0` | in | target (in-control) mean | — |
-| `k` | in | allowance (reference value) k >= 0 | — |
-| `h` | in | decision interval h > 0 | — |
-| `c_plus` | out | final upper CUSUM C+_n | — |
-| `c_minus` | out | final lower CUSUM C-_n | — |
-| `alarm_index` | out | first t with C+_t > h or C-_t > h (0 if none) | — |
-| `side` | out | upper, lower, both or none | — |
+| `x` | in | the observations, oldest first | - |
+| `mu0` | in | target (in-control) mean | - |
+| `k` | in | allowance (reference value) k >= 0 | - |
+| `h` | in | decision interval h > 0 | - |
+| `c_plus` | out | final upper CUSUM C+_n | - |
+| `c_minus` | out | final lower CUSUM C-_n | - |
+| `alarm_index` | out | first t with C+_t > h or C-_t > h (0 if none) | - |
+| `side` | out | upper, lower, both or none | - |
 
 **Applies when:** C+_0 = C-_0 = 0; an alarm needs a value strictly above h.
 
@@ -1308,7 +1244,7 @@ side = upper
 
 <a id="two_change_points"></a>
 
-#### Two change points in the mean (optimal segmentation) — `two_change_points`
+#### Two change points in the mean (optimal segmentation), `two_change_points`
 
 The two change points that minimise the total within-segment sum of squares (three mean levels), found by exhaustive dynamic search.
 
@@ -1318,12 +1254,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `min_size` | in | minimum segment length (default 2) (optional) | — |
-| `change_1` | out | end of the first segment | — |
-| `change_2` | out | end of the second segment | — |
-| `means` | out | the three segment means | — |
-| `cost` | out | total within-segment sum of squares | — |
+| `x` | in | the series, oldest first | - |
+| `min_size` | in | minimum segment length (default 2) (optional) | - |
+| `change_1` | out | end of the first segment | - |
+| `change_2` | out | end of the second segment | - |
+| `means` | out | the three segment means | - |
+| `cost` | out | total within-segment sum of squares | - |
 
 **Applies when:** each segment has at least min_size values; ties: the smallest first, then second index.
 
@@ -1343,7 +1279,7 @@ cost = 3.333333333
 
 <a id="seasonal_indices_additive"></a>
 
-#### Seasonal indices (additive decomposition) — `seasonal_indices_additive`
+#### Seasonal indices (additive decomposition): `seasonal_indices_additive`
 
 Seasonal indices of classical additive decomposition: detrend by the centred moving average, average each season, normalise the indices to sum to 0.
 
@@ -1353,10 +1289,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least two full seasons) | — |
-| `m` | in | season length | — |
-| `indices` | out | the m seasonal indices, starting with the season of x_1 | — |
-| `first` | out | the index of the first observation's season | — |
+| `x` | in | the series, oldest first (at least two full seasons) | - |
+| `m` | in | season length | - |
+| `indices` | out | the m seasonal indices, starting with the season of x_1 | - |
+| `first` | out | the index of the first observation's season | - |
 
 **Applies when:** n >= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season).
 
@@ -1372,7 +1308,7 @@ first = 6.484375
 
 <a id="seasonal_indices_multiplicative"></a>
 
-#### Seasonal indices (multiplicative decomposition) — `seasonal_indices_multiplicative`
+#### Seasonal indices (multiplicative decomposition), `seasonal_indices_multiplicative`
 
 Seasonal indices of classical multiplicative decomposition: detrend by the centred moving average, average each season, normalise the indices to average 1.
 
@@ -1382,10 +1318,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least two full seasons) | — |
-| `m` | in | season length | — |
-| `indices` | out | the m seasonal indices, starting with the season of x_1 | — |
-| `first` | out | the index of the first observation's season | — |
+| `x` | in | the series, oldest first (at least two full seasons) | - |
+| `m` | in | season length | - |
+| `indices` | out | the m seasonal indices, starting with the season of x_1 | - |
+| `first` | out | the index of the first observation's season | - |
 
 **Applies when:** n >= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season); positive data.
 
@@ -1401,7 +1337,7 @@ first = 1.167585459
 
 <a id="seasonally_adjusted_additive"></a>
 
-#### Seasonally adjusted series (additive) — `seasonally_adjusted_additive`
+#### Seasonally adjusted series (additive): `seasonally_adjusted_additive`
 
 The seasonally adjusted series of classical additive decomposition: each value minus its seasonal index.
 
@@ -1411,10 +1347,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least two full seasons) | — |
-| `m` | in | season length | — |
-| `adjusted` | out | the seasonally adjusted series | — |
-| `last` | out | the latest adjusted value | — |
+| `x` | in | the series, oldest first (at least two full seasons) | - |
+| `m` | in | season length | - |
+| `adjusted` | out | the seasonally adjusted series | - |
+| `last` | out | the latest adjusted value | - |
 
 **Applies when:** n >= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season).
 
@@ -1430,7 +1366,7 @@ last = 51.203125
 
 <a id="seasonally_adjusted_multiplicative"></a>
 
-#### Seasonally adjusted series (multiplicative) — `seasonally_adjusted_multiplicative`
+#### Seasonally adjusted series (multiplicative), `seasonally_adjusted_multiplicative`
 
 The seasonally adjusted series of classical multiplicative decomposition: each value divided by its seasonal index.
 
@@ -1440,10 +1376,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least two full seasons) | — |
-| `m` | in | season length | — |
-| `adjusted` | out | the seasonally adjusted series | — |
-| `last` | out | the latest adjusted value | — |
+| `x` | in | the series, oldest first (at least two full seasons) | - |
+| `m` | in | season length | - |
+| `adjusted` | out | the seasonally adjusted series | - |
+| `last` | out | the latest adjusted value | - |
 
 **Applies when:** n >= 2m; trend: centred moving average of length m (2 x m for even m); index i belongs to the season of observation i (the list starts at the first observation's season); positive data.
 
@@ -1461,7 +1397,7 @@ last = 51.44573357
 
 <a id="cross_correlation_best_lag"></a>
 
-#### Lag of the strongest cross-correlation — `cross_correlation_best_lag`
+#### Lag of the strongest cross-correlation: `cross_correlation_best_lag`
 
 The lag k in -K..K with the largest |r_xy(k)|, r_xy(k) = corr(x_{t+k}, y_t): a positive k means y leads x by k periods.
 
@@ -1471,11 +1407,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the first series | — |
-| `y` | in | the second series (same length) | — |
-| `K` | in | the largest lag searched | — |
-| `lag` | out | the lag with the largest absolute cross-correlation | — |
-| `ccf` | out | r_xy at that lag | — |
+| `x` | in | the first series | - |
+| `y` | in | the second series (same length) | - |
+| `K` | in | the largest lag searched | - |
+| `lag` | out | the lag with the largest absolute cross-correlation | - |
+| `ccf` | out | r_xy at that lag | - |
 
 **Applies when:** equal lengths; K <= n - 1; ties: the smallest |k|, then the positive k.
 
@@ -1491,7 +1427,7 @@ ccf = 0.7136566647
 
 <a id="cross_correlation_at_lag"></a>
 
-#### Sample cross-correlation at lag k — `cross_correlation_at_lag`
+#### Sample cross-correlation at lag k: `cross_correlation_at_lag`
 
 The sample cross-correlation r_xy(k) = corr(x_{t+k}, y_t) of two equally long series (y leads x by k).
 
@@ -1501,10 +1437,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the first series | — |
-| `y` | in | the second series (same length) | — |
-| `k` | in | the lag k >= 0 | — |
-| `ccf` | out | the cross-correlation r_xy(k) | — |
+| `x` | in | the first series | - |
+| `y` | in | the second series (same length) | - |
+| `k` | in | the lag k >= 0 | - |
+| `ccf` | out | the cross-correlation r_xy(k) | - |
 
 **Applies when:** equal lengths; 0 <= k <= n - 1; denominator n, standard deviations with divisor n.
 
@@ -1521,7 +1457,7 @@ ccf = 0.6428571429
 
 <a id="ses_best_alpha"></a>
 
-#### Best smoothing constant among candidates — `ses_best_alpha`
+#### Best smoothing constant among candidates: `ses_best_alpha`
 
 Among candidate smoothing constants, the one whose simple exponential smoothing (l_0 = x_1) gives the smallest sum of squared one-step errors, with that SSE and its forecast.
 
@@ -1531,11 +1467,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `alphas` | in | candidate smoothing constants, each in (0, 1] | — |
-| `alpha` | out | the best smoothing constant | — |
-| `sse` | out | its sum of squared one-step errors | — |
-| `forecast` | out | its forecast of the next period | — |
+| `x` | in | the series, oldest first | - |
+| `alphas` | in | candidate smoothing constants, each in (0, 1] | - |
+| `alpha` | out | the best smoothing constant | - |
+| `sse` | out | its sum of squared one-step errors | - |
+| `forecast` | out | its forecast of the next period | - |
 
 **Applies when:** l_0 = x_1; ties: the first candidate listed.
 
@@ -1552,7 +1488,7 @@ forecast = 24.375
 
 <a id="holt_damped_trend"></a>
 
-#### Damped-trend Holt method — `holt_damped_trend`
+#### Damped-trend Holt method: `holt_damped_trend`
 
 Holt's method with a damped trend (damping parameter phi): the h-step forecast is l_n + (phi + phi^2 + ... + phi^h) b_n. Initial states l_0 = x_1, b_0 = x_2 - x_1 unless stated.
 
@@ -1562,17 +1498,17 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `alpha` | in | level smoothing constant, 0 < alpha <= 1 | — |
-| `beta` | in | trend smoothing constant, 0 < beta <= 1 (b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}) | — |
-| `phi` | in | damping parameter, 0 < phi <= 1 | — |
-| `l0` | in | initial level l_0 (default x_1) (optional) | — |
-| `b0` | in | initial trend b_0 (default x_2 - x_1) (optional) | — |
-| `h` | in | forecast horizon in periods (default 1) (optional) | — |
-| `forecast` | out | the h-step-ahead forecast | — |
-| `level` | out | the final level l_n | — |
-| `trend` | out | the final trend b_n | — |
-| `sse` | out | sum of squared one-step errors | — |
+| `x` | in | the series, oldest first | - |
+| `alpha` | in | level smoothing constant, 0 < alpha <= 1 | - |
+| `beta` | in | trend smoothing constant, 0 < beta <= 1 (b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}) | - |
+| `phi` | in | damping parameter, 0 < phi <= 1 | - |
+| `l0` | in | initial level l_0 (default x_1) (optional) | - |
+| `b0` | in | initial trend b_0 (default x_2 - x_1) (optional) | - |
+| `h` | in | forecast horizon in periods (default 1) (optional) | - |
+| `forecast` | out | the h-step-ahead forecast | - |
+| `level` | out | the final level l_n | - |
+| `trend` | out | the final trend b_n | - |
+| `sse` | out | sum of squared one-step errors | - |
 
 **Applies when:** 0 < alpha, beta, phi <= 1; l_0 = x_1, b_0 = x_2 - x_1 unless stated.
 
@@ -1593,7 +1529,7 @@ sse = 13.01694759
 
 <a id="exponential_smoothing_update"></a>
 
-#### Exponential smoothing forecast update — `exponential_smoothing_update`
+#### Exponential smoothing forecast update: `exponential_smoothing_update`
 
 The next forecast by simple exponential smoothing from the previous forecast, the actual value and the smoothing constant: F_new = F + alpha (A - F).
 
@@ -1603,11 +1539,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `F` | in | the previous forecast | — |
-| `A` | in | the actual value of that period | — |
-| `alpha` | in | smoothing constant, 0 < alpha <= 1 | — |
-| `forecast` | out | the new forecast | — |
-| `error` | out | the forecast error A - F | — |
+| `F` | in | the previous forecast | - |
+| `A` | in | the actual value of that period | - |
+| `alpha` | in | smoothing constant, 0 < alpha <= 1 | - |
+| `forecast` | out | the new forecast | - |
+| `error` | out | the forecast error A - F | - |
 
 **Applies when:** 0 < alpha <= 1.
 
@@ -1626,7 +1562,7 @@ error = 10
 
 <a id="holt_linear_trend"></a>
 
-#### Holt's linear trend method — `holt_linear_trend`
+#### Holt's linear trend method: `holt_linear_trend`
 
 Holt's linear (double) exponential smoothing: level and trend updated each period, h-step forecast l_n + h b_n. Initial states l_0 = x_1 and b_0 = x_2 - x_1 (before the first observation) unless stated.
 
@@ -1636,16 +1572,16 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `alpha` | in | level smoothing constant, 0 < alpha <= 1 | — |
-| `beta` | in | trend smoothing constant, 0 < beta <= 1 (b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}) | — |
-| `l0` | in | initial level l_0 (default x_1) (optional) | — |
-| `b0` | in | initial trend b_0 (default x_2 - x_1) (optional) | — |
-| `h` | in | forecast horizon in periods (default 1) (optional) | — |
-| `forecast` | out | the h-step-ahead forecast | — |
-| `level` | out | the final level l_n | — |
-| `trend` | out | the final trend b_n | — |
-| `sse` | out | sum of squared one-step errors | — |
+| `x` | in | the series, oldest first | - |
+| `alpha` | in | level smoothing constant, 0 < alpha <= 1 | - |
+| `beta` | in | trend smoothing constant, 0 < beta <= 1 (b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}) | - |
+| `l0` | in | initial level l_0 (default x_1) (optional) | - |
+| `b0` | in | initial trend b_0 (default x_2 - x_1) (optional) | - |
+| `h` | in | forecast horizon in periods (default 1) (optional) | - |
+| `forecast` | out | the h-step-ahead forecast | - |
+| `level` | out | the final level l_n | - |
+| `trend` | out | the final trend b_n | - |
+| `sse` | out | sum of squared one-step errors | - |
 
 **Applies when:** 0 < alpha, beta <= 1; l_0 = x_1, b_0 = x_2 - x_1 unless stated; trend form: beta multiplies (l_t - l_{t-1}) (the error-correction beta* of many texts).
 
@@ -1665,7 +1601,7 @@ sse = 7.492761855
 
 <a id="holt_winters_additive"></a>
 
-#### Holt-Winters additive method — `holt_winters_additive`
+#### Holt-Winters additive method: `holt_winters_additive`
 
 Holt-Winters exponential smoothing with additive trend and additive seasonality: the h-step forecast, final level and trend, and the sum of squared one-step errors. initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations.
 
@@ -1675,16 +1611,16 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least two full seasons) | — |
-| `m` | in | season length | — |
-| `alpha` | in | level smoothing constant | — |
-| `beta` | in | trend smoothing constant | — |
-| `gamma` | in | seasonal smoothing constant | — |
-| `h` | in | forecast horizon in periods (default 1) (optional) | — |
-| `forecast` | out | the h-step-ahead forecast | — |
-| `level` | out | final level l_n | — |
-| `trend` | out | final trend b_n | — |
-| `sse` | out | sum of squared one-step errors | — |
+| `x` | in | the series, oldest first (at least two full seasons) | - |
+| `m` | in | season length | - |
+| `alpha` | in | level smoothing constant | - |
+| `beta` | in | trend smoothing constant | - |
+| `gamma` | in | seasonal smoothing constant | - |
+| `h` | in | forecast horizon in periods (default 1) (optional) | - |
+| `forecast` | out | the h-step-ahead forecast | - |
+| `level` | out | final level l_n | - |
+| `trend` | out | final trend b_n | - |
+| `sse` | out | sum of squared one-step errors | - |
 
 **Applies when:** n >= 2m; 0 < alpha, beta, gamma <= 1; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations.
 
@@ -1705,7 +1641,7 @@ sse = 146.5534279
 
 <a id="holt_winters_multiplicative"></a>
 
-#### Holt-Winters multiplicative method — `holt_winters_multiplicative`
+#### Holt-Winters multiplicative method: `holt_winters_multiplicative`
 
 Holt-Winters exponential smoothing with additive trend and multiplicative seasonality: the h-step forecast, final level and trend, and the sum of squared one-step errors. initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations.
 
@@ -1715,16 +1651,16 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (at least two full seasons) | — |
-| `m` | in | season length | — |
-| `alpha` | in | level smoothing constant | — |
-| `beta` | in | trend smoothing constant | — |
-| `gamma` | in | seasonal smoothing constant | — |
-| `h` | in | forecast horizon in periods (default 1) (optional) | — |
-| `forecast` | out | the h-step-ahead forecast | — |
-| `level` | out | final level l_n | — |
-| `trend` | out | final trend b_n | — |
-| `sse` | out | sum of squared one-step errors | — |
+| `x` | in | the series, oldest first (at least two full seasons) | - |
+| `m` | in | season length | - |
+| `alpha` | in | level smoothing constant | - |
+| `beta` | in | trend smoothing constant | - |
+| `gamma` | in | seasonal smoothing constant | - |
+| `h` | in | forecast horizon in periods (default 1) (optional) | - |
+| `forecast` | out | the h-step-ahead forecast | - |
+| `level` | out | final level l_n | - |
+| `trend` | out | final trend b_n | - |
+| `sse` | out | sum of squared one-step errors | - |
 
 **Applies when:** n >= 2m; 0 < alpha, beta, gamma <= 1; initialization: l_0 = mean of the first season, b_0 = (mean of season 2 - mean of season 1)/m, s_j = x_j - l_0 (additive) or x_j / l_0 (multiplicative) for the first m observations; positive data.
 
@@ -1745,7 +1681,7 @@ sse = 219.2701175
 
 <a id="holt_update"></a>
 
-#### One update of Holt's method — `holt_update`
+#### One update of Holt's method: `holt_update`
 
 Update Holt's level and trend with one new observation and forecast h periods ahead.
 
@@ -1755,15 +1691,15 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `l` | in | previous level | — |
-| `b` | in | previous trend | — |
-| `y` | in | the new observation | — |
-| `alpha` | in | level smoothing constant | — |
-| `beta` | in | trend smoothing constant | — |
-| `h` | in | forecast horizon (default 1) (optional) | — |
-| `level` | out | new level | — |
-| `trend` | out | new trend | — |
-| `forecast` | out | level + h trend | — |
+| `l` | in | previous level | - |
+| `b` | in | previous trend | - |
+| `y` | in | the new observation | - |
+| `alpha` | in | level smoothing constant | - |
+| `beta` | in | trend smoothing constant | - |
+| `h` | in | forecast horizon (default 1) (optional) | - |
+| `level` | out | new level | - |
+| `trend` | out | new trend | - |
+| `forecast` | out | level + h trend | - |
 
 **Applies when:** 0 < alpha, beta <= 1; b_t = beta (l_t - l_{t-1}) + (1 - beta) b_{t-1}.
 
@@ -1785,7 +1721,7 @@ forecast = 54.99
 
 <a id="simple_exponential_smoothing"></a>
 
-#### Simple exponential smoothing — `simple_exponential_smoothing`
+#### Simple exponential smoothing: `simple_exponential_smoothing`
 
 Simple exponential smoothing with smoothing constant alpha: the forecast of the next period and the sum of squared one-step errors. The initial level l_0 is the first observation unless stated.
 
@@ -1795,11 +1731,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `alpha` | in | the smoothing constant, 0 < alpha <= 1 | — |
-| `l0` | in | the initial level l_0 before the first observation (default: x_1) (optional) | — |
-| `forecast` | out | the forecast of the next period (the final level l_n) | — |
-| `sse` | out | sum of squared one-step errors, e_t = x_t - l_{t-1} | — |
+| `x` | in | the series, oldest first | - |
+| `alpha` | in | the smoothing constant, 0 < alpha <= 1 | - |
+| `l0` | in | the initial level l_0 before the first observation (default: x_1) (optional) | - |
+| `forecast` | out | the forecast of the next period (the final level l_n) | - |
+| `sse` | out | sum of squared one-step errors, e_t = x_t - l_{t-1} | - |
 
 **Applies when:** 0 < alpha <= 1; l_0 = x_1 unless an initial level is stated.
 
@@ -1818,7 +1754,7 @@ sse = 16.598016
 
 <a id="mean_absolute_error"></a>
 
-#### Mean absolute error — `mean_absolute_error`
+#### Mean absolute error: `mean_absolute_error`
 
 The mean absolute error of forecasts against actual values.
 
@@ -1828,10 +1764,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `y` | in | the actual values | — |
-| `f` | in | the forecasts (same length) | — |
-| `mae` | out | Mean absolute error | — |
-| `n` | out | number of forecasts | — |
+| `y` | in | the actual values | - |
+| `f` | in | the forecasts (same length) | - |
+| `mae` | out | Mean absolute error | - |
+| `n` | out | number of forecasts | - |
 
 **Applies when:** equal lengths; errors e_t = actual - forecast.
 
@@ -1847,7 +1783,7 @@ n = 4
 
 <a id="mean_absolute_percentage_error"></a>
 
-#### Mean absolute percentage error — `mean_absolute_percentage_error`
+#### Mean absolute percentage error: `mean_absolute_percentage_error`
 
 The mean absolute percentage error (in percent) of forecasts against actual values.
 
@@ -1857,10 +1793,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `y` | in | the actual values | — |
-| `f` | in | the forecasts (same length) | — |
-| `mape` | out | Mean absolute percentage error | — |
-| `n` | out | number of forecasts | — |
+| `y` | in | the actual values | - |
+| `f` | in | the forecasts (same length) | - |
+| `mape` | out | Mean absolute percentage error | - |
+| `n` | out | number of forecasts | - |
 
 **Applies when:** equal lengths; errors e_t = actual - forecast; no actual value is 0; the result is in percent.
 
@@ -1876,7 +1812,7 @@ n = 4
 
 <a id="mean_absolute_scaled_error"></a>
 
-#### Mean absolute scaled error — `mean_absolute_scaled_error`
+#### Mean absolute scaled error: `mean_absolute_scaled_error`
 
 MASE: the forecasts' mean absolute error divided by the in-sample mean absolute error of the (seasonal) naive forecast on the training data.
 
@@ -1886,13 +1822,13 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `y_train` | in | the training (in-sample) data | — |
-| `y` | in | the actual values | — |
-| `f` | in | the forecasts (same length as y) | — |
-| `sp` | in | seasonal period of the naive benchmark (default 1) (optional) | — |
-| `mase` | out | the mean absolute scaled error | — |
-| `mae` | out | the forecasts' MAE | — |
-| `scale` | out | in-sample MAE of the lag-sp naive forecast | — |
+| `y_train` | in | the training (in-sample) data | - |
+| `y` | in | the actual values | - |
+| `f` | in | the forecasts (same length as y) | - |
+| `sp` | in | seasonal period of the naive benchmark (default 1) (optional) | - |
+| `mase` | out | the mean absolute scaled error | - |
+| `mae` | out | the forecasts' MAE | - |
+| `scale` | out | in-sample MAE of the lag-sp naive forecast | - |
 
 **Applies when:** the training data are longer than sp and not constant at lag sp.
 
@@ -1909,7 +1845,7 @@ scale = 1.75
 
 <a id="mean_forecast_error"></a>
 
-#### Mean forecast error (bias) — `mean_forecast_error`
+#### Mean forecast error (bias): `mean_forecast_error`
 
 The mean forecast error (bias): positive when the forecasts are too low on average.
 
@@ -1919,10 +1855,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `y` | in | the actual values | — |
-| `f` | in | the forecasts (same length) | — |
-| `mean_error` | out | Mean forecast error (bias) | — |
-| `n` | out | number of forecasts | — |
+| `y` | in | the actual values | - |
+| `f` | in | the forecasts (same length) | - |
+| `mean_error` | out | Mean forecast error (bias) | - |
+| `n` | out | number of forecasts | - |
 
 **Applies when:** equal lengths; errors e_t = actual - forecast.
 
@@ -1938,7 +1874,7 @@ n = 4
 
 <a id="mean_squared_error"></a>
 
-#### Mean squared error — `mean_squared_error`
+#### Mean squared error: `mean_squared_error`
 
 The mean squared error of forecasts against actual values.
 
@@ -1948,10 +1884,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `y` | in | the actual values | — |
-| `f` | in | the forecasts (same length) | — |
-| `mse` | out | Mean squared error | — |
-| `n` | out | number of forecasts | — |
+| `y` | in | the actual values | - |
+| `f` | in | the forecasts (same length) | - |
+| `mse` | out | Mean squared error | - |
+| `n` | out | number of forecasts | - |
 
 **Applies when:** equal lengths; errors e_t = actual - forecast.
 
@@ -1967,7 +1903,7 @@ n = 4
 
 <a id="root_mean_squared_error"></a>
 
-#### Root mean squared error — `root_mean_squared_error`
+#### Root mean squared error: `root_mean_squared_error`
 
 The root mean squared error of forecasts against actual values.
 
@@ -1977,10 +1913,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `y` | in | the actual values | — |
-| `f` | in | the forecasts (same length) | — |
-| `rmse` | out | Root mean squared error | — |
-| `n` | out | number of forecasts | — |
+| `y` | in | the actual values | - |
+| `f` | in | the forecasts (same length) | - |
+| `rmse` | out | Root mean squared error | - |
+| `n` | out | number of forecasts | - |
 
 **Applies when:** equal lengths; errors e_t = actual - forecast.
 
@@ -1996,7 +1932,7 @@ n = 4
 
 <a id="symmetric_mape"></a>
 
-#### Symmetric mean absolute percentage error — `symmetric_mape`
+#### Symmetric mean absolute percentage error: `symmetric_mape`
 
 The symmetric MAPE in percent: 100/n sum 2|y - f| / (|y| + |f|).
 
@@ -2006,10 +1942,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `y` | in | the actual values | — |
-| `f` | in | the forecasts (same length) | — |
-| `smape` | out | Symmetric mean absolute percentage error | — |
-| `n` | out | number of forecasts | — |
+| `y` | in | the actual values | - |
+| `f` | in | the forecasts (same length) | - |
+| `smape` | out | Symmetric mean absolute percentage error | - |
+| `n` | out | number of forecasts | - |
 
 **Applies when:** equal lengths; errors e_t = actual - forecast; no pair with actual and forecast both 0; the result is in percent (range 0 to 200).
 
@@ -2027,7 +1963,7 @@ n = 4
 
 <a id="exponential_interpolation"></a>
 
-#### Exponential (log-linear) interpolation — `exponential_interpolation`
+#### Exponential (log-linear) interpolation: `exponential_interpolation`
 
 Fill a missing value at time t0 assuming constant growth between the neighbouring observations (linear interpolation of the logarithms).
 
@@ -2037,10 +1973,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `t` | in | the times (strictly increasing) | — |
-| `y` | in | the values at those times | — |
-| `t0` | in | the time of the missing value | — |
-| `value` | out | the interpolated value at t0 | — |
+| `t` | in | the times (strictly increasing) | - |
+| `y` | in | the values at those times | - |
+| `t0` | in | the time of the missing value | - |
+| `value` | out | the interpolated value at t0 | - |
 
 **Applies when:** positive values; times strictly increasing; t0 within the observed times.
 
@@ -2056,7 +1992,7 @@ value = 134.1640786
 
 <a id="linear_interpolation"></a>
 
-#### Linear interpolation of a missing value — `linear_interpolation`
+#### Linear interpolation of a missing value: `linear_interpolation`
 
 Fill a missing value at time t0 by the straight line between the neighbouring observations.
 
@@ -2066,10 +2002,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `t` | in | the times (strictly increasing) | — |
-| `y` | in | the values at those times | — |
-| `t0` | in | the time of the missing value | — |
-| `value` | out | the interpolated value at t0 | — |
+| `t` | in | the times (strictly increasing) | - |
+| `y` | in | the values at those times | - |
+| `t0` | in | the time of the missing value | - |
+| `value` | out | the interpolated value at t0 | - |
 
 **Applies when:** times strictly increasing; t0 within the observed times (no extrapolation).
 
@@ -2087,7 +2023,7 @@ value = 13.5
 
 <a id="kalman_filter_constant_velocity"></a>
 
-#### Kalman filter for a constant-velocity model — `kalman_filter_constant_velocity`
+#### Kalman filter for a constant-velocity model, `kalman_filter_constant_velocity`
 
 Track position and velocity from noisy position measurements with the constant-velocity Kalman filter (discrete white-noise acceleration with variance q, time step dt): final state and covariance.
 
@@ -2097,18 +2033,18 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the measured positions, oldest first | — |
-| `dt` | in | time step | — |
-| `q` | in | acceleration (process) noise variance | — |
-| `r` | in | position measurement noise variance | — |
-| `p0` | in | initial position estimate | — |
-| `v0` | in | initial velocity estimate | — |
-| `var0` | in | initial variance of position and of velocity (uncorrelated) | — |
-| `position` | out | final position estimate | — |
-| `velocity` | out | final velocity estimate | — |
-| `p11` | out | final position variance | — |
-| `p12` | out | final position-velocity covariance | — |
-| `p22` | out | final velocity variance | — |
+| `x` | in | the measured positions, oldest first | - |
+| `dt` | in | time step | - |
+| `q` | in | acceleration (process) noise variance | - |
+| `r` | in | position measurement noise variance | - |
+| `p0` | in | initial position estimate | - |
+| `v0` | in | initial velocity estimate | - |
+| `var0` | in | initial variance of position and of velocity (uncorrelated) | - |
+| `position` | out | final position estimate | - |
+| `velocity` | out | final velocity estimate | - |
+| `p11` | out | final position variance | - |
+| `p12` | out | final position-velocity covariance | - |
+| `p22` | out | final velocity variance | - |
 
 **Applies when:** F = [[1, dt], [0, 1]], H = [1, 0]; Q = q [[dt^4/4, dt^3/2], [dt^3/2, dt^2]]; predict then update at every measurement.
 
@@ -2133,7 +2069,7 @@ p22 = 0.224491015
 
 <a id="kalman_filter_local_level"></a>
 
-#### Kalman filter for a random-walk (local level) model — `kalman_filter_local_level`
+#### Kalman filter for a random-walk (local level) model, `kalman_filter_local_level`
 
 Filter a sequence of measurements with the scalar Kalman filter for x_t = x_{t-1} + w_t, z_t = x_t + v_t (predict, then update, at every step): the final estimate, variance, gain, all filtered estimates and the Gaussian log-likelihood of the one-step prediction errors.
 
@@ -2143,16 +2079,16 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the measurements, oldest first | — |
-| `q` | in | process noise variance | — |
-| `r` | in | measurement noise variance | — |
-| `m0` | in | initial state estimate | — |
-| `p0` | in | initial variance | — |
-| `estimate` | out | final filtered estimate | — |
-| `variance` | out | final variance | — |
-| `gain` | out | final gain | — |
-| `estimates` | out | filtered estimates for every measurement | — |
-| `log_likelihood` | out | sum of log N(v_t; 0, S_t) | — |
+| `x` | in | the measurements, oldest first | - |
+| `q` | in | process noise variance | - |
+| `r` | in | measurement noise variance | - |
+| `m0` | in | initial state estimate | - |
+| `p0` | in | initial variance | - |
+| `estimate` | out | final filtered estimate | - |
+| `variance` | out | final variance | - |
+| `gain` | out | final gain | - |
+| `estimates` | out | filtered estimates for every measurement | - |
+| `log_likelihood` | out | sum of log N(v_t; 0, S_t) | - |
 
 **Applies when:** q >= 0, r > 0, p0 >= 0; the initial estimate is the state before the first measurement.
 
@@ -2175,7 +2111,7 @@ log_likelihood = -8.617118062
 
 <a id="kalman_update"></a>
 
-#### Kalman measurement update (scalar) — `kalman_update`
+#### Kalman measurement update (scalar): `kalman_update`
 
 Combine a prior estimate (mean, variance) with a measurement (value, noise variance): the posterior mean and variance and the Kalman gain.
 
@@ -2185,13 +2121,13 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `m` | in | prior mean | — |
-| `p` | in | prior variance (> 0) | — |
-| `z` | in | the measurement | — |
-| `r` | in | measurement noise variance (> 0) | — |
-| `mean` | out | posterior mean | — |
-| `variance` | out | posterior variance | — |
-| `gain` | out | Kalman gain p/(p+r) | — |
+| `m` | in | prior mean | - |
+| `p` | in | prior variance (> 0) | - |
+| `z` | in | the measurement | - |
+| `r` | in | measurement noise variance (> 0) | - |
+| `mean` | out | posterior mean | - |
+| `variance` | out | posterior variance | - |
+| `gain` | out | Kalman gain p/(p+r) | - |
 
 **Applies when:** p > 0, r > 0; the measurement observes the state directly (H = 1).
 
@@ -2212,7 +2148,7 @@ gain = 0.8
 
 <a id="kalman_step"></a>
 
-#### One Kalman filter step (random-walk model) — `kalman_step`
+#### One Kalman filter step (random-walk model), `kalman_step`
 
 One predict-and-update step of the scalar Kalman filter for a random-walk state x_t = x_{t-1} + w_t observed as z_t = x_t + v_t.
 
@@ -2222,15 +2158,15 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `m` | in | previous estimate | — |
-| `p` | in | previous estimate variance | — |
-| `z` | in | the new measurement | — |
-| `q` | in | process noise variance | — |
-| `r` | in | measurement noise variance | — |
-| `mean` | out | updated estimate | — |
-| `variance` | out | updated variance | — |
-| `gain` | out | Kalman gain | — |
-| `prior_variance` | out | predicted variance p + q | — |
+| `m` | in | previous estimate | - |
+| `p` | in | previous estimate variance | - |
+| `z` | in | the new measurement | - |
+| `q` | in | process noise variance | - |
+| `r` | in | measurement noise variance | - |
+| `mean` | out | updated estimate | - |
+| `variance` | out | updated variance | - |
+| `gain` | out | Kalman gain | - |
+| `prior_variance` | out | predicted variance p + q | - |
 
 **Applies when:** p, q >= 0, r > 0; F = H = 1.
 
@@ -2253,7 +2189,7 @@ prior_variance = 5
 
 <a id="rts_smoother_local_level"></a>
 
-#### Rauch-Tung-Striebel smoother (random-walk model) — `rts_smoother_local_level`
+#### Rauch-Tung-Striebel smoother (random-walk model), `rts_smoother_local_level`
 
 Smoothed state estimates of the random-walk (local level) model: the Kalman filter forward, then the Rauch-Tung-Striebel recursion backward.
 
@@ -2263,14 +2199,14 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the measurements, oldest first | — |
-| `q` | in | process noise variance | — |
-| `r` | in | measurement noise variance | — |
-| `m0` | in | initial state estimate | — |
-| `p0` | in | initial variance | — |
-| `smoothed` | out | smoothed estimates for every time | — |
-| `first` | out | smoothed estimate at time 1 | — |
-| `first_variance` | out | its variance | — |
+| `x` | in | the measurements, oldest first | - |
+| `q` | in | process noise variance | - |
+| `r` | in | measurement noise variance | - |
+| `m0` | in | initial state estimate | - |
+| `p0` | in | initial variance | - |
+| `smoothed` | out | smoothed estimates for every time | - |
+| `first` | out | smoothed estimate at time 1 | - |
+| `first_variance` | out | its variance | - |
 
 **Applies when:** q > 0, r > 0, p0 >= 0.
 
@@ -2291,7 +2227,7 @@ first_variance = 0.6949754603
 
 <a id="kalman_steady_state_gain"></a>
 
-#### Steady-state Kalman gain (random-walk model) — `kalman_steady_state_gain`
+#### Steady-state Kalman gain (random-walk model), `kalman_steady_state_gain`
 
 The limiting Kalman gain and variances of the random-walk (local level) model with process variance q and measurement variance r (the solution of the scalar Riccati equation).
 
@@ -2301,11 +2237,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `q` | in | process noise variance (> 0) | — |
-| `r` | in | measurement noise variance (> 0) | — |
-| `gain` | out | steady-state gain | — |
-| `prior_variance` | out | steady-state predicted variance P- | — |
-| `posterior_variance` | out | steady-state filtered variance | — |
+| `q` | in | process noise variance (> 0) | - |
+| `r` | in | measurement noise variance (> 0) | - |
+| `gain` | out | steady-state gain | - |
+| `prior_variance` | out | steady-state predicted variance P- | - |
+| `posterior_variance` | out | steady-state filtered variance | - |
 
 **Applies when:** q > 0, r > 0.
 
@@ -2324,7 +2260,7 @@ posterior_variance = 1.561552813
 
 <a id="kalman_steady_state_constant_velocity"></a>
 
-#### Steady-state Kalman gains of a constant-velocity model — `kalman_steady_state_constant_velocity`
+#### Steady-state Kalman gains of a constant-velocity model, `kalman_steady_state_constant_velocity`
 
 The limiting position and velocity gains (and predicted position variance) of the constant-velocity Kalman filter with discrete white-noise acceleration q, time step dt and measurement variance r.
 
@@ -2334,12 +2270,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `dt` | in | time step | — |
-| `q` | in | acceleration noise variance (> 0) | — |
-| `r` | in | measurement noise variance (> 0) | — |
-| `k_position` | out | steady-state position gain | — |
-| `k_velocity` | out | steady-state velocity gain | — |
-| `prior_p11` | out | steady-state predicted position variance | — |
+| `dt` | in | time step | - |
+| `q` | in | acceleration noise variance (> 0) | - |
+| `r` | in | measurement noise variance (> 0) | - |
+| `k_position` | out | steady-state position gain | - |
+| `k_velocity` | out | steady-state velocity gain | - |
+| `prior_p11` | out | steady-state predicted position variance | - |
 
 **Applies when:** dt, q, r > 0; Q = q [[dt^4/4, dt^3/2], [dt^3/2, dt^2]].
 
@@ -2361,7 +2297,7 @@ prior_p11 = 1.203666322
 
 <a id="centred_moving_average"></a>
 
-#### Centred moving average — `centred_moving_average`
+#### Centred moving average: `centred_moving_average`
 
 The centred moving average of length k: a symmetric k-term mean for odd k, the 2 x k moving average (half weights at both ends) for even k, as used in classical decomposition.
 
@@ -2371,11 +2307,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the length of the moving average | — |
-| `cma` | out | the centred moving averages, from time first_index on | — |
-| `first_index` | out | the time t (1-based) of the first centred value (k//2 + 1) | — |
-| `first` | out | the first centred moving average | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the length of the moving average | - |
+| `cma` | out | the centred moving averages, from time first_index on | - |
+| `first_index` | out | the time t (1-based) of the first centred value (k//2 + 1) | - |
+| `first` | out | the first centred moving average | - |
 
 **Applies when:** k >= 2; odd k: k <= n; even k: k + 1 <= n.
 
@@ -2392,7 +2328,7 @@ first = 15.75
 
 <a id="exponential_moving_average"></a>
 
-#### Exponential moving average — `exponential_moving_average`
+#### Exponential moving average: `exponential_moving_average`
 
 The exponential moving average with span k (alpha = 2/(k+1)), started at the first value.
 
@@ -2402,11 +2338,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the span (number of periods) | — |
-| `ema` | out | the exponential moving average at every time (EMA_1 = x_1) | — |
-| `last` | out | the latest exponential moving average | — |
-| `alpha` | out | the weight 2/(k+1) | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the span (number of periods) | - |
+| `ema` | out | the exponential moving average at every time (EMA_1 = x_1) | - |
+| `last` | out | the latest exponential moving average | - |
+| `alpha` | out | the weight 2/(k+1) | - |
 
 **Applies when:** k >= 1; EMA_1 = x_1 (no averaging of a start-up window).
 
@@ -2423,7 +2359,7 @@ alpha = 0.5
 
 <a id="linearly_weighted_moving_average"></a>
 
-#### Linearly weighted moving average — `linearly_weighted_moving_average`
+#### Linearly weighted moving average: `linearly_weighted_moving_average`
 
 The k-period linearly weighted moving average: weights 1, 2, ..., k from the oldest to the newest value of each window.
 
@@ -2433,10 +2369,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the window length | — |
-| `lwma` | out | the weighted moving averages, one per complete window | — |
-| `last` | out | the latest weighted moving average (forecast of the next period) | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the window length | - |
+| `lwma` | out | the weighted moving averages, one per complete window | - |
+| `last` | out | the latest weighted moving average (forecast of the next period) | - |
 
 **Applies when:** 1 <= k <= n; the newest value of a window has weight k, the oldest weight 1.
 
@@ -2452,7 +2388,7 @@ last = 14.16666667
 
 <a id="simple_moving_average"></a>
 
-#### Simple moving average — `simple_moving_average`
+#### Simple moving average: `simple_moving_average`
 
 The k-period simple (trailing) moving average of a series; its last value is the moving-average forecast of the next period.
 
@@ -2462,11 +2398,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `k` | in | the window length (number of periods) | — |
-| `sma` | out | the moving averages, one per complete window (the first covers x_1..x_k) | — |
-| `last` | out | the latest moving average (forecast of the next period) | — |
-| `count` | out | number of moving averages (n - k + 1) | — |
+| `x` | in | the series, oldest first | - |
+| `k` | in | the window length (number of periods) | - |
+| `sma` | out | the moving averages, one per complete window (the first covers x_1..x_k) | - |
+| `last` | out | the latest moving average (forecast of the next period) | - |
+| `count` | out | number of moving averages (n - k + 1) | - |
 
 **Applies when:** 1 <= k <= n.
 
@@ -2485,7 +2421,7 @@ count = 3
 
 <a id="augmented_dickey_fuller_test"></a>
 
-#### Augmented Dickey-Fuller statistic — `augmented_dickey_fuller_test`
+#### Augmented Dickey-Fuller statistic: `augmented_dickey_fuller_test`
 
 The augmented Dickey-Fuller tau statistic with p lagged differences: the t-ratio of gamma in Delta x_t = gamma x_{t-1} + sum_j delta_j Delta x_{t-j} (+ constant, + trend) + e_t. The statistic only.
 
@@ -2495,13 +2431,13 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `p` | in | number of lagged differences | — |
-| `regression` | in | deterministic terms: c = constant (default), ct = constant and trend, n = none (optional) | — |
-| `tau` | out | the ADF statistic | — |
-| `gamma` | out | the coefficient of x_{t-1} | — |
-| `se` | out | its standard error | — |
-| `nobs` | out | observations in the regression (n - 1 - p) | — |
+| `x` | in | the series, oldest first | - |
+| `p` | in | number of lagged differences | - |
+| `regression` | in | deterministic terms: c = constant (default), ct = constant and trend, n = none (optional) | - |
+| `tau` | out | the ADF statistic | - |
+| `gamma` | out | the coefficient of x_{t-1} | - |
+| `se` | out | its standard error | - |
+| `nobs` | out | observations in the regression (n - 1 - p) | - |
 
 **Applies when:** p <= n/2 - (deterministic terms) - 1; default deterministic terms: a constant; the lag length is given, not selected.
 
@@ -2520,7 +2456,7 @@ nobs = 9
 
 <a id="dickey_fuller_test"></a>
 
-#### Dickey-Fuller unit-root statistic — `dickey_fuller_test`
+#### Dickey-Fuller unit-root statistic: `dickey_fuller_test`
 
 The Dickey-Fuller tau statistic: the t-ratio of gamma in the regression Delta x_t = gamma x_{t-1} (+ constant, + trend) + e_t. The statistic only: compare it with Dickey-Fuller critical values.
 
@@ -2530,12 +2466,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `regression` | in | deterministic terms: c = constant (default), ct = constant and trend, n = none (optional) | — |
-| `tau` | out | the Dickey-Fuller statistic gamma/se | — |
-| `gamma` | out | the coefficient of x_{t-1} | — |
-| `se` | out | its standard error | — |
-| `nobs` | out | observations in the regression (n - 1) | — |
+| `x` | in | the series, oldest first | - |
+| `regression` | in | deterministic terms: c = constant (default), ct = constant and trend, n = none (optional) | - |
+| `tau` | out | the Dickey-Fuller statistic gamma/se | - |
+| `gamma` | out | the coefficient of x_{t-1} | - |
+| `se` | out | its standard error | - |
+| `nobs` | out | observations in the regression (n - 1) | - |
 
 **Applies when:** the series is not constant; default deterministic terms: a constant; no lagged differences (see augmented_dickey_fuller_test).
 
@@ -2554,7 +2490,7 @@ nobs = 9
 
 <a id="kpss_test"></a>
 
-#### KPSS stationarity statistic — `kpss_test`
+#### KPSS stationarity statistic: `kpss_test`
 
 The KPSS statistic for level (c) or trend (ct) stationarity with a Bartlett-kernel long-run variance using a given number of lags. The statistic only: compare it with KPSS critical values.
 
@@ -2564,11 +2500,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `nlags` | in | Bartlett lags in the long-run variance | — |
-| `regression` | in | c = level stationarity (default), ct = trend stationarity (optional) | — |
-| `kpss` | out | the KPSS statistic | — |
-| `long_run_variance` | out | Bartlett long-run variance of the residuals | — |
+| `x` | in | the series, oldest first | - |
+| `nlags` | in | Bartlett lags in the long-run variance | - |
+| `regression` | in | c = level stationarity (default), ct = trend stationarity (optional) | - |
+| `kpss` | out | the KPSS statistic | - |
+| `long_run_variance` | out | Bartlett long-run variance of the residuals | - |
 
 **Applies when:** 0 <= lags < n; residuals from the mean (c) or a linear trend t = 1..n (ct).
 
@@ -2587,7 +2523,7 @@ long_run_variance = 0.8113541667
 
 <a id="compound_average_growth_rate"></a>
 
-#### Compound average growth rate of a series — `compound_average_growth_rate`
+#### Compound average growth rate of a series: `compound_average_growth_rate`
 
 The compound (geometric) average growth rate per period of a positive series (CAGR when the periods are years), and the total growth from the first to the last value.
 
@@ -2597,11 +2533,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (positive values) | — |
-| `rate` | out | compound average growth rate per period, as a fraction | — |
-| `rate_percent` | out | the same rate in percent | — |
-| `total_growth` | out | total growth x_n/x_1 - 1, as a fraction | — |
-| `periods` | out | number of periods n - 1 | — |
+| `x` | in | the series, oldest first (positive values) | - |
+| `rate` | out | compound average growth rate per period, as a fraction | - |
+| `rate_percent` | out | the same rate in percent | - |
+| `total_growth` | out | total growth x_n/x_1 - 1, as a fraction | - |
+| `periods` | out | number of periods n - 1 | - |
 
 **Applies when:** all values positive; equally spaced periods.
 
@@ -2619,7 +2555,7 @@ periods = 4
 
 <a id="differencing"></a>
 
-#### Regular and seasonal differencing — `differencing`
+#### Regular and seasonal differencing: `differencing`
 
 Difference a series d times (and seasonally D times at lag s): the series that an ARIMA(p, d, q) or seasonal ARIMA model works on.
 
@@ -2629,13 +2565,13 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `d` | in | number of regular (lag-1) differences, 0..3 (default 1) (optional) | — |
-| `D` | in | number of seasonal differences, 0..2 (default 0) (optional) | — |
-| `s` | in | seasonal lag (needed when D > 0) (optional) | — |
-| `differenced` | out | the differenced series | — |
-| `last` | out | its latest value | — |
-| `length` | out | its length n - d - D s | — |
+| `x` | in | the series, oldest first | - |
+| `d` | in | number of regular (lag-1) differences, 0..3 (default 1) (optional) | - |
+| `D` | in | number of seasonal differences, 0..2 (default 0) (optional) | - |
+| `s` | in | seasonal lag (needed when D > 0) (optional) | - |
+| `differenced` | out | the differenced series | - |
+| `last` | out | its latest value | - |
+| `length` | out | its length n - d - D s | - |
 
 **Applies when:** d + D >= 1; the series is longer than d + D s.
 
@@ -2654,7 +2590,7 @@ In the worked example, x = [3, 5, 9, 15, 23, 33], d = 2 go through the equation 
 
 <a id="exponential_trend_forecast"></a>
 
-#### Exponential trend fit and forecast — `exponential_trend_forecast`
+#### Exponential trend fit and forecast: `exponential_trend_forecast`
 
 Fit x_t = a e^(b t) (t = 1..n) by least squares on ln x_t, the growth rate per period e^b - 1, and the forecast of period n + h.
 
@@ -2664,12 +2600,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first (positive) | — |
-| `h` | in | periods ahead (default 1) (optional) | — |
-| `a` | out | the scale a | — |
-| `b` | out | the exponent rate b | — |
-| `growth_rate` | out | e^b - 1 per period | — |
-| `forecast` | out | a e^(b (n + h)) | — |
+| `x` | in | the series, oldest first (positive) | - |
+| `h` | in | periods ahead (default 1) (optional) | - |
+| `a` | out | the scale a | - |
+| `b` | out | the exponent rate b | - |
+| `growth_rate` | out | e^b - 1 per period | - |
+| `forecast` | out | a e^(b (n + h)) | - |
 
 **Applies when:** positive values; least squares on the logarithms (not on the values).
 
@@ -2687,7 +2623,7 @@ forecast = 173.4170967
 
 <a id="linear_trend_forecast"></a>
 
-#### Linear trend fit and forecast — `linear_trend_forecast`
+#### Linear trend fit and forecast: `linear_trend_forecast`
 
 Fit the least-squares trend line x_t = a + b t (t = 1..n) and forecast period n + h.
 
@@ -2697,12 +2633,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `h` | in | periods ahead to forecast (default 1) (optional) | — |
-| `slope` | out | trend per period b | — |
-| `intercept` | out | a (the trend value at t = 0) | — |
-| `forecast` | out | a + b (n + h) | — |
-| `r_squared` | out | coefficient of determination | — |
+| `x` | in | the series, oldest first | - |
+| `h` | in | periods ahead to forecast (default 1) (optional) | - |
+| `slope` | out | trend per period b | - |
+| `intercept` | out | a (the trend value at t = 0) | - |
+| `forecast` | out | a + b (n + h) | - |
+| `r_squared` | out | coefficient of determination | - |
 
 **Applies when:** t = 1..n; the series is not constant.
 
@@ -2720,7 +2656,7 @@ r_squared = 0.9969792322
 
 <a id="trend_seasonal_regression"></a>
 
-#### Linear trend with seasonal dummy variables — `trend_seasonal_regression`
+#### Linear trend with seasonal dummy variables, `trend_seasonal_regression`
 
 Fit x_t = a + b t + (effect of t's season) by least squares with seasonal dummies (the first season is the baseline, effect 0; the series starts in season 1) and forecast period n + h.
 
@@ -2730,13 +2666,13 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first, starting in season 1 | — |
-| `m` | in | season length | — |
-| `h` | in | periods ahead (default 1) (optional) | — |
-| `forecast` | out | the fitted value at t = n + h | — |
-| `intercept` | out | a | — |
-| `slope` | out | b per period | — |
-| `season_effects` | out | the m seasonal effects (season 1 = 0) | — |
+| `x` | in | the series, oldest first, starting in season 1 | - |
+| `m` | in | season length | - |
+| `h` | in | periods ahead (default 1) (optional) | - |
+| `forecast` | out | the fitted value at t = n + h | - |
+| `intercept` | out | a | - |
+| `slope` | out | b per period | - |
+| `season_effects` | out | the m seasonal effects (season 1 = 0) | - |
 
 **Applies when:** n >= m + 3; x_1 is in season 1; season 1 is the baseline.
 
@@ -2754,7 +2690,7 @@ season_effects = [0.0,-12.406249999999996,-6.145833333333334,-6.21875]
 
 <a id="mann_kendall_test"></a>
 
-#### Mann-Kendall trend test — `mann_kendall_test`
+#### Mann-Kendall trend test: `mann_kendall_test`
 
 The Mann-Kendall statistic S, its variance (with the tie correction), the continuity-corrected normal score z and the two-sided p-value for a monotonic trend.
 
@@ -2764,11 +2700,11 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `s` | out | S = sum_{i<j} sign(x_j - x_i) | — |
-| `var_s` | out | variance of S with tie correction | — |
-| `z` | out | (S - sign S) / sqrt(var S) | — |
-| `p_value` | out | two-sided normal p-value | — |
+| `x` | in | the series, oldest first | - |
+| `s` | out | S = sum_{i<j} sign(x_j - x_i) | - |
+| `var_s` | out | variance of S with tie correction | - |
+| `z` | out | (S - sign S) / sqrt(var S) | - |
+| `p_value` | out | two-sided normal p-value | - |
 
 **Applies when:** n >= 4; ties corrected in the variance; continuity correction of 1 in z.
 
@@ -2786,7 +2722,7 @@ p_value = 0.004878564475
 
 <a id="quadratic_trend_forecast"></a>
 
-#### Quadratic trend fit and forecast — `quadratic_trend_forecast`
+#### Quadratic trend fit and forecast: `quadratic_trend_forecast`
 
 Fit x_t = b0 + b1 t + b2 t^2 (t = 1..n) by least squares and forecast period n + h.
 
@@ -2796,12 +2732,12 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `h` | in | periods ahead (default 1) (optional) | — |
-| `b0` | out | constant | — |
-| `b1` | out | coefficient of t | — |
-| `b2` | out | coefficient of t^2 | — |
-| `forecast` | out | the trend value at t = n + h | — |
+| `x` | in | the series, oldest first | - |
+| `h` | in | periods ahead (default 1) (optional) | - |
+| `b0` | out | constant | - |
+| `b1` | out | coefficient of t | - |
+| `b2` | out | coefficient of t^2 | - |
+| `forecast` | out | the trend value at t = n + h | - |
 
 **Applies when:** t = 1..n; n >= 4.
 
@@ -2819,7 +2755,7 @@ forecast = 43.2
 
 <a id="drift_forecast"></a>
 
-#### Random-walk-with-drift (drift method) forecast — `drift_forecast`
+#### Random-walk-with-drift (drift method) forecast, `drift_forecast`
 
 The drift method: the average change per period (x_n - x_1)/(n - 1) and the forecast x_n + h x drift.
 
@@ -2829,10 +2765,10 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `h` | in | periods ahead (default 1) (optional) | — |
-| `drift` | out | average change per period | — |
-| `forecast` | out | x_n + h drift | — |
+| `x` | in | the series, oldest first | - |
+| `h` | in | periods ahead (default 1) (optional) | - |
+| `drift` | out | average change per period | - |
+| `forecast` | out | x_n + h drift | - |
 
 **Applies when:** n >= 2.
 
@@ -2848,7 +2784,7 @@ forecast = 121
 
 <a id="sens_slope"></a>
 
-#### Sen's slope (Theil-Sen trend) — `sens_slope`
+#### Sen's slope (Theil-Sen trend): `sens_slope`
 
 Sen's robust trend slope (median of all pairwise slopes, t = 1..n) and the intercept median(x) - slope median(t).
 
@@ -2858,9 +2794,9 @@ $$
 
 | symbol |  | meaning | SI unit |
 |---|---|---|---|
-| `x` | in | the series, oldest first | — |
-| `slope` | out | median of (x_j - x_i)/(j - i), i < j | — |
-| `intercept` | out | median(x) - slope (n+1)/2 | — |
+| `x` | in | the series, oldest first | - |
+| `slope` | out | median of (x_j - x_i)/(j - i), i < j | - |
+| `intercept` | out | median(x) - slope (n+1)/2 | - |
 
 **Applies when:** t = 1..n.
 
@@ -2874,4 +2810,4 @@ intercept = 9.333333333
 
 **What the worked example means:** This calculation determines the Sen's slope, which is the median of all pairwise slopes between points in the series. By using the median instead of the mean, it provides a resistant estimate of the trend direction and magnitude against outliers. The resulting slope of 1.66667 indicates how much the value changes on average for each step forward in time. The intercept of 9.33333 represents the estimated value at the center of the time sequence, calculated by adjusting the median of the data by the trend.
 
-Questions and reports: support@ai999x.com. AI999X — The Future Is Self-Improving.
+Questions and reports: support@ai999x.com. AI999X, The Future Is Self-Improving.
