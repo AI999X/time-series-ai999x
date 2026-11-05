@@ -1,6 +1,6 @@
 # time-series: the Time Series program — user guide
 
-**time-series-ai999x 1.0.3**, Rust build: command line, desktop app and browser. **Creator / engineer:** Ibnul Jaif Farabi · **Company:** AI999X · support@ai999x.com
+**time-series-ai999x 1.1.0**, Rust build: command line, desktop app and browser. **Creator / engineer:** Ibnul Jaif Farabi · **Company:** AI999X · support@ai999x.com
 
 Time Series covers moving averages, exponential smoothing, autocorrelation, ARIMA basics, stationarity tests, change points, forecasting accuracy and Kalman filtering. This guide is about `time-series`, the model as a self-contained program for Windows and Linux: 77 capabilities in 14 topics, answered on your own computer with no network, no Python and nothing else to install. The same compiled model runs in the AI999X desktop app and in the browser on the model's page (https://www.ai999x.com/models/time-series-ai999x/); the Python package (`pip install time-series-ai999x`) has its own guide. Every command output printed here is what the program printed.
 
