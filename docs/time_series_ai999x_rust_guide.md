@@ -1,8 +1,8 @@
 # time-series: the Time Series program, user guide
 
-**time-series-ai999x 1.1.0**, Rust build: command line, desktop app and browser. **Creator / engineer:** Ibnul Jaif Farabi · **Company:** AI999X · support@ai999x.com
+**time-series-ai999x 1.6.0**, Rust build: command line, desktop app and browser. **Creator / engineer:** Ibnul Jaif Farabi · **Company:** AI999X · support@ai999x.com
 
-Time Series covers moving averages, exponential smoothing, autocorrelation, ARIMA basics, stationarity tests, change points, forecasting accuracy and Kalman filtering. This guide is about `time-series`, the model as a self-contained program for Windows and Linux: 77 capabilities in 14 topics, answered on your own computer with no network, no Python and nothing else to install. The same compiled model runs in the AI999X desktop app and in the browser on the model's page (https://www.ai999x.com/models/time-series-ai999x/); the Python package (`pip install time-series-ai999x`) has its own guide. Every command output printed here is what the program printed.
+Time Series covers moving averages, exponential smoothing, autocorrelation, ARIMA basics, stationarity tests, change points, forecasting accuracy and Kalman filtering. This guide is about `time-series`, the model as a self-contained program for Windows and Linux: 78 capabilities in 14 topics, answered on your own computer with no network, no Python and nothing else to install. The same compiled model runs in the AI999X desktop app and in the browser on the model's page (https://www.ai999x.com/models/time-series-ai999x/); the Python package (`pip install time-series-ai999x`) has its own guide. Every command output printed here is what the program printed.
 
 ## Contents
 
@@ -17,37 +17,37 @@ Time Series covers moving averages, exponential smoothing, autocorrelation, ARIM
 
 ## 1. Get it
 
-Version 1.5.0 of the AI999X desktop app and of the command-line bundle. Checksums for every file: https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS; the newest version is always under https://downloads.ai999x.com/desktop/latest/. Full instructions: https://www.ai999x.com/desktop-cli/
+Version 1.6.0 of the AI999X desktop app and of the command-line bundle. Checksums for every file: https://downloads.ai999x.com/desktop/1.6.0/SHA256SUMS; the newest version is always under https://downloads.ai999x.com/desktop/latest/. Full instructions: https://www.ai999x.com/desktop-cli/
 
 | what | system | download |
 |---|---|---|
-| Desktop app: Time Series | Windows x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-time-series-1.5.0-windows-x86_64.zip |
-| Desktop app: Time Series | Linux x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-time-series-1.5.0-linux-x86_64.tar.gz |
-| Desktop app: all models | Windows x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-1.5.0-windows-x86_64.zip |
-| Desktop app: all models | Linux x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-1.5.0-linux-x86_64.tar.gz |
-| Command line | Windows x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-cli-1.5.0-windows-x86_64.zip |
-| Command line | Linux x86-64 | https://downloads.ai999x.com/desktop/1.5.0/ai999x-cli-1.5.0-linux-x86_64.tar.gz |
+| Desktop app: Time Series | Windows x86-64 | https://downloads.ai999x.com/desktop/1.6.0/ai999x-time-series-1.6.0-windows-x86_64.zip |
+| Desktop app: Time Series | Linux x86-64 | https://downloads.ai999x.com/desktop/1.6.0/ai999x-time-series-1.6.0-linux-x86_64.tar.gz |
+| Desktop app: all models | Windows x86-64 | https://downloads.ai999x.com/desktop/1.6.0/ai999x-1.6.0-windows-x86_64.zip |
+| Desktop app: all models | Linux x86-64 | https://downloads.ai999x.com/desktop/1.6.0/ai999x-1.6.0-linux-x86_64.tar.gz |
+| Command line | Windows x86-64 | https://downloads.ai999x.com/desktop/1.6.0/ai999x-cli-1.6.0-windows-x86_64.zip |
+| Command line | Linux x86-64 | https://downloads.ai999x.com/desktop/1.6.0/ai999x-cli-1.6.0-linux-x86_64.tar.gz |
 
 ### Desktop app
 
-Time Series in its own app: search, questions in words, input forms, live figures and explanations. Windows: Download ai999x-time-series-1.5.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x-time-series.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
+Time Series in its own app: search, questions in words, input forms, live figures and explanations. Windows: Download ai999x-time-series-1.6.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x-time-series.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
 
 ```shell
-curl -LO https://downloads.ai999x.com/desktop/1.5.0/ai999x-time-series-1.5.0-linux-x86_64.tar.gz
-curl -LO https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS
+curl -LO https://downloads.ai999x.com/desktop/1.6.0/ai999x-time-series-1.6.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.6.0/SHA256SUMS
 sha256sum -c --ignore-missing SHA256SUMS
-tar xzf ai999x-time-series-1.5.0-linux-x86_64.tar.gz
-./ai999x-time-series-1.5.0-linux-x86_64/ai999x-time-series
+tar xzf ai999x-time-series-1.6.0-linux-x86_64.tar.gz
+./ai999x-time-series-1.6.0-linux-x86_64/ai999x-time-series
 ```
 
-It opens on this model: type a question or pick a capability, fill in the form and press Compute. The AI999X desktop app with every model works the same way (choose the model first). Windows: Download ai999x-1.5.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
+It opens on this model: type a question or pick a capability, fill in the form and press Compute. The AI999X desktop app with every model works the same way (choose the model first). Windows: Download ai999x-1.6.0-windows-x86_64.zip, right-click it → Extract All, then open the folder and start ai999x.exe. If Windows SmartScreen asks, choose More info → Run anyway. Linux:
 
 ```shell
-curl -LO https://downloads.ai999x.com/desktop/1.5.0/ai999x-1.5.0-linux-x86_64.tar.gz
-curl -LO https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS
+curl -LO https://downloads.ai999x.com/desktop/1.6.0/ai999x-1.6.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.6.0/SHA256SUMS
 sha256sum -c --ignore-missing SHA256SUMS
-tar xzf ai999x-1.5.0-linux-x86_64.tar.gz
-./ai999x-1.5.0-linux-x86_64/ai999x
+tar xzf ai999x-1.6.0-linux-x86_64.tar.gz
+./ai999x-1.6.0-linux-x86_64/ai999x
 ```
 
 ### Command line: Linux
@@ -55,11 +55,11 @@ tar xzf ai999x-1.5.0-linux-x86_64.tar.gz
 The bundle holds one program per model; `time-series` is this one. The checksum line should print OK.
 
 ```shell
-curl -LO https://downloads.ai999x.com/desktop/1.5.0/ai999x-cli-1.5.0-linux-x86_64.tar.gz
-curl -LO https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS
+curl -LO https://downloads.ai999x.com/desktop/1.6.0/ai999x-cli-1.6.0-linux-x86_64.tar.gz
+curl -LO https://downloads.ai999x.com/desktop/1.6.0/SHA256SUMS
 sha256sum -c --ignore-missing SHA256SUMS
-mkdir -p ~/.local/share && tar xzf ai999x-cli-1.5.0-linux-x86_64.tar.gz -C ~/.local/share
-echo 'export PATH="$HOME/.local/share/ai999x-cli-1.5.0-linux-x86_64:$PATH"' >> ~/.bashrc && source ~/.bashrc
+mkdir -p ~/.local/share && tar xzf ai999x-cli-1.6.0-linux-x86_64.tar.gz -C ~/.local/share
+echo 'export PATH="$HOME/.local/share/ai999x-cli-1.6.0-linux-x86_64:$PATH"' >> ~/.bashrc && source ~/.bashrc
 time-series --version
 ```
 
@@ -68,12 +68,12 @@ time-series --version
 The fourth line should print True.
 
 ```powershell
-$F = "ai999x-cli-1.5.0-windows-x86_64.zip"
-Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.5.0/$F" -OutFile $F
-Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.5.0/SHA256SUMS" -OutFile SHA256SUMS
+$F = "ai999x-cli-1.6.0-windows-x86_64.zip"
+Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.6.0/$F" -OutFile $F
+Invoke-WebRequest "https://downloads.ai999x.com/desktop/1.6.0/SHA256SUMS" -OutFile SHA256SUMS
 (Get-FileHash $F -Algorithm SHA256).Hash.ToLower() -eq ((Select-String -SimpleMatch $F SHA256SUMS).Line -split ' ')[0]
 Expand-Archive $F -DestinationPath "$env:LOCALAPPDATA\AI999X" -Force
-$D = "$env:LOCALAPPDATA\AI999X\ai999x-cli-1.5.0-windows-x86_64"; $env:Path += ";$D"
+$D = "$env:LOCALAPPDATA\AI999X\ai999x-cli-1.6.0-windows-x86_64"; $env:Path += ";$D"
 [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "User") + ";$D", "User")
 time-series --version
 ```
@@ -96,7 +96,7 @@ Prints the model, its version and that this is the Rust build.
 
 ```shell
 $ time-series --version
-time-series-ai999x 1.5.0 (Rust build, ax-engine 1.5.0)
+time-series-ai999x 1.6.0 (Rust build, ax-engine 1.6.0)
 ```
 
 ### 2.2 Ask in words
@@ -144,7 +144,7 @@ ar_forecast                              Forecasts of an AR(p) model
 ar_least_squares                         AR(p) estimation by conditional least squares
 ar_yule_walker                           AR(p) estimation by Yule-Walker
 arima_p10_forecast                       Forecasts of an ARIMA(p,1,0) model
-… 69 more
+… 70 more
 ```
 
 ### 2.5 What a capability needs
@@ -285,7 +285,7 @@ The same model is a WebAssembly module, `time_series_ai999x.wasm` (https://www.a
 
 By topic. For each: what it does, what it needs and gives, when it applies, and a command with what the program printed for it. `time-series info <id>` shows the same inputs and outputs in the terminal.
 
-### ARIMA models (7)
+### ARIMA models (8)
 
 <a id="ar1_forecast"></a>
 
@@ -448,6 +448,44 @@ forecast = 110.496
 ```
 
 **What the worked example means:** This calculation produces an h-step forecast for an ARIMA model with a single integration order and no drift. It begins by modeling the differenced series as a stationary autoregressive process of order p, using coefficients [0.4] to predict future changes in the level. These predicted differences are then summed cumulatively starting from the most recent observed value [100, 102, 105, 104, 108]. The resulting output 110.496 represents the expected level of the series at horizon 3, assuming the underlying trend continues without additional constant shifts.
+
+<a id="sarima_forecast"></a>
+
+#### Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms, `sarima_forecast`
+
+h-step forecasts of ARMA(p,q), ARIMA(p,d,q) and seasonal ARIMA(p,d,q)(P,D,Q)m models with moving-average terms: the recursion of the full model with future shocks set to 0 and the stated last residuals for the past shocks (plus-sign MA convention).
+
+$$
+\phi(B)\,\Phi(B^m)\,(1-B)^d(1-B^m)^D x_t = c + \theta(B)\,\Theta(B^m)\,e_t,\quad \hat x_{n+j} = c - \sum_{k\ge1} a_k \hat x_{n+j-k} + \sum_{i\ge j} m_i\, e_{n+j-i}
+$$
+
+| symbol |  | meaning | SI unit |
+|---|---|---|---|
+| `x` | in | the series, oldest first (at least as many values as the model's AR degree with differencing) | - |
+| `phi` | in | AR coefficients phi_1..phi_p (none, or [0], when p = 0) (optional) | - |
+| `theta` | in | MA coefficients theta_1..theta_q, plus-sign convention (optional) | - |
+| `residuals` | in | the last L residuals e_(n-L+1)..e_n, oldest first (L = q + m Q) (optional) | - |
+| `d` | in | differencing order d (0, 1 or 2; from the model's name) (optional) | - |
+| `seasonal_phi` | in | seasonal AR coefficients Phi_1..Phi_P (optional) | - |
+| `seasonal_theta` | in | seasonal MA coefficients Theta_1..Theta_Q, plus-sign convention (optional) | - |
+| `D` | in | seasonal differencing order D (0 or 1) (optional) | - |
+| `m` | in | season length m (with a seasonal part) (optional) | - |
+| `c` | in | the constant c (default 0) (optional) | - |
+| `h` | in | forecast horizon (default 1) (optional) | - |
+| `forecasts` | out | the forecasts for steps 1..h | - |
+| `forecast` | out | the h-step forecast | - |
+
+**Applies when:** stationary AR parts; plus-sign MA convention x_t = ... + e_t + theta_1 e_(t-1) + ...; exactly L = q + m Q residuals, oldest first; future shocks 0; a season length only with a seasonal part.
+
+```shell
+$ time-series solve sarima_forecast "phi=[0.5]" "theta=[0.3]" "residuals=[0.8]" "x=[100, 102, 105, 104, 108]" h=3 d=1
+forecasts = [110.24,111.35999999999999,111.91999999999996]
+forecast = 111.92
+  by: Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms  (expand phi(B) Phi(B^m) (1-B)^d (1-B^m)^D and theta(B) Theta(B^m); xhat_(n+j) = c - sum_k a_k xhat_(n+j-k) + sum_(i >= j) m_i e_(n+j-i))
+  assumes: stationary AR parts; plus-sign MA convention x_t = ... + e_t + theta_1 e_(t-1) + ...; exactly L = q + m Q residuals, oldest first; future shocks 0; a season length only with a seasonal part
+```
+
+In the worked example, phi = [0.5], theta = [0.3], residuals = [0.8], x = [100, 102, 105, 104, 108], h = 3, d = 1 go through the equation above and give forecasts = [110.24, 111.36, 111.92], forecast = 111.92. It applies only when stationary AR parts; plus-sign MA convention x_t = ... + e_t + theta_1 e_(t-1) + ...; exactly L = q + m Q residuals, oldest first; future shocks 0; a season length only with a seasonal part: outside that it says what is wrong instead of returning a number.
 
 <a id="partial_autocorrelations_from_autocorrelations"></a>
 
@@ -2681,7 +2719,7 @@ $ time-series solve trend_seasonal_regression "x=[30, 21, 29, 31, 40, 30, 39, 41
 forecast = 59.25
 intercept = 27.96875
 slope = 2.40625
-season_effects = [0.0,-12.406249999999996,-6.145833333333334,-6.21875]
+season_effects = [0.0,-12.406249999999996,-6.145833333333333,-6.218749999999999]
   by: Linear trend with seasonal dummy variables  (ordinary least squares on (1, t, D_2, ..., D_m))
   assumes: n >= m + 3; x_1 is in season 1; season 1 is the baseline
 ```

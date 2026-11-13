@@ -76,9 +76,10 @@
   "trend_seasonal_regression",
   "ar2_theoretical_acf",
   "ma1_theoretical_pacf",
-  "arma_theoretical_pacf"
+  "arma_theoretical_pacf",
+  "sarima_forecast"
  ],
- "generated": "2026-10-23",
+ "generated": "2026-11-13",
  "tool": "tools/certify_procedures.py",
  "report": "release/procedure_certification.json"
 }

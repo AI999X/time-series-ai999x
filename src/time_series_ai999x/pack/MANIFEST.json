@@ -1,5 +1,5 @@
 {
- "package": "1.5.0",
+ "package": "1.6.0",
  "pack": "1.0.0",
  "knowledge_db": null,
  "files": {
@@ -7,9 +7,9 @@
   "dictionary/terms.json": "b2d8da1d78769f517c23c6ea61c20fc6a48166102bca0adc66f36fb5f54d905d",
   "knowledge/relations.json": "0f274d97b7eda9f1b37698a826a54dd5604b924e145be577f50a86350c2e52ae",
   "knowledge/reference_cases.json": "7414a14e2c4202a7fae8cdd14e1a2ef7267f35a9665b0633001349c698d4e4e7",
-  "capabilities/_expected.py": "2e844e14a2b86d56a1d40492dfe0c14122ee6031834bcae5f55852a30b246a39",
-  "capabilities/procedures.py": "56adc7fb0052c0fba26e81d4eabd8900c0bf0f5dab0e3c006cfae56913b9140a",
-  "capabilities/procedures_certified.json": "ccbcf752f1b6d5dab3e483bf822a3eb1bc2bd17dfe8c8a08c33afc9db2fd83c5",
+  "capabilities/_expected.py": "75de1ce5451f0b9b9971ed8e75de52b08760fde76698b9c48c9aaa05a1aa0d9e",
+  "capabilities/procedures.py": "8eef960d5838b0e533eae5d699b4231d32ff79a60c50d9160495505bfe0996d2",
+  "capabilities/procedures_certified.json": "dd6165b1c8d09600fb1414484414c823a10305d10e2077db0a9a82db79dfd3c5",
   "time_series_knowledge_public.sqlite": "c7e145b304ba4e4f89abdba0485b5fe6cdf43e12adc8f26590c7725ae35ddceb"
  },
  "engine": [

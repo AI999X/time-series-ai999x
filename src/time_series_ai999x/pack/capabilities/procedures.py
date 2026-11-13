@@ -4308,3 +4308,275 @@ _cap("arma_theoretical_pacf", level="expert", name="Theoretical partial autocorr
      examples=[dict(phi="0.5", theta="0.4"), dict(phi=[0.6, -0.3], theta=[0.2], K=4)],
      questions=[_q("Find the partial autocorrelations of the ARMA(1,1) process with phi = [0.5] and theta = [0.4].", 0),
                 _q("Compute the theoretical PACF up to lag 4 of the ARMA(2,1) model with phi = [0.6, -0.3] and theta = [0.2].", 1)])
+
+
+# ============================================================================ ARMA / ARIMA / SARIMA forecasts ====
+# The multiplicative model phi(B) Phi(B^m) (1 - B)^d (1 - B^m)^D x_t = c + theta(B) Theta(B^m) e_t with
+# phi(B) = 1 - phi_1 B - ..., Phi(B^m) = 1 - Phi_1 B^m - ..., and the PLUS-sign MA convention of this model:
+# theta(B) = 1 + theta_1 B + ..., Theta(B^m) = 1 + Theta_1 B^m + .... Forecasts set future shocks to 0 and use the
+# stated residuals for past shocks; the constant c enters the equation as written (it is not the series mean: for
+# d = D = 0 the mean is c / (phi(1) Phi(1))). The residuals are e_(n-L+1) .. e_n, oldest first, L the degree of
+# theta(B) Theta(B^m). The orders d, D and m are read from the model's written name, never from loose numbers.
+def _seasonal_poly(coefs, m, sign):
+    """1 + sign (c_1 B^m + c_2 B^2m + ...) as an ascending coefficient list."""
+    out = [0.0] * (m * len(coefs) + 1)
+    out[0] = 1.0
+    for k in range(len(coefs)):
+        out[m * (k + 1)] = sign * coefs[k]
+    return out
+
+
+def _polymul(p, q):
+    out = [0.0] * (len(p) + len(q) - 1)
+    for i in range(len(p)):
+        for j in range(len(q)):
+            out[i + j] += p[i] * q[j]
+    return out
+
+
+def _trimz(c):
+    c = list(c)
+    while len(c) > 1 and c[-1] == 0:
+        c.pop()
+    return c
+
+
+def _sarima_polys(phi, theta, d, sphi, stheta, D, m):
+    """The full AR polynomial (differencing included) and the full MA polynomial, ascending in B."""
+    ar = [1.0] + [-v for v in phi]
+    if len(sphi) > 0:
+        ar = _polymul(ar, _seasonal_poly(sphi, m, -1.0))
+    for _ in range(d):
+        ar = _polymul(ar, [1.0, -1.0])
+    for _ in range(D):
+        ar = _polymul(ar, _seasonal_poly([1.0], m, -1.0))
+    ma = [1.0] + list(theta)
+    if len(stheta) > 0:
+        ma = _polymul(ma, _seasonal_poly(stheta, m, 1.0))
+    return _trimz(ar), _trimz(ma)
+
+
+def run_sarima_forecast(x, phi=None, theta=None, residuals=None, d=0, seasonal_phi=None, seasonal_theta=None, D=0,
+                        m=None, c=0.0, h=1):
+    x = _fin(x)
+    phi = [] if phi is None else _fin(phi, "the AR coefficients")
+    theta = [] if theta is None else _fin(theta, "the MA coefficients")
+    sphi = [] if seasonal_phi is None else _fin(seasonal_phi, "the seasonal AR coefficients")
+    stheta = [] if seasonal_theta is None else _fin(seasonal_theta, "the seasonal MA coefficients")
+    d = _int(d, "the differencing order d", 0, 2)
+    D = _int(D, "the seasonal differencing order D", 0, 1)
+    c = _num(c, "the constant")
+    h = _int(h, "the horizon h", 1, 500)
+    seasonal = len(sphi) > 0 or len(stheta) > 0 or D > 0
+    if seasonal:
+        if m is None:
+            raise ValueError("a seasonal part needs the season length m")
+        m = _int(m, "the season length m", 2, 52)
+    elif m is not None:
+        raise ValueError("a season length was given without a seasonal part")
+    if not _stationary(phi) or not _stationary(sphi):
+        raise ValueError("the AR parts must be stationary (every root outside the unit circle)")
+    ar, ma = _sarima_polys(phi, theta, d, sphi, stheta, D, m)
+    L = len(ma) - 1
+    e = [] if residuals is None else _fin(residuals, "the residuals")
+    if len(e) != L:
+        if L == 0:
+            raise ValueError("the model has no moving-average part: residuals are not used")
+        raise ValueError(f"the moving-average part reaches back {L} residuals: give exactly {L}, oldest first")
+    need = max(len(ar) - 1, 1)
+    if len(x) < need:
+        raise ValueError(f"the series needs at least {need} values for this model")
+    hist = list(x)
+    out = []
+    for j in range(1, h + 1):
+        terms = [c]
+        for k in range(1, len(ar)):
+            terms.append(-ar[k] * hist[-k])
+        for i in range(j, L + 1):
+            terms.append(ma[i] * e[L - 1 - (i - j)])
+        v = math.fsum(terms)
+        hist.append(v)
+        out.append(v)
+    return {"forecasts": out, "forecast": out[-1]}
+
+
+def ref_sarima_forecast(x, phi=None, theta=None, residuals=None, d=0, seasonal_phi=None, seasonal_theta=None, D=0,
+                        m=None, c=0.0, h=1):
+    """Two stages: difference the series (w = (1 - B)^d (1 - B^m)^D x), forecast w with the ARMA recursion built
+    from numpy polynomial products, then undo the differencing one step at a time."""
+    import numpy as np
+    x = [float(v) for v in x]
+    mm = int(m) if m is not None else 1
+
+    def seas(coefs, sign):
+        p = np.zeros(mm * len(coefs) + 1)
+        p[0] = 1.0
+        for k, v in enumerate(coefs, 1):
+            p[mm * k] = sign * float(v)
+        return p
+
+    ar = np.convolve(np.r_[1.0, -np.asarray(list(phi or []), dtype=float)], seas(list(seasonal_phi or []), -1.0))
+    ma = np.convolve(np.r_[1.0, np.asarray(list(theta or []), dtype=float)], seas(list(seasonal_theta or []), 1.0))
+    while len(ar) > 1 and ar[-1] == 0:
+        ar = ar[:-1]
+    while len(ma) > 1 and ma[-1] == 0:
+        ma = ma[:-1]
+    delta = np.array([1.0])
+    for _ in range(int(d)):
+        delta = np.convolve(delta, [1.0, -1.0])
+    for _ in range(int(D)):
+        delta = np.convolve(delta, seas([1.0], -1.0))
+    nd = len(delta) - 1
+    w = [float(sum(delta[k] * x[t - k] for k in range(nd + 1))) for t in range(nd, len(x))]
+    e = [float(v) for v in (residuals or [])]
+    L = len(ma) - 1
+    xs = list(x)
+    for j in range(1, int(h) + 1):
+        wf = float(c) + sum(-ar[k] * w[-k] for k in range(1, len(ar))) \
+            + sum(ma[i] * e[L - 1 - (i - j)] for i in range(j, L + 1))
+        w.append(float(wf))
+        xs.append(float(wf - sum(delta[k] * xs[-k] for k in range(1, nd + 1))))
+    out = xs[len(x):]
+    return {"forecasts": out, "forecast": out[-1]}
+
+
+def wrong_sarima_forecast(x, phi=None, theta=None, residuals=None, d=0, seasonal_phi=None, seasonal_theta=None, D=0,
+                          m=None, c=0.0, h=1):
+    # the other MA sign convention (e_t - theta_1 e_(t-1) ...) applied to a plus-sign model
+    neg = (lambda v: None if v is None else [-float(u) for u in v])
+    return run_sarima_forecast(x, phi, neg(theta), residuals, d, seasonal_phi, neg(seasonal_theta), D, m, c, h)
+
+
+def _rnd_sarima(rng):
+    p, q = rng.randint(0, 2), rng.randint(1, 2)
+    d = rng.choice([0, 1, 1, 2])
+    out = {"theta": [rng.choice([-1, 1]) * round(rng.uniform(0.1, 0.8), 2) for _ in range(q)], "d": d,
+           "c": rng.choice([0.0, round(rng.uniform(-2, 2), 2)]), "h": rng.randint(1, 8)}
+    if p:
+        out["phi"] = _rand_stationary(rng, p, -0.7, 0.7)
+    L, deg = q, p + d
+    if rng.random() < 0.5:
+        m = rng.choice([4, 12])
+        P, Q, D = rng.randint(0, 1), rng.randint(0, 1), rng.randint(0, 1)
+        if P + Q + D == 0:
+            D = 1
+        out["m"], out["D"] = m, D
+        if P:
+            out["seasonal_phi"] = [rng.choice([-1, 1]) * round(rng.uniform(0.1, 0.7), 2)]
+        if Q:
+            out["seasonal_theta"] = [rng.choice([-1, 1]) * round(rng.uniform(0.1, 0.8), 2)]
+        L += m * Q
+        deg += m * (P + D)
+        out["x"] = _seasonal(rng, rng.randint(deg + 2, deg + 30), m)
+    else:
+        out["x"] = _walk(rng, rng.randint(deg + 2, 40)) if d else _ar1(rng, rng.randint(max(deg, 1) + 2, 40))
+    sd = max(0.1, 0.02 * abs(out["x"][-1]))
+    e = [round(rng.gauss(0, sd), 3) for _ in range(L)]
+    if e[-1] == 0:
+        e[-1] = round(sd, 3)
+    out["residuals"] = e
+    return out
+
+
+_SAR_RE = r"\b(s?arima|arma)\s*\(\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*(\d+)\s*)?\)"
+_SEAS_RE = r"\s*(?:x\s*)?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*(?:_\s*\{?\s*|\[\s*|\{\s*)?(\d+)\s*[\]\}]?"
+
+
+def _x_sarima(rest, d, spans):
+    """The orders come from the written model, ARMA(p,q), ARIMA(p,d,q) or ARIMA(p,d,q)(P,D,Q)m (also _m, [m]); every
+    coefficient list must have the length its order states ([0] for an order 0)."""
+    mo = re.search(_SAR_RE, rest)
+    if not mo:
+        return {"_out_of_scope": "name the model as ARMA(p,q), ARIMA(p,d,q) or ARIMA(p,d,q)(P,D,Q)m"}
+    if mo.group(1) == "arma":
+        if mo.group(4) is not None:
+            return {"_out_of_scope": "ARMA takes two orders (p,q); write ARIMA(p,d,q) for a differenced model"}
+        p, dd, q = int(mo.group(2)), 0, int(mo.group(3))
+    else:
+        if mo.group(4) is None:
+            return {"_out_of_scope": "ARIMA takes three orders (p,d,q)"}
+        p, dd, q = int(mo.group(2)), int(mo.group(3)), int(mo.group(4))
+    want = {"phi": p, "theta": q, "seasonal_phi": 0, "seasonal_theta": 0}
+    ms = re.match(_SEAS_RE, rest[mo.end():])
+    if ms:
+        want["seasonal_phi"], want["seasonal_theta"] = int(ms.group(1)), int(ms.group(3))
+        d["D"], d["m"] = float(ms.group(2)), float(ms.group(4))
+        spans.append((mo.end() + ms.start(), mo.end() + ms.end()))
+    elif mo.group(1) == "sarima":
+        return {"_out_of_scope": "SARIMA needs its seasonal orders, as (P,D,Q)m"}
+    d["d"] = float(dd)
+    for sym, n in want.items():
+        if sym in d:
+            items = [t for t in re.split(r"[,\s;]+", d[sym].strip("[]")) if t]
+            if len(items) != n and not (n == 0 and d[sym].strip("[] ") in ("0", "0.0")):
+                return {"_out_of_scope": f"the model's order is {n} for the {sym.replace('_', ' ')} list, but "
+                                         f"{len(items)} values were given"}
+        elif n > 0:
+            return {"_out_of_scope": f"the model's order needs {n} {sym.replace('_', ' ')} values; none were given"}
+
+
+_SPHI_LABEL = r"seasonal (?:ar|autoregressive) (?:coefficients|part|parameters)"
+_STHETA_LABEL = r"seasonal (?:ma|moving[- ]average) (?:coefficients|part|parameters)"
+
+_cap("sarima_forecast", level="advanced", name="Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms",
+     topic=_ARM,
+     purpose="h-step forecasts of ARMA(p,q), ARIMA(p,d,q) and seasonal ARIMA(p,d,q)(P,D,Q)m models with moving-average "
+             "terms: the recursion of the full model with future shocks set to 0 and the stated last residuals for the "
+             "past shocks (plus-sign MA convention).",
+     inputs=[_vin("x", "the series, oldest first (at least as many values as the model's AR degree with differencing)", 1),
+             _vin("phi", "AR coefficients phi_1..phi_p (none, or [0], when p = 0)", 1, required=False, max_length=6),
+             _vin("theta", "MA coefficients theta_1..theta_q, plus-sign convention", 1, required=False, max_length=6),
+             _vin("residuals", "the last L residuals e_(n-L+1)..e_n, oldest first (L = q + m Q)", 1, required=False),
+             _iin("d", "differencing order d (0, 1 or 2; from the model's name)", required=False, lo=0, hi=2),
+             _vin("seasonal_phi", "seasonal AR coefficients Phi_1..Phi_P", 1, required=False, max_length=3),
+             _vin("seasonal_theta", "seasonal MA coefficients Theta_1..Theta_Q, plus-sign convention", 1, required=False,
+                  max_length=3),
+             _iin("D", "seasonal differencing order D (0 or 1)", required=False, lo=0, hi=1),
+             _iin("m", "season length m (with a seasonal part)", required=False, lo=2, hi=52),
+             _nin("c", "the constant c (default 0)", required=False),
+             _iin("h", "forecast horizon (default 1)", required=False, lo=1)],
+     outputs=[_out("forecasts", "the forecasts for steps 1..h"), _out("forecast", "the h-step forecast")],
+     primary="forecast",
+     conditions=["stationary AR parts", "plus-sign MA convention x_t = ... + e_t + theta_1 e_(t-1) + ...",
+                 "exactly L = q + m Q residuals, oldest first", "future shocks 0",
+                 "a season length only with a seasonal part"],
+     method="expand phi(B) Phi(B^m) (1-B)^d (1-B^m)^D and theta(B) Theta(B^m); xhat_(n+j) = c - sum_k a_k xhat_(n+j-k) "
+            "+ sum_(i >= j) m_i e_(n+j-i)",
+     latex=r"\phi(B)\,\Phi(B^m)\,(1-B)^d(1-B^m)^D x_t = c + \theta(B)\,\Theta(B^m)\,e_t,\quad "
+           r"\hat x_{n+j} = c - \sum_{k\ge1} a_k \hat x_{n+j-k} + \sum_{i\ge j} m_i\, e_{n+j-i}",
+     run=run_sarima_forecast, reference=ref_sarima_forecast, wrong=wrong_sarima_forecast, rnd=_rnd_sarima,
+     need=[r"forecast|predict", r"\b(?:s?arima|arma)\s*\(", r"\bma\b|moving[- ]average|\btheta\b|residual|shock|seasonal",
+           r"\["],
+     avoid=r"variance|auto-?correlation|\bacf\b|\bpacf\b", prio=6,
+     aliases={"c": _nm("constant", "intercept"), "h": A_H, "d": [], "D": [], "m": []},
+     labels={"x": _SERIES_LABEL,
+             "phi": r"(?<!seasonal )(?:\bphi\b|\bar (?:coefficients|part|parameters)|autoregressive (?:coefficients|part))",
+             "theta": r"(?<!seasonal )(?:\btheta\b|\bma (?:coefficients|part|parameters)|moving[- ]average (?:coefficients|part))",
+             "residuals": r"residuals?|shocks?|innovations?|errors?",
+             "seasonal_phi": _SPHI_LABEL, "seasonal_theta": _STHETA_LABEL},
+     extract=_x_sarima,
+     templates=["Forecast 3 steps ahead with an ARIMA(1,1,1) model with AR coefficients [0.5], MA coefficients [0.3] and "
+                "last residuals [0.8] for the series [100, 102, 105, 104, 108].",
+                "Forecast 5 steps ahead with an ARIMA(0,0,1)(0,1,1)4 model with MA coefficients [0.5], seasonal MA "
+                "coefficients [-0.6] and last residuals [1, 0, 0, 0, 2] for the series [10, 20, 30, 40, 12, 22, 31, 41]."],
+     examples=[dict(x="100, 102, 105, 104, 108", phi="0.5", theta="0.3", residuals="0.8", d=1, h=3),
+               dict(x=[5.0, 4.2, 5.5], phi=[0.6], theta=[-0.4], residuals=[0.5], c=2, h=3),
+               dict(x=[10, 20, 30, 40, 12, 22, 31, 41], theta=[0.5], seasonal_theta=[-0.6], residuals=[1, 0, 0, 0, 2],
+                    D=1, m=4, h=5)],
+     questions=[_q("Forecast 3 steps ahead with an ARIMA(1,1,1) model with AR coefficients [0.5], MA coefficients [0.3] "
+                   "and last residuals [0.8] for the series [100, 102, 105, 104, 108].",
+                   outputs={"forecasts": [110.24, 111.36, 111.92], "forecast": 111.92}),
+                _q("Forecast 3 steps ahead with an ARMA(1,1) model with AR coefficients [0.6], MA coefficients [-0.4], "
+                   "constant 2 and last residuals [0.5] for the series [5.0, 4.2, 5.5].",
+                   outputs={"forecasts": [5.1, 5.06, 5.036], "forecast": 5.036}),
+                _q("Forecast 5 steps ahead with an ARIMA(0,0,1)(0,1,1)4 model with MA coefficients [0.5], seasonal MA "
+                   "coefficients [-0.6] and last residuals [1, 0, 0, 0, 2] for the series [10, 20, 30, 40, 12, 22, 31, 41].",
+                   outputs={"forecasts": [12.7, 22.0, 31.0, 39.8, 12.1], "forecast": 12.1}),
+                _q("Forecast 2 steps ahead with an ARIMA(1,1,1) model with AR coefficients [1.2], MA coefficients [0.3] "
+                   "and last residuals [0.8] for the series [100, 102, 105, 104, 108].", outcome="INVALID_INPUT"),
+                _q("Forecast 2 steps ahead with an ARIMA(0,1,2) model with MA coefficients [0.3, 0.2] and last residuals "
+                   "[0.8] for the series [100, 102, 105, 104, 108].", outcome="INVALID_INPUT"),
+                _q("Forecast 2 steps ahead with an ARIMA(1,1,1) model with AR coefficients [0.5, 0.2], MA coefficients "
+                   "[0.3] and last residuals [0.8] for the series [100, 102, 105, 104, 108].", outcome="OUT_OF_SCOPE"),
+                _q("Forecast 2 steps ahead with an ARIMA(1,1,1) model with AR coefficients [0.5], MA coefficients [0.3] "
+                   "and last residuals [0.8].", outcome="NEEDS_INPUT")])

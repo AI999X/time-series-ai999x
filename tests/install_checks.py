@@ -15,7 +15,7 @@ def _close(a, b):
 
 
 def checks(P) -> dict:
-    out = {"certified_procedures": len(P.pack().procedures) == 77,
+    out = {"certified_procedures": len(P.pack().procedures) == 78,
            "refuses_nonsense": not P.ask("What is it?").solved}
     for i, (q, want) in enumerate(QUESTIONS):
         a = P.ask(q)

@@ -18,7 +18,7 @@ result.show()
 
 | topic | capabilities |
 |---|---|
-| ARIMA models | [AR(p) estimation by Yule-Walker](#ar_yule_walker), [AR(p) estimation by conditional least squares](#ar_least_squares), [Yule-Walker equations from autocorrelations](#yule_walker_from_autocorrelations), [Partial autocorrelations from autocorrelations](#partial_autocorrelations_from_autocorrelations), [Forecasts of an AR(p) model](#ar_forecast), [Forecasts of an ARIMA(p,1,0) model](#arima_p10_forecast), [AR(1) forecast towards the mean](#ar1_forecast) |
+| ARIMA models | [AR(p) estimation by Yule-Walker](#ar_yule_walker), [AR(p) estimation by conditional least squares](#ar_least_squares), [Yule-Walker equations from autocorrelations](#yule_walker_from_autocorrelations), [Partial autocorrelations from autocorrelations](#partial_autocorrelations_from_autocorrelations), [Forecasts of an AR(p) model](#ar_forecast), [Forecasts of an ARIMA(p,1,0) model](#arima_p10_forecast), [AR(1) forecast towards the mean](#ar1_forecast), [Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms](#sarima_forecast) |
 | ARMA theory | [Theoretical autocorrelations of an MA(q) process](#ma_theoretical_acf), [Theoretical autocorrelations of an ARMA(1,1) process](#arma11_theoretical_acf), [Theoretical autocorrelations of an ARMA(p,q) process](#arma_theoretical_acf), [Variance and lag-1 autocovariance of an ARMA(p,q) process](#arma_variance), [Psi weights (MA-infinity representation) of an ARMA process](#psi_weights), [Pi weights (AR-infinity representation) of an ARMA process](#pi_weights), [H-step forecast error variance of an ARMA model](#forecast_error_variance), [Mean, variance and autocorrelation of an AR(1) process](#ar1_properties), [Stationarity of an AR(2) process](#ar2_stationarity), [Invertibility of an MA(2) process](#ma2_invertibility), [Theoretical autocorrelations of an AR(2) process](#ar2_theoretical_acf), [Theoretical partial autocorrelations of an MA(1) process](#ma1_theoretical_pacf), [Theoretical partial autocorrelations of an ARMA(p,q) process](#arma_theoretical_pacf) |
 | Autocorrelation | [Sample autocorrelation at lag k](#sample_autocorrelation), [Sample autocovariance at lag k](#sample_autocovariance), [Sample partial autocorrelation at lag k](#sample_partial_autocorrelation), [Bartlett standard error of a sample autocorrelation](#bartlett_standard_error), [Ljung-Box test](#ljung_box_test), [Box-Pierce test](#box_pierce_test) |
 | Change points | [Single change point in the mean (least squares)](#change_point_mean_shift), [Two change points in the mean (optimal segmentation)](#two_change_points), [Multiple change points with a penalty (PELT)](#penalised_change_points), [CUSUM estimate of a change point](#cusum_change_point), [Tabular CUSUM control chart](#tabular_cusum) |
@@ -148,6 +148,7 @@ Call `solve("<id>", **inputs)` with plain numbers; the result's `values` holds e
 | ar2_theoretical_acf | Theoretical autocorrelations of an AR(2) process | phi1, phi2, K | acf, rho1 |
 | ma1_theoretical_pacf | Theoretical partial autocorrelations of an MA(1) process | theta, K | pacf, pacf1 |
 | arma_theoretical_pacf | Theoretical partial autocorrelations of an ARMA(p,q) process | phi, theta, K | pacf, pacf1 |
+| sarima_forecast | Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms | x, phi, theta, residuals, d, seasonal_phi, seasonal_theta, D, m, c, h | forecasts, forecast |
 
 <a id="simple_moving_average"></a>
 
@@ -3933,3 +3934,71 @@ time_series_ai999x.solve('arma_theoretical_pacf', phi=[0.6, -0.3], theta=[0.2], 
 |---|---|---|
 | Find the partial autocorrelations of the ARMA(1,1) process with phi = [0.5] and theta = [0.4]. | SOLVED | pacf = [0.6923076923076924, -0.2556818181818184, 0.1010327795240235, -0.04033486904612524, 0.016128951324258605], pacf1 = 0.692308 |
 | Compute the theoretical PACF up to lag 4 of the ARMA(2,1) model with phi = [0.6, -0.3] and theta = [0.2]. | SOLVED | pacf = [0.5515075376884422, -0.3926998491704374, 0.07804182053618533, -0.015604405193828833], pacf1 = 0.551508 |
+
+<a id="sarima_forecast"></a>
+
+### Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms, `sarima_forecast`
+
+h-step forecasts of ARMA(p,q), ARIMA(p,d,q) and seasonal ARIMA(p,d,q)(P,D,Q)m models with moving-average terms: the recursion of the full model with future shocks set to 0 and the stated last residuals for the past shocks (plus-sign MA convention).
+
+$$
+\phi(B)\,\Phi(B^m)\,(1-B)^d(1-B^m)^D x_t = c + \theta(B)\,\Theta(B^m)\,e_t,\quad \hat x_{n+j} = c - \sum_{k\ge1} a_k \hat x_{n+j-k} + \sum_{i\ge j} m_i\, e_{n+j-i}
+$$
+
+| input | meaning | condition |
+|---|---|---|
+| `x` | the series, oldest first (at least as many values as the model's AR degree with differencing) |  |
+| `phi` | AR coefficients phi_1..phi_p (none, or [0], when p = 0) |  |
+| `theta` | MA coefficients theta_1..theta_q, plus-sign convention |  |
+| `residuals` | the last L residuals e_(n-L+1)..e_n, oldest first (L = q + m Q) |  |
+| `d` | differencing order d (0, 1 or 2; from the model's name) |  |
+| `seasonal_phi` | seasonal AR coefficients Phi_1..Phi_P |  |
+| `seasonal_theta` | seasonal MA coefficients Theta_1..Theta_Q, plus-sign convention |  |
+| `D` | seasonal differencing order D (0 or 1) |  |
+| `m` | season length m (with a seasonal part) |  |
+| `c` | the constant c (default 0) |  |
+| `h` | forecast horizon (default 1) |  |
+
+| output | meaning |
+|---|---|
+| `forecasts` | the forecasts for steps 1..h |
+| `forecast` | the h-step forecast |
+
+- **Method:** expand phi(B) Phi(B^m) $(1-B)^{d}$ $(1-B^{m})^{D}$ and theta(B) Theta(B^m); xhat_(n+j) = c - sum_k a_k xhat_(n+j-k) + sum_(i >= j) m_i e_(n+j-i)
+- **Assumes:** stationary AR parts; plus-sign MA convention $x_t = ... + e_t + theta_1$ e_(t-1) + ...; exactly $L = q + m$ Q residuals, oldest first; future shocks 0; a season length only with a seasonal part
+- **Evidence:** certified procedure (gates: conditions, control, examples, fast_enough, questions, reference, sensitivity, templates)
+
+![the forecasts for steps 1](https://www.ai999x.com/?ax_fig=time-series-ai999x/sarima-forecast-series)
+
+*the forecasts for steps 1..h (forecasts) returned by time-series-ai999x for the worked example, one value for each position in the list (3 values, first 110.24, last 111.92, largest 111.92). Inputs: x = 100, 102, 105, 104, 108, phi = 0.5, theta = 0.3, residuals = 0.8, d = 1, h = 3.*
+
+![forecast (the h-step forecast) against h (forecast horizon (default 1)) from 1 to 11](https://www.ai999x.com/?ax_fig=time-series-ai999x/sarima-forecast-curve)
+
+*forecast (the h-step forecast) against h (forecast horizon (default 1)) from 1 to 11. One curve for each value of d (differencing order d (0, 1 or 2; from the model's name)): 1, 2. Other inputs as in the worked example: x = 100, 102, 105, 104, 108, phi = 0.5, theta = 0.3, residuals = 0.8. 11 points per curve computed by time-series-ai999x; marked: the worked example, h = 3, forecast = 111.92.*
+
+```python
+time_series_ai999x.solve('sarima_forecast', x='100, 102, 105, 104, 108', phi='0.5', theta='0.3', residuals='0.8', d=1, h=3)
+# -> forecasts = [110.24, 111.35999999999999, 111.91999999999996], forecast = 111.92   (SOLVED)
+```
+
+```python
+time_series_ai999x.solve('sarima_forecast', x=[5.0, 4.2, 5.5], phi=[0.6], theta=[-0.4], residuals=[0.5], c=2, h=3)
+# -> forecasts = [5.1, 5.06, 5.036], forecast = 5.036   (SOLVED)
+```
+
+```python
+time_series_ai999x.solve('sarima_forecast', x=[10, 20, 30, 40, 12, 22, 31, 41], theta=[0.5], seasonal_theta=[-0.6], residuals=[1, 0, 0, 0, 2], D=1, m=4, h=5)
+# -> forecasts = [12.7, 22.0, 31.0, 39.8, 12.1], forecast = 12.1   (SOLVED)
+```
+
+**Questions in words (documented forms), as executed:**
+
+| question | outcome | result |
+|---|---|---|
+| Forecast 3 steps ahead with an ARIMA(1,1,1) model with AR coefficients [0.5], MA coefficients [0.3] and last residuals [0.8] for the series [100, 102, 105, 104, 108]. | SOLVED | forecasts = [110.24, 111.35999999999999, 111.91999999999996], forecast = 111.92 |
+| Forecast 3 steps ahead with an ARMA(1,1) model with AR coefficients [0.6], MA coefficients [-0.4], constant 2 and last residuals [0.5] for the series [5.0, 4.2, 5.5]. | SOLVED | forecasts = [5.1, 5.06, 5.036], forecast = 5.036 |
+| Forecast 5 steps ahead with an ARIMA(0,0,1)(0,1,1)4 model with MA coefficients [0.5], seasonal MA coefficients [-0.6] and last residuals [1, 0, 0, 0, 2] for the series [10, 20, 30, 40, 12, 22, 31, 41]. | SOLVED | forecasts = [12.7, 22.0, 31.0, 39.8, 12.1], forecast = 12.1 |
+| Forecast 2 steps ahead with an ARIMA(1,1,1) model with AR coefficients [1.2], MA coefficients [0.3] and last residuals [0.8] for the series [100, 102, 105, 104, 108]. | INVALID_INPUT | Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms: the AR parts must be stationary (every root outside t |
+| Forecast 2 steps ahead with an ARIMA(0,1,2) model with MA coefficients [0.3, 0.2] and last residuals [0.8] for the series [100, 102, 105, 104, 108]. | INVALID_INPUT | Forecasts of an ARMA, ARIMA or seasonal ARIMA model with MA terms: the moving-average part reaches back 2 residuals: giv |
+| Forecast 2 steps ahead with an ARIMA(1,1,1) model with AR coefficients [0.5, 0.2], MA coefficients [0.3] and last residuals [0.8] for the series [100, 102, 105, 104, 108]. | OUT_OF_SCOPE | Out of scope: the model's order is 1 for the phi list, but 2 values were given. |
+| Forecast 2 steps ahead with an ARIMA(1,1,1) model with AR coefficients [0.5], MA coefficients [0.3] and last residuals [0.8]. | NEEDS_INPUT | sarima_forecast needs x (the series, oldest first (at least as many values as the model's AR degree with differencing)). |
