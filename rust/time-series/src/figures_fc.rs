@@ -217,17 +217,22 @@ pub fn holt_pair(s: &Solved) -> Option<Figure> {
         p.dashed(&b, 3, oth_n);
     }
     p.line_dots(&a, 0, own_n);
-    let last = own[own.len() - 1];
+    // marked: the step the visitor asked for (h, 1 by default) and the forecast the capability returned for it — not
+    // h = 8 (time series review, 2026-11-13: the mark read 36.64 while the answer was 22.65)
+    let h0 = n(s, "h").unwrap_or(1.0).round().clamp(1.0, 8.0);
+    let mine = own.iter().copied().find(|q| (q.0 - (nn + h0)).abs() < 1e-9).unwrap_or(own[own.len() - 1]);
+    let last = (mine.0, s.out("forecast").unwrap_or(mine.1));
     p.mark(last.0, last.1, &num(last.1));
     let body = p.finish("t, period", "x", "");
     let phi_t = if damped { format!(", damping φ = {}", num(n(s, "phi")?)) } else { String::new() };
-    let oth_t = oth.last().map(|q| format!(" (the other method gives {})", num(q.1))).unwrap_or_default();
+    let oth_t = oth.iter().find(|q| (q.0 - mine.0).abs() < 1e-9).map(|q| format!(" (the other method gives {})", num(q.1)))
+        .unwrap_or_default();
     Some(s.chart("forecast", if damped { "A damped trend flattens the forecast" } else {
                      "Holt's linear trend against a damped trend"
                  },
                  &format!("History x = {} and forecasts h = 1 to 8 from Holt's method with α = {}, β = {}{phi_t} ({own_n}), \
-                           beside the {oth_n} with the same α and β, every point a run of the model; marked: h = 8, \
-                           forecast = {}{oth_t}.", lst(&x), num(alpha), num(beta), num(last.1)), &body))
+                           beside the {oth_n} with the same α and β, every point a run of the model; marked: h = {}, \
+                           forecast = {}{oth_t}.", lst(&x), num(alpha), num(beta), num(h0), num(last.1)), &body))
 }
 
 pub fn hw_three(s: &Solved) -> Option<Figure> {
