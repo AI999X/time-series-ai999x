@@ -1413,7 +1413,7 @@ $$
 
 ![An AR model with coefficients φ = 0](https://www.ai999x.com/?ax_fig=time-series-ai999x/ar-forecast-forecast)
 
-*An AR model with coefficients φ = 0.5, 0.2 and constant c = 1. History x = 10, 11, 12 and the forecasts the package returns for h = 1 … 8 periods ahead (other inputs as in the worked example); marked: h = 8, forecast = 4.23965.*
+*An AR model with coefficients φ = 0.5, 0.2 and constant c = 1.0. History x = 10, 11, 12 and the forecasts the package returns for h = 1 … 8 periods ahead (other inputs as in the worked example); marked: h = 8, forecast = 4.23965.*
 
 ```python
 time_series_ai999x.solve('ar_forecast', x='10, 11, 12', phi='0.5, 0.2', c=1, h=3)
