@@ -10,8 +10,8 @@ Time Series covers moving averages, exponential smoothing, autocorrelation, ARIM
 
 | | |
 |---|---|
-| **Desktop app** (Windows, Linux) | [Windows](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.5/ai999x-time-series-1.6.5-windows-x86_64.zip) · [Linux](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.5/ai999x-time-series-1.6.5-linux-x86_64.tar.gz) |
-| **Command line** `time-series` (Windows, Linux) | [Windows](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.4/ai999x-cli-1.6.4-windows-x86_64.zip) · [Linux](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.4/ai999x-cli-1.6.4-linux-x86_64.tar.gz) |
+| **Desktop app** (Windows, Linux) | [Windows](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.6/ai999x-time-series-1.6.6-windows-x86_64.zip) · [Linux](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.6/ai999x-time-series-1.6.6-linux-x86_64.tar.gz) |
+| **Command line** `time-series` (Windows, Linux) | [Windows](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.6/ai999x-cli-1.6.6-windows-x86_64.zip) · [Linux](https://github.com/AI999X/ai999x-desktop/releases/download/v1.6.6/ai999x-cli-1.6.6-linux-x86_64.tar.gz) |
 | **Browser** (any device) | [Try it on the model page](https://www.ai999x.com/models/time-series-ai999x/#capabilities) |
 | **Python** 3.10+ | `pip install time-series-ai999x`: on Windows and Linux (x86-64) `pip` installs the same compiled engine; on other systems (macOS, ARM) it installs a pure-Python build that gives the same answers |
 
@@ -229,113 +229,6 @@ phi1 = 0.6354166667
 sigma2 = 2.515046296
 ```
 
-## Rust library: 15 examples
-
-The crate `time-series-ai999x` (in `rust/` of the GitHub repository) answers a JSON request with `time_series_ai999x::solve_json`. Each call below was compiled and run on this release; the comment under it is what it printed. The whole program is `rust/time-series/examples/readme.rs`: `cd rust && cargo run --release --example readme -p time-series-ai999x`.
-
-```rust
-use serde_json::{json, Value};
-
-fn show(request: Value) {
-    let answer: Value = serde_json::from_str(&time_series_ai999x::solve_json(&request.to_string())).unwrap();
-    println!("{}", answer["outcome"].as_str().unwrap_or(""));
-    for v in answer["values"].as_array().into_iter().flatten() {
-        let unit = v[2].as_str().unwrap_or("");
-        let unit = if unit.is_empty() || unit == "1" { String::new() } else { format!(" {unit}") };
-        println!("{} = {}{}", v[0].as_str().unwrap_or(""), v[1], unit);
-    }
-}
-
-show(json!({"key": "ar1_forecast", "inputs": {"x": "58", "phi": "0.7", "mu": "50", "h": "3"}}));
-// SOLVED
-// forecast = 52.744
-
-show(json!({"key": "forecast_error_variance", "inputs": {"phi": [0.5], "theta": [0.3], "sigma2": "2", "h": "3"}}));
-// SOLVED
-// variance = 3.6000000000000005
-// sd = 1.8973665961010278
-
-show(json!({"key": "bartlett_standard_error", "inputs": {"x": [4, 6, 5, 8, 7, 9, 8, 10, 9, 12], "k": "3"}}));
-// SOLVED
-// se = 0.4144598128675235
-// half_width_95 = 0.8123263062595565
-// acf = -0.041085271317829464
-
-show(json!({"key": "cusum_change_point", "inputs": {"x": [5, 6, 5, 7, 6, 12, 13, 12, 14]}}));
-// SOLVED
-// change_index = 5
-// max_cusum = 15.444444444444446
-// mean_before = 5.8
-// mean_after = 12.75
-
-show(json!({"key": "seasonal_indices_additive", "inputs": {"x": [30, 21, 29, 31, 40, 30, 39, 41, 50, 39, 48, 51], "m": "4"}}));
-// SOLVED
-// indices = [6.484375,-6.453125,0.171875,-0.203125]
-// first = 6.484375
-
-show(json!({"key": "cross_correlation_best_lag", "inputs": {"x": [1, 3, 2, 5, 4, 6, 5, 8], "y": [3, 2, 5, 4, 6, 5, 8, 7], "K": "3"}}));
-// SOLVED
-// lag = 1
-// ccf = 0.713656664657495
-
-show(json!({"key": "ses_best_alpha", "inputs": {"alphas": [0.1, 0.3, 0.5], "x": [20, 22, 21, 24, 23, 26]}}));
-// SOLVED
-// alpha = 0.5
-// sse = 23.8125
-// forecast = 24.375
-
-show(json!({"key": "mean_absolute_error", "inputs": {"y": [10, 12, 14, 13], "f": [11, 12, 13, 15]}}));
-// SOLVED
-// mae = 1.0
-// n = 4
-
-show(json!({"key": "exponential_interpolation", "inputs": {"t": [1, 2, 3, 4], "y": [100, 120, 150, 170], "t0": "2.5"}}));
-// SOLVED
-// value = 134.16407865
-
-show(json!({"key": "kalman_filter_constant_velocity", "inputs": {"x": [1.1, 1.9, 3.2, 4, 4.8], "dt": "1", "q": "0.1", "r": "1", "p0": "0", "v0": "1", "var0": "10"}}));
-// SOLVED
-// position = 4.896949573170698
-// velocity = 0.9385623391396838
-// p11 = 0.6153900119485677
-// p12 = 0.24430952913214324
-// p22 = 0.2244910149533221
-
-show(json!({"key": "centred_moving_average", "inputs": {"x": [12, 15, 14, 18, 20, 19, 23, 25], "k": "4"}}));
-// SOLVED
-// cma = [15.75,17.25,18.875,20.875]
-// first_index = 3
-// first = 15.75
-
-show(json!({"key": "augmented_dickey_fuller_test", "inputs": {"x": [10.2, 10.8, 10.5, 11.3, 11, 11.9, 11.6, 12.4, 12, 12.9, 12.5, 13.4], "p": "2", "regression": "c"}}));
-// SOLVED
-// tau = -1.1865317507333888
-// gamma = -0.039052598225601906
-// se = 0.03291323489781349
-// nobs = 9
-
-show(json!({"key": "compound_average_growth_rate", "inputs": {"x": [100, 110, 125, 133, 150]}}));
-// SOLVED
-// rate = 0.1066819197
-// rate_percent = 10.66819197
-// total_growth = 0.5
-// periods = 4
-
-show(json!({"key": "exponential_trend_forecast", "inputs": {"x": [100, 112, 124, 140, 155], "h": "1"}}));
-// SOLVED
-// a = 89.6494987216
-// b = 0.109965341318
-// growth_rate = 0.116239382402
-// forecast = 173.417096711
-
-show(json!({"key": "ar_least_squares", "inputs": {"x": [4, 6, 5, 8, 7, 9, 8, 10, 9, 12], "p": "1"}}));
-// SOLVED
-// const = 3.5625000000000013
-// phi = [0.6354166666666665]
-// phi1 = 0.6354166666666665
-// sigma2 = 2.515046296296296
-```
-
 ## Guides
 
 - Desktop app guide: the window, every calculation, scenes and charts: [PDF](https://huggingface.co/AI999X/time-series-ai999x/blob/main/docs/time_series_ai999x_desktop_guide.pdf) · [HTML](https://huggingface.co/AI999X/time-series-ai999x/blob/main/docs/time_series_ai999x_desktop_guide.html) · [Markdown](https://huggingface.co/AI999X/time-series-ai999x/blob/main/docs/time_series_ai999x_desktop_guide.md)
@@ -344,7 +237,7 @@ show(json!({"key": "ar_least_squares", "inputs": {"x": [4, 6, 5, 8, 7, 9, 8, 10,
 
 Every calculation, with its formula, a worked example and its figures: **[Time Series on ai999x.com](https://www.ai999x.com/models/time-series-ai999x/)**. Install guides for the app and the command line: [https://www.ai999x.com/desktop-cli/](https://www.ai999x.com/desktop-cli/).
 
-Version 1.6.4 · License: Apache-2.0 · Author: Ibnul Jaif Farabi · Organization: AI999X · Contact: support@ai999x.com · [Support the project](https://buymeacoffee.com/ibnuljaiffarabi)
+Version 1.6.6 · License: Apache-2.0 · Author: Ibnul Jaif Farabi · Organization: AI999X · Contact: support@ai999x.com · [Support the project](https://buymeacoffee.com/ibnuljaiffarabi)
 
 *The Future Is Self-Improving.*
 
